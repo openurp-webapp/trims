@@ -23,5 +23,10 @@ class TeacherInfoAction extends RestfulAction[Teacher]{
     }
     forward()
   }
+  
+  def nav():String = {
+    put("id", get("id"))
+    forward()
+  }
 
 }

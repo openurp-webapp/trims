@@ -1,7 +1,5 @@
 [#ftl]
-[#include "../nav.ftl"/]
 [@b.head/]
-[@nav "a" 10/]
 [@b.toolbar title="${teacher.person.name} 基本信息"]
 [/@]
 <table class="infoTable">

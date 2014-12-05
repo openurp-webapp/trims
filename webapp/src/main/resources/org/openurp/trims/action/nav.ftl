@@ -1,19 +1,35 @@
 [#ftl]
-[#macro nav name id]
-<style>
-.nav{padding:0px;}
-.nav li{float:left; padding: 5 10px;}
-.nav li{border-bottom:1px solid #aaa;}
-.nav li a{text-decoration:none;}
-.nav li.active{border:1px solid #aaa;border-bottom:0px;}
-</style>
-<ul class="nav">
-  <li class="a">[@b.a href="teacher-info!info?id=${teacher.id}"]基本信息[/@]</li>
-  <li class="b">[@b.a href="teacher-info!info?id=${teacher.id}"]教学情况[/@]</li>
-  <li class="c">[@b.a href="teacher-info!info?id=${teacher.id}"]科研情况[/@]</li>
-  <li class="d">[@b.a href="teacher-info!info?id=${teacher.id}"]师资情况[/@]</li>
-  <li class="e">[@b.a href="teacher-info!info?id=${teacher.id}"]获奖情况[/@]</li>
-  <li class="f">[@b.a href="teacher-info!info?id=${teacher.id}"]其他情况[/@]</li>
+  <style>
+  .nav{padding:0px; margin:3px 0;}
+  .nav li{text-decoration:none;}
+  .nav li{float:left;}
+  /*.nav li.active{border:1px solid #aaa;border-bottom:0px;}*/
+  .nav li.active{background-color: #eee;}
+  .nav1 li a{font-size:14px}
+  .nav li{padding: 3px 5px; /*border-bottom:1px solid #aaa;*/}
+  .nav2 > li > a{font-size:14px; padding: 2px 3px!important;}
+  .nav3 > li > a{font-size:14px; padding: 1px 2px!important;}
+  </style>
+[#macro nav id level=1]
+<ul class="nav nav${level} nav${id}">
+[#nested/]
 </ul>
-<script>$(".${name}").addClass('active');</script>
+<script>
+  $(".nav${id} li").click(function (){
+    $(".nav${level} li").removeClass("active")
+    $(this).addClass("active");
+  }).first().addClass("active");
+</script>
+[/#macro]
+
+[#macro nav2 id]
+  [@nav id 2]
+    [#nested/]
+  [/@]
+[/#macro]
+
+[#macro nav3 id]
+  [@nav id 3]
+    [#nested/]
+  [/@]
 [/#macro]
