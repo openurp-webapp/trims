@@ -15,6 +15,7 @@
   <properties>
     <bundle.symbolicName>org.openurp.trims</bundle.symbolicName>
     <bundle.namespace>org.openurp.trims</bundle.namespace>
+    <beangle.data.version>4.1.6</beangle.data.version>
   </properties>
   
   <modules>
