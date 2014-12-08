@@ -12,6 +12,10 @@
   <packaging>war</packaging>
   <name>OpenURP TRIMS Webapp</name>
 
+  <properties>
+    <beangle.data.version>4.1.6</beangle.data.version>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>org.openurp.platform</groupId>
