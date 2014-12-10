@@ -7,13 +7,14 @@ import org.openurp.trims.action.TeachingAction
 import org.openurp.trims.action.CourseSearchTrimsAction
 import org.openurp.trims.service.impl.CecServiceImpl
 import org.openurp.teach.code.service.internal.BaseCodeServiceImpl
+import org.openurp.trims.action.LessonTrimsAction
 
 class DefaultModule2 extends AbstractBindModule {
 
   protected override def binding() {
     bind(classOf[CecServiceImpl])
 
-    bind(classOf[CourseSearchTrimsAction])
+    bind(classOf[CourseSearchTrimsAction], classOf[LessonTrimsAction])
     
     // TODO should remoed to openurp-teach-core 
     bind(classOf[BaseCodeServiceImpl])
