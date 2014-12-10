@@ -20,8 +20,6 @@
     <th>期末成绩及格率</th>
     <th>期末总评及格率</th>
   </tr>
-  ${gaTotalMap[""+201101320]}
-  ${(examGradesMap["2011013201"]/examTotalMap[""+201101320])?string.percent}
   [#list lessons as lesson]
     <tr>
       <td>${lesson.semester.schoolYear}-${lesson.semester.name}</td>

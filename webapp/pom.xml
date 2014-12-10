@@ -20,11 +20,11 @@
     <dependency>
       <groupId>org.openurp.platform</groupId>
       <artifactId>openurp-platform-web</artifactId>
-      <version>${project.version}</version>
+      <version>0.0.2-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.openurp.teach</groupId>
-      <artifactId>openurp-teach-model</artifactId>
+      <artifactId>openurp-teach-core</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
