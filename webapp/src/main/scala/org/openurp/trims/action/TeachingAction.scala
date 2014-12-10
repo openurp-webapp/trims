@@ -87,7 +87,6 @@ class TeachingAction extends RestfulAction[Teacher] {
     val examGrades = entityDao.search(query)
     val examTotalMap: Map[String, Int] = getTotalMap(examGrades)
     put("examGradesMap", getGradeMap(examGrades))
-    //
     put("examTotalMap", examTotalMap)
   }
   

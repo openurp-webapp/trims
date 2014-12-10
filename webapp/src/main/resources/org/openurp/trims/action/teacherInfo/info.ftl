@@ -5,7 +5,7 @@
 <table class="infoTable">
   <tr>
     <td class="title" width="20%">照片</td>
-    <td class="content"></td>
+    <td class="content"><image src="${service_base}/sns/photo/${photo_url}.jpg" style="width:100px"></td>
     <td class="title" width="20%">性别</td>
     <td class="content">${(teacher.person.gender.name)!}</td>
   </tr>

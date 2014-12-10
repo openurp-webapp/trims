@@ -5,6 +5,8 @@ import org.openurp.base.Teacher
 import org.beangle.webmvc.api.annotation.mapping
 import org.beangle.webmvc.api.annotation.param
 import java.util.Calendar
+import org.beangle.commons.codec.digest.Digests
+import org.openurp.platform.ws.ServiceConfig
 
 class TeacherInfoAction extends RestfulAction[Teacher]{  
   
@@ -21,6 +23,8 @@ class TeacherInfoAction extends RestfulAction[Teacher]{
       	(if(now.get(Calendar.MONTH)<cbirthday.get(Calendar.MONTH)) 1 else 0)
       put("age", age)
     }
+    put("service_base",ServiceConfig.wsBase)
+    put("photo_url",Digests.md5Hex(teacher.person.code+"@sfu.edu.cn"))
     forward()
   }
   
