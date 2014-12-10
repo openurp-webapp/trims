@@ -16,19 +16,22 @@ import org.beangle.commons.lang.Strings
 import org.openurp.teach.lesson.Lesson
 import org.beangle.commons.collection.Order
 import org.openurp.teach.plan.PlanCourse
-//import org.openurp.trims.model.ReadingBook
 import org.openurp.teach.plan.CoursePlan
 import org.openurp.teach.plan.MajorPlan
+import org.openurp.base.Teacher
+import org.openurp.trims.service.CecService
 
 class CourseSearchTrimsAction extends AbsEamsAction[Course] {
 
   var baseCodeService: BaseCodeService = _
 
+  var cecService: CecService = _
+
   override def index(): String = {
     val query = OqlBuilder.from(classOf[Department], "depart")
-    query.where(new Condition("depart.level=1"))
+    query.where(new Condition("depart.parent is null"))
     query.where(new Condition("depart.teaching=true"))
-    query.where(new Condition("depart.enabled=true"))
+//    query.where(new Condition("depart.enabled=true"))
     val departs = entityDao.search(query)
     put("departments", departs)
     val project = getProject()
@@ -51,7 +54,7 @@ class CourseSearchTrimsAction extends AbsEamsAction[Course] {
     put("courses", entityDao.search(getQueryBuilder()))
     put("courseHourTypes", baseCodeService.getCodes(project, classOf[CourseHourType]))
 
-    put("type", get("type"))
+    put("type", get("type").orNull)
     return forward()
   }
 
@@ -80,44 +83,45 @@ class CourseSearchTrimsAction extends AbsEamsAction[Course] {
     //    List outlines = entityDao.search(outlineQuery)
     //    put("outlines", outlines)
 
+    val project = getProject()
+    put("courseHourTypes", baseCodeService.getCodes(project, classOf[CourseHourType]))
     put("type", type_)
+    val courseid = get("course.id").get
+    val course = getModel[Course](entityName,convertId(courseid))
+    put("courseSiteUrl", cecService.getUrl(course.code).orNull)
+    put(shortName, course)
     return forward()
   }
 
   private def detailDefault() {
-    val courseid = get("course.id")
-    super.info(courseid.get)
-    val teachObjectsQuery = OqlBuilder.from(classOf[Lesson], "task")
-    teachObjectsQuery.select("select distinct major, majorField")
-    teachObjectsQuery.join("task.teachClass.major", "major")
-    teachObjectsQuery.join("left outer", "task.teachClass.majorField",
-      "majorField")
-    teachObjectsQuery.where(new Condition("task.course.id=:courseId",
-      getLong("course.id")))
-    teachObjectsQuery.where(new Condition("major.department.college=true"))
-    teachObjectsQuery.where(new Condition("major.enabled=true"))
-    teachObjectsQuery.orderBy(new Order("major.code", true))
-    teachObjectsQuery.orderBy(new Order("majorField.code", false))
+//    val teachObjectsQuery = OqlBuilder.from(classOf[Lesson], "task")
+//    teachObjectsQuery.select("select distinct major, majorField")
+//    teachObjectsQuery.join("task.teachClass.major", "major")
+//    teachObjectsQuery.join("left outer", "task.teachClass.majorField", "majorField")
+//    teachObjectsQuery.where(new Condition("task.course.id=:courseId", getLong("course.id")))
+//    teachObjectsQuery.where(new Condition("major.department.college=true"))
+//    teachObjectsQuery.where(new Condition("major.enabled=true"))
+//    teachObjectsQuery.orderBy(new Order("major.code", true))
+//    teachObjectsQuery.orderBy(new Order("majorField.code", false))
 
     val teacherQuery = OqlBuilder.from(classOf[Lesson], "task")
     teacherQuery.select("select distinct teacher")
     teacherQuery.join("task.teachers", "teacher")
-    teacherQuery.where(new Condition("task.course.id=:courseId",
-      getLong("course.id")))
-    teacherQuery.where(new Condition("teacher.virtual=:virtual", false))
+    teacherQuery.where(new Condition("task.course.id=:courseId", getInt("course.id").get))
+//    teacherQuery.where(new Condition("teacher.virtual=:virtual", false))
 
-    val textBookQuery = OqlBuilder.from(classOf[Lesson], "task")
-    textBookQuery.select("select distinct textbook")
-    textBookQuery.join("task.requirement.textbooks", "textbook")
-    textBookQuery.where(new Condition("task.course.id =(:ids)",
-      getLong("course.id")))
-    textBookQuery.orderBy(new Order("textbook.name"))
-    val textbooks = entityDao.search(textBookQuery)
+//    val textBookQuery = OqlBuilder.from(classOf[Lesson], "task")
+//    textBookQuery.select("select distinct textbook")
+//    textBookQuery.join("task.requirement.textbooks", "textbook")
+//    textBookQuery.where(new Condition("task.course.id =(:ids)",
+//      getLong("course.id")))
+//    textBookQuery.orderBy(new Order("textbook.name"))
+//    val textbooks = entityDao.search(textBookQuery)
 
 //    put("readings", getReadingBooks(getInt("course.id").get))
-    put("teachObjects", entityDao.search(teachObjectsQuery))
+//    put("teachObjects", entityDao.search(teachObjectsQuery))
     put("teachers", entityDao.search(teacherQuery))
-    put("textbooks", textbooks)
+//    put("textbooks", textbooks)
   }
 
   private def detailInMajor() {

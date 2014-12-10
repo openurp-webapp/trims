@@ -29,7 +29,7 @@
     </dependency>
     <dependency>
       <groupId>org.openurp.teach</groupId>
-      <artifactId>openurp-teach-api</artifactId>
+      <artifactId>openurp-teach-core</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>

@@ -1,0 +1,25 @@
+[@b.head/]
+[@b.grid items=courses var="course"]
+  [@b.row]
+    [@b.col property="code" title="代码"/]
+    [@b.col property="name" title="名称"]
+      [@b.a href="!detail?course.id=${course.id}&type=${(type!)?html}"]${course.name}[/@]
+    [/@]
+    [#--
+    [@b.col property="educationType" title="educationType"]course.educationType.name[/@]
+    --]
+    [@b.col property="credits" title="学分"/]
+    [@b.col property="period" title="学时"/]
+    [@b.col property="weekHour" title="周课时"/]
+    [@b.col property="weeks" title="周数"/]
+    [#--
+    [#list courseHourTypes?sort_by('code') as courseHourType]
+      [@b.col property="weeks" title="${courseHourType.name}"]
+        #{course.period.getCourseHour(courseHourType)!}
+      [/@]
+    [/#list]
+      <td>${(course.extInfo.examMode.name)?if_exists}</td>
+    --]
+  [/@]
+ [/@]
+[@b.foot/]
