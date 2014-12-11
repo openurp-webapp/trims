@@ -6,14 +6,10 @@ import org.beangle.data.jpa.dao.OqlBuilder
 import org.beangle.commons.lang.Strings
 import org.openurp.base.Department
 
-class LessonPeriodAction extends RestfulAction[Lesson] {
+class LessonPeriodAction extends AbsEamsAction[Lesson] {
 
   override def index(): String = {
-    val query = OqlBuilder.from(classOf[Lesson], "l")
-    query.select("l.semester.schoolYear")
-    query.groupBy("l.semester.schoolYear")
-    query.orderBy("l.semester.schoolYear desc")
-    put("datas", entityDao.search(query))
+    put("datas", getLessonYears())
     forward()
   }
 

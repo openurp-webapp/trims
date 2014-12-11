@@ -25,5 +25,15 @@ abstract class AbsEamsAction[T <: Entity[_ <: java.io.Serializable]] extends Abs
     query.orderBy("l.semester.schoolYear desc")
     entityDao.search(query)
   }
+  
+  protected def getAvg(datas:Seq[Any])(f:Any => Double) = {
+    val o = (for(d <- datas) yield f(d))
+    o.sum / datas.length
+  }
+  
+  protected def getStandardDeviation(datas:Seq[Any], avg:Double)(f:Any => Double) = {
+    val o = (for(d <- datas) yield (Math.pow(f(d) - avg, 2)))
+    Math.sqrt(o.sum / datas.length)
+  }
 
 }
