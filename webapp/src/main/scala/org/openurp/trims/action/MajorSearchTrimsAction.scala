@@ -15,7 +15,7 @@ class MajorSearchTrimsAction extends AbsEamsAction[Major] {
 
   var baseCodeService: BaseCodeService = _
 
-  override def index(): String = {
+  def index(): String = {
     //		val s :String=getSystemConfig().getItems().get("trims.url.nation_master")//获取全国硕博士点设置的后台维护
 //    		put("nation_master_url",s)
     forward()

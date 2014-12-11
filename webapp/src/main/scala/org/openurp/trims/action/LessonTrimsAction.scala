@@ -8,12 +8,12 @@ import org.openurp.base.Department
 
 class LessonTrimsAction extends AbsEamsAction[Lesson] {
 
-  override def index(): String = {
+  def index(): String = {
     put("datas", getLessonYears())
     forward()
   }
 
-  override def search(): String = {
+  def search(): String = {
     val query = OqlBuilder.from(classOf[Lesson], "l")
     query.select("l.teachDepart.id, count(*) as num")
     get("year").map(year=>{
