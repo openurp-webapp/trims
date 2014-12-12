@@ -1,5 +1,4 @@
 [#ftl]
-[#include "../nav.ftl"/]
 [@b.head/]
 [@b.div id="teacher_div"]
   [@b.toolbar title=title!"教师查询"/]
