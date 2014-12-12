@@ -6,6 +6,9 @@ import org.openurp.trims.action.TeacherInfoAction
 import org.openurp.trims.action.TeachingAction
 import org.openurp.trims.action.ExpCourseSearchTrimsAction
 import org.openurp.trims.action.MajorSearchTrimsAction
+import com.sun.org.apache.bcel.internal.generic.ClassObserver
+import org.openurp.trims.action.PeriodStatisticsAction
+import org.openurp.trims.action.DepartPeriodCountAction
 
 class DefaultModule extends AbstractBindModule {
 
@@ -15,5 +18,7 @@ class DefaultModule extends AbstractBindModule {
     bind(classOf[TeachingAction])
     bind(classOf[ExpCourseSearchTrimsAction])
     bind(classOf[MajorSearchTrimsAction])
+    bind(classOf[PeriodStatisticsAction])
+    bind(classOf[DepartPeriodCountAction])
   }
 }

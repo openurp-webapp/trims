@@ -1,6 +1,7 @@
 [#ftl]
 [@b.head/]
 [#include "../nav.ftl"/]
+<h4>学年详细上课情况</h4>
 [@nav3 "year${curYear!}"]
   [#list years as v]
     <li class="year${v[0]}" [#if curYear == v[0]]class="active"[/#if]>[@b.a href="teaching!lesson?id=${teacher.id}&year=${v[0]}"]${v[0]}(<span style="color: red;">${v[1]}</span>)[/@]</li>

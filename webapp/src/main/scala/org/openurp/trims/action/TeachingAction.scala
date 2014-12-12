@@ -40,6 +40,32 @@ class TeachingAction extends RestfulAction[Teacher] {
     put("lessons", lessons)
     forward()
   }
+/**
+ * 教师平均课时折线图
+ * */
+  def lessonLine(): String = {
+    var id = get("id").get
+    val teacher = entityDao.get(classOf[Teacher], new Integer(id))
+    put(shortName, teacher)
+    val sql = s"""select  s.school_year, s.name, sum(c.period)
+			from teach.lessons l 
+			join teach.lessons_teachers lt on lt.lesson_id=l.id 
+			join base.semesters s on l.semester_id = s.id 
+			join teach.courses c on c.id = l.course_id
+			where lt.teacher_id = ${id} 
+			group by s.school_year,s.name
+    		order by s.school_year desc,s.name  desc"""
+    val query = SqlBuilder.sql(sql)
+    val datas = entityDao.search(query)
+    var sum = 0
+    for (i <- 0 until datas.size) {
+      sum = sum + new Integer(datas(i).asInstanceOf[Array[Any]](2).toString)
+    }
+    val avg = sum/datas.size
+    put("avg", avg)
+    put("datas", datas)
+    forward()
+  }
 
   def nav(): String = {
     val id = get("id").get
@@ -58,20 +84,20 @@ class TeachingAction extends RestfulAction[Teacher] {
     val query = SqlBuilder.sql(sql)
     entityDao.search(query)
   }
-  
+
   /**
    * 成绩及格率
    */
   @mapping(value = "grade/{id}")
   def grade(@param("id") id: String): String = {
     lesson(id)
-    putExamGrade()
-    putGaGrade()
+    putExamGrade(id)
+    putGaGrade(id)
     forward()
 
   }
   //期末成绩examGrade.end
-  private def putExamGrade() {
+  private def putExamGrade(id: String) {
     val sql = s"""select id,score,count(*) from
 			(select l.id, case 
 			when cg.score>=60 then 1
@@ -81,7 +107,7 @@ class TeachingAction extends RestfulAction[Teacher] {
 			join teach.lessons l on cg.lesson_id=l.id
     		join base.semesters s on l.semester_id = s.id
 			join teach.lessons_teachers lt on lt.lesson_id = l.id
-			where lt.teacher_id=10
+			where lt.teacher_id=${id}
 			 ) t group by id,score"""
     val query = SqlBuilder.sql(sql)
     val examGrades = entityDao.search(query)
@@ -89,9 +115,9 @@ class TeachingAction extends RestfulAction[Teacher] {
     put("examGradesMap", getGradeMap(examGrades))
     put("examTotalMap", examTotalMap)
   }
-  
+
   //总评成绩gaGrade.endGa
-  private def putGaGrade() {
+  private def putGaGrade(id: String) {
     val sql = s"""select id,score,count(*) from
 			(select l.id, case 
 			when cg.score>=60 then 1
@@ -101,7 +127,7 @@ class TeachingAction extends RestfulAction[Teacher] {
 			join teach.lessons l on cg.lesson_id=l.id
     		join base.semesters s on l.semester_id = s.id
 			join teach.lessons_teachers lt on lt.lesson_id = l.id
-			where lt.teacher_id=10
+			where lt.teacher_id=${id}
 			 ) t group by id,score"""
     val query = SqlBuilder.sql(sql)
     val gaGrades = entityDao.search(query)
@@ -109,7 +135,7 @@ class TeachingAction extends RestfulAction[Teacher] {
     put("gaGradesMap", getGradeMap(gaGrades))
     put("gaTotalMap", gaTotalMap)
   }
-  
+
   //通过课程id和成绩得到相应的课程数量
   private def getGradeMap(datas: Seq[Any]): Map[String, Int] = {
     val map = new collection.mutable.HashMap[String, Int]
@@ -119,7 +145,7 @@ class TeachingAction extends RestfulAction[Teacher] {
     })
     map.toMap
   }
-  
+
   //通过课程id得到相应的课程总数
   private def getTotalMap(datas: Seq[Any]): Map[String, Int] = {
     val map = new collection.mutable.HashMap[String, Int]
