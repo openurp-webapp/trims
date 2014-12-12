@@ -1,0 +1,80 @@
+@import url("Public.css");
+
+body
+{
+	background: #FFFFFF;
+}
+
+.ShowWatermark
+{
+	
+}
+
+.RollOverImg
+{
+	
+}
+.MenuTable
+{
+	font-size: 13px;
+	line-height: 32px;
+}
+
+a.MenuItem:link
+{
+	color: #000000;
+	text-decoration: none
+}
+a.MenuItem:visited
+{
+	color: #000000;
+	text-decoration: none
+}
+a.MenuItem:active
+{
+	color: #000000;
+	text-decoration: none
+}
+a:hover
+{
+	color: #ff6600
+}
+.TableNormal
+{
+	border-collapse:	collapse;
+	line-height: 20px;
+}
+.TdContent
+{
+	background-color: transparent;
+}
+.TdLabel
+{
+	background-color: #B1D9F2;
+}
+
+.TrNormal
+{
+	background-color: transparent;
+}
+.TrHead
+{
+	background-color:	#75BBFB;
+}
+
+/*文字连接样式*/
+a:link {
+	color: #000080;
+	text-decoration: none;
+}
+
+/*文字连接已经访问过的样式*/
+a:visited {
+ text-decoration: none;
+}
+
+/*鼠标悬停在文字连接上的样式*/
+a:hover {
+	color: red;
+	/*text-decoration: none;*/
+}

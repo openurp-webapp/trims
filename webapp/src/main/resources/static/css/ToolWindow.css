@@ -1,0 +1,51 @@
+body
+{
+	margin:				10px;
+	background-color:	#d4d0c8;
+}
+select
+{
+	font-size: 12px;
+	font-family: "宋体";
+}
+input
+{
+	font-size: 12px;
+	font-family: "宋体";
+}
+textarea
+{
+	font-size: 14px;
+	font-family: "宋体";
+}
+br
+{
+	font-size: 14px;
+}
+table
+{
+	font-size: 14px;
+	font-family: "宋体";
+}
+
+.HeadText
+{
+	font-size: 18px;
+	font-family: "宋体";
+}
+.SmallText
+{
+	font-size: 12px;
+	font-family: "宋体";
+}
+.NormalText
+{
+	font-size: 14px;
+	font-family: "宋体";
+}
+.HighlightText
+{
+	color: #ff0000;
+	font-weight: bold;
+	font-family: "宋体";
+}

@@ -10,7 +10,7 @@
             var myChart = echarts.init(document.getElementById('departPeriodChart')); 
             
             var option = {
-                title: {text:'[#if year??]${year}学年[/#if][#if term??]  第${term}学期[/#if]'},
+                title: {text:'[#if year??]${year}学年[/#if][#if term??]  第${term}学期[/#if]  部门人平均课时'},
                 //renderAsImage:true,
                 tooltip: {
                     show: true
@@ -65,9 +65,9 @@
             // 为echarts对象加载数据 
             myChart.setOption(option);
             myChart.on('click', function (param){
-              bg.Go('${b.url('period-statistics!period')}?year=${year!}&term=${term}&did='+departmentIds[param.dataIndex],'periodStatisticsChart')
+              bg.Go('${b.url('period-statistics!period')}?year=${year!}&term=${term!}&did='+departmentIds[param.dataIndex],'periodStatisticsChartDiv')
             }); 
         });
 </script>
-[@b.div id="periodStatisticsChart"/]
+[@b.div id="periodStatisticsChartDiv"/]
 [@b.foot/]

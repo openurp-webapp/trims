@@ -6,7 +6,9 @@ import org.beangle.data.jpa.dao.SqlBuilder
 import org.beangle.data.jpa.dao.OqlBuilder
 import org.beangle.commons.lang.Strings
 import org.openurp.base.Department
-
+/**
+ * 各部门学期平均课时统计
+ * */
 class DepartPeriodCountAction extends RestfulAction[Lesson] {
   
   override def index(): String = {

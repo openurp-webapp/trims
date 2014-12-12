@@ -8,7 +8,9 @@ import org.openurp.teach.lesson.Lesson
 import org.beangle.data.jpa.dao.OqlBuilder
 import org.beangle.commons.lang.Strings
 import org.openurp.base.Department
-
+/**
+ * 平均课时人数统计
+ * */
 class PeriodStatisticsAction extends  RestfulAction[Lesson]{
   
   override def index(): String = {
