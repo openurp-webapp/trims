@@ -30,7 +30,7 @@
                         "name":"重修数量",
                         "type":"line",
                         smooth:true,
-                        "data":[[#list datas2 as d][#if d_index gt 0],[/#if]${d[1]*100}[/#list]],
+                        "data":[[#list datas2 as d][#if d_index gt 0],[/#if]${d[1]}[/#list]],
                         markLine : {
                             data : [
                                 {type : 'average', name: '平均值'}
