@@ -1,22 +1,23 @@
 [#ftl]
   <style>
-  .nav{padding:0px; margin:3px 0;}
-  .nav li{text-decoration:none;}
-  .nav li{float:left;}
-  /*.nav li.active{border:1px solid #aaa;border-bottom:0px;}*/
-  .nav li.active{background-color: #eee;}
-  .nav1 li a{font-size:14px}
-  .nav li{padding: 3px 5px; /*border-bottom:1px solid #aaa;*/}
-  .nav2 > li > a{font-size:14px; padding: 2px 3px!important;}
-  .nav3 > li > a{font-size:14px; padding: 1px 2px!important;}
+  .inav{padding:0px; margin:3px 0;}
+  .inav li{text-decoration:none; list-style:none;}
+  .inav li{float:left;}
+  /*.inav li.active{border:1px solid #aaa;border-bottom:0px;}*/
+  .inav li.active{background-color: #eee;}
+  .inav1 li a{font-size:14px}
+  .inav li{padding: 3px 5px; /*border-bottom:1px solid #aaa;*/}
+  .inav2 > li > a{font-size:14px; padding: 2px 3px!important;}
+  .inav3 > li > a{font-size:14px; padding: 1px 2px!important;}
   </style>
 [#macro nav id level=1]
-<ul class="nav nav${level} nav${id}">
+<ul class="inav inav${level} inav${id}">
 [#nested/]
 </ul>
+<div style="clear:both;"></div>
 <script>
-  $(".nav${id} li").click(function (){
-    $(".nav${level} li").removeClass("active")
+  $(".inav${id} li").click(function (){
+    $(".inav${level} li").removeClass("active")
     $(this).addClass("active");
   }).first().addClass("active");
 </script>

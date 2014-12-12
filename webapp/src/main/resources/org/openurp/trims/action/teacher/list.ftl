@@ -3,7 +3,7 @@
 [#-- filterable="true"--]
 [@b.grid  items=teachers var="teacher" filterable="true"]
   [@b.row]
-    [@b.col width="50%" property="person.name" title="姓名"][@b.a href="teacher-info!info?id=${teacher.id}" target="teacher_div"]${(teacher.person.name)!}[/@][/@]
+    [@b.col width="50%" property="person.name" title="姓名"][@b.a href="teacher-info!nav?id=${teacher.id}" target="teacher_div"]${(teacher.person.name)!}[/@][/@]
     [@b.col width="50%" property="department.name" title="所属部门"][/@]
   [/@]
 [/@]
