@@ -11,8 +11,8 @@ class DefaultModule2 extends AbstractBindModule {
     bind(classOf[CecServiceImpl])
 
     bind(classOf[CourseSearchTrimsAction], classOf[LessonTrimsAction], classOf[LessonPeriodAction])
-    bind(classOf[LessonTeachClassStdCountAction])
-    
+    bind(classOf[LessonTeachClassStdCountAction], classOf[CourseTakeReStudyAction])
+
     // TODO should remoed to openurp-teach-core 
     bind(classOf[BaseCodeServiceImpl])
   }

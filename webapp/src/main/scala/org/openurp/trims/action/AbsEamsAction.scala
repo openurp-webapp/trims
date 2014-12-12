@@ -7,8 +7,9 @@ import org.openurp.teach.core.Project
 import org.openurp.teach.lesson.Lesson
 import org.openurp.base.Department
 import org.beangle.webmvc.entity.action.AbstractRestfulAction
+import org.beangle.webmvc.entity.action.AbstractEntityAction
 
-abstract class AbsEamsAction[T <: Entity[_ <: java.io.Serializable]] extends AbstractRestfulAction[T] {
+abstract class AbsEamsAction[T <: Entity[_ <: java.io.Serializable]] extends AbstractEntityAction[T] {
 
   protected def getProject() = {
     entityDao.get(classOf[Project], new Integer(1))

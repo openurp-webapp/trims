@@ -27,7 +27,7 @@ class CourseSearchTrimsAction extends AbsEamsAction[Course] {
 
   var cecService: CecService = _
 
-  override def index(): String = {
+  def index(): String = {
     val query = OqlBuilder.from(classOf[Department], "depart")
     query.where(new Condition("depart.parent is null"))
     query.where(new Condition("depart.teaching=true"))
@@ -46,7 +46,7 @@ class CourseSearchTrimsAction extends AbsEamsAction[Course] {
   /**
    * 查找课程
    */
-  override def search(): String = {
+  def search(): String = {
     //    super.search()
     val project = getProject()
     val entityQuery = OqlBuilder.from(classOf[Course], "course")
