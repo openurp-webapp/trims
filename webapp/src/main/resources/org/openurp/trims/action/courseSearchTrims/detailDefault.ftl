@@ -91,7 +91,7 @@
   <tr class="TrNormal">
 	<td class="TdLabel" align="center" nowrap="nowrap" width="90">任课教师</td>
 	<td class="TdContent" width="50%" colspan="3">
-		&nbsp;<#list teachers as t><#if t_index gt 0>、</#if>${t.name}</#list>
+		&nbsp;<#list teachers as t><#if t_index gt 0>、</#if>${(t.person.name)!t.id}</#list>
 	</td>
   </tr>
   <tr class="TrNormal">
