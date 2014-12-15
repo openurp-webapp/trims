@@ -80,7 +80,8 @@ class TeachingAction extends RestfulAction[Teacher] {
 		from teach.lessons l join teach.lessons_teachers lt on l.id = lt.lesson_id 
 		join base.semesters s on l.semester_id = s.id
 		where lt.teacher_id = ${id}
-		group by s.school_year"""
+		group by s.school_year
+		order by s.school_year"""
     val query = SqlBuilder.sql(sql)
     entityDao.search(query)
   }

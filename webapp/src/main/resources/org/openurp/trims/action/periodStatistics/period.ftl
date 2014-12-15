@@ -23,7 +23,7 @@
             
             var option = {
                 title : {
-                    text: '[#if year??]${year}学年[/#if][#if term??]  第${term}学期[/#if]  平均课时人数统计',
+                    text: '[#if year??]${year}学年[/#if][#if term??]  第${term}学期[/#if]  [#if department??]${department.name}[/#if]  平均课时人数统计',
                 },
                 tooltip : {
                     trigger: 'axis'
@@ -69,4 +69,5 @@
         }
     );
 </script>
+[@b.div href="!top10?year=${year!}&term=${term!}&departmentId=${(department.id)!}"/]
 [@b.foot/]

@@ -55,5 +55,35 @@ class PeriodStatisticsAction extends  RestfulAction[Lesson]{
     put("datas", datas)
     forward()
   }
+  
+  def top10():String={
+    val year = get("year")
+    val term = get("term")
+    val departmentId = getInt("departmentId")
+    val sql="""	select  p.name p_name,s.school_year, s.name s_name, sum(c.period) num, d.name d_name
+		from teach.lessons l 
+		join teach.lessons_teachers lt on lt.lesson_id=l.id 
+		join base.semesters s on l.semester_id = s.id 
+		join base.teachers t on t.id = lt.teacher_id
+		join base.people p on p.id=t.person_id
+		join base.departments d on d.id=l.teach_depart_id
+		join teach.courses c on c.id = l.course_id where 1=1"""+  
+		(if(year.isDefined && Strings.isNotBlank(year.get))s" and s.school_year = '${year.get}'"else"")+
+		(if(term.isDefined && Strings.isNotBlank(term.get))s" and s.name = '${term.get}'"else"")+
+		(if(departmentId.isDefined)s" and l.teach_depart_id = '${departmentId.get}'"else"")+
+		"""group by s.school_year,s.name,p.name, d.name
+		order by num desc limit 10"""
+	if(year.isDefined && Strings.isNotBlank(year.get)) put("year", year)
+	if(term.isDefined && Strings.isNotBlank(term.get)) put("term", term)
+	if(departmentId.isDefined){
+	  val departId = departmentId.get
+	  val department = entityDao .get(classOf[Department], new Integer(departId))
+	  put("department",department)
+	}
+    val query = SqlBuilder.sql(sql)
+    val datas = entityDao .search(query)
+    put("datas", datas)
+    forward()
+  }
 
 }
