@@ -63,7 +63,11 @@ abstract class AbsEamsAction[T <: Entity[_ <: java.io.Serializable]] extends Abs
   }
   
   protected def putNamesAndValues(datas:Seq[Any]){
-    val names = for(data <- datas) yield data.asInstanceOf[Array[Any]](0)
+    putNamesAndValues(datas ,data=>data(1))
+  }
+  
+  protected def putNamesAndValues(datas:Seq[Any],nf:Array[Any] => Any){
+    val names = for(data <- datas) yield nf(data.asInstanceOf[Array[Any]])
     val values = for(data <- datas) yield data.asInstanceOf[Array[Any]](1)
     put("names", names)
     put("values", values)
