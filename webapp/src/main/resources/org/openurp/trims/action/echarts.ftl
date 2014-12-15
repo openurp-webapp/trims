@@ -1,8 +1,7 @@
-[#macro echartsLine id title names=[] values=[] onclick='']
-[@echarts id=id title=title names=names values=values onclick=onclick type='line'/]
-[/#macro]
-[#macro echarts id title names=[] values=[] onclick='' type='bar']
+[#macro echarts id title title2='' names=[] values=[] onclick='' type='bar' xname='' yname='' interval=0 color=true showSeriesLable=true xrotate=-30
+ barMinHeight=20]
 
+[#if datas?size gt 0]
 <div id="${id}" style="height:300px;">
 
 </div>
@@ -13,30 +12,36 @@
             var myChart = echarts.init(document.getElementById('${id}')); 
             
             var option = {
-                title: {text:'${title}'},
+                title: {text:'${title}'
+                [#if title2 != '']
+                , subtext : '${title2}'
+                [/#if]},
                 //renderAsImage:true,
                 tooltip: {
                     show: true
                 },
                 xAxis : [
                     {
+                        [#if xname != '']name : '${xname}',[/#if]
                         type : 'category',
-                        axisLabel:{interval:0, rotate:-25},
+                        axisLabel:{interval:'${interval}', rotate:${xrotate}},
                         data : [[#list names as d][#if d_index gt 0],[/#if]'${d}'[/#list]]
                     }
                 ],
                 yAxis : [
                     {
+                        [#if yname != '']name : '${yname}',[/#if]
                         type : 'value'
                     }
                 ],
                 series : [
                     {
-                        "name":"课程数量",
                         "type":"${type}",
-                        barMinHeight: 20,
+                        barMinHeight: ${barMinHeight},
+                        smooth:true,
                         itemStyle: {
                             normal: {
+                                [#if color]
                                 color: function(params) {
                                     // build a color map as your need.
                                     var colorList = [
@@ -46,14 +51,21 @@
                                     ];
                                     return colorList[params.dataIndex%colorList.length]
                                 },
+                                [/#if]
                                 label: {
-                                    show: true,
+                                    show: ${showSeriesLable?string},
                                     position: 'top',
                                     formatter: '{c}'
                                 }
                             }
                         },
                         "data":[[#list values as d][#if d_index gt 0],[/#if]${d}[/#list]],
+                        markPoint : {
+                            data : [
+                                {type : 'max', name: '最大值'},
+                                {type : 'min', name: '最小值'}
+                            ]
+                        },
                         markLine : {
                             data : [
                                 {type : 'average', name: '平均值'}
@@ -65,8 +77,14 @@
             // 为echarts对象加载数据 
             myChart.setOption(option); 
             [#if onclick != '']
-            myChart.on('click', ${onclick});
+            myChart.on('click', function (param){
+              if(param.name == '最大值' || param.name == '最小值') return;
+              ${onclick}(param)
+            });
             [/#if]
         });
 </script>
+[#else]
+<div style="padding:100px; font-size:20px; text-align:center">暂无数据</div>
+[/#if]
 [/#macro]

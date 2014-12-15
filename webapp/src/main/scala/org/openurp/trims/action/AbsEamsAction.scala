@@ -23,7 +23,7 @@ abstract class AbsEamsAction[T <: Entity[_ <: java.io.Serializable]] extends Abs
   
   protected def getDepartmentMap() = {
     val map = new collection.mutable.HashMap[String, String]
-    getDepartments().foreach( d => {
+    entityDao.getAll(classOf[Department]).foreach( d => {
       map.put(d.id.toString(), if(d.shortName != null) d.shortName else d.name)
     })
     map
@@ -55,15 +55,16 @@ abstract class AbsEamsAction[T <: Entity[_ <: java.io.Serializable]] extends Abs
     Math.sqrt(o.sum / datas.length)
   }
   
-  protected def where[T](query:OqlBuilder[T], condition:String, name:String, value:Any) {
-    if(value != null && Strings.isNotBlank(value.toString) && (value.getClass.isPrimitive() && value.asInstanceOf[AnyVal] != 0)){
-      put(name, value)
-      query.where(condition, value)
+  protected def where[T](query:OqlBuilder[T], condition:String, name:String, value:Option[Any]) {
+    if(value.isDefined && Strings.isNotBlank(value.get.toString) &&
+        !(value.get.getClass.isPrimitive() && value.get.asInstanceOf[AnyVal] == 0)){
+      put(name, value.get)
+      query.where(condition, value.get)
     }
   }
   
   protected def putNamesAndValues(datas:Seq[Any]){
-    putNamesAndValues(datas ,data=>data(1))
+    putNamesAndValues(datas ,data=>data(0))
   }
   
   protected def putNamesAndValues(datas:Seq[Any],nf:Array[Any] => Any){

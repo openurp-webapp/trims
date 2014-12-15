@@ -42,7 +42,7 @@ class LessonTeachClassStdCountAction extends AbsEamsAction[Lesson] {
     val standardDeviation = getStandardDeviation(datas, avg)(d => {
       d.asInstanceOf[Array[Any]](1).toString.toDouble
     })
-    put("datas", datas)
+    putNamesAndValues(datas)
     put("avg", avg)
     put("standardDeviation", standardDeviation)
     forward()

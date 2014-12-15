@@ -5,6 +5,7 @@ import org.beangle.data.jpa.dao.OqlBuilder
 import org.openurp.base.Department
 import org.openurp.teach.core.Student
 import org.openurp.teach.lesson.Lesson
+import java.util.Date
 
 class StudentDepartStatisticsAction extends AbsEamsAction[Student] {
 
@@ -14,10 +15,10 @@ class StudentDepartStatisticsAction extends AbsEamsAction[Student] {
 
   def year(): String = {
     val query = OqlBuilder.from(classOf[Student], "s")
-    query.select("substring(s.grade, 0, 5), count(*) as num")
+    query.select("substring(s.grade, 1, 4), count(*) as num")
     where(query, "s.department.id = :did", "departmentId", getInt("departmentId"))
-    query.groupBy("substring(s.grade, 0, 5)")
-    query.orderBy("substring(s.grade, 0, 5)")
+    query.groupBy("substring(s.grade, 1, 4)")
+    query.orderBy("substring(s.grade, 1, 4)")
     putNamesAndValues(entityDao.search(query))
     forward()
   }
@@ -30,8 +31,12 @@ class StudentDepartStatisticsAction extends AbsEamsAction[Student] {
   def depart(): String = {
     val query = OqlBuilder.from(classOf[Student], "s")
     query.select("s.department.id, count(*) as num")
+    if(get("year").isEmpty){
+      query.where("s.graduateOn >:now", new Date())
+    }
     where(query, "substring(s.grade, 1, 4) =:year", "year", get("year"))
     query.groupBy("s.department.id")
+    query.orderBy("count(*) desc")
     val datas = entityDao.search(query).asInstanceOf[Seq[Any]]
     val departs = getDepartmentMap()
     val names = for (data <- datas) yield departs.get(data.asInstanceOf[Array[Any]](0).toString).getOrElse("")

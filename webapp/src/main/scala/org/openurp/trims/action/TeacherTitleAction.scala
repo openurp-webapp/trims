@@ -16,6 +16,8 @@ class TeacherTitleAction extends AbsEamsAction{
   def search(): String = {
     val query = OqlBuilder.from(classOf[Teacher], "l")
     query.select("l.title.id, count(*) as num")
+    query.where("l.teaching = true")
+//    query.where("l.title.id is not null")
     query.groupBy("l.title.id")
     query.orderBy("count(*) desc")
     val datas = entityDao.search(query)
@@ -23,9 +25,7 @@ class TeacherTitleAction extends AbsEamsAction{
     entityDao.getAll(classOf[TeacherTitle]).foreach( d => {
       map.put(d.id.toString(), d.name)
     })
-    val o = null
-    println(o.toString())
-    putNamesAndValues(datas, data => map.get(data(0).toString).getOrElse(data(0)))
+    putNamesAndValues(datas, data => map.get(data(0)+"").getOrElse("无职称"))
     forward()
   }
   
@@ -34,12 +34,19 @@ class TeacherTitleAction extends AbsEamsAction{
     val title = entityDao.get(classOf[TeacherTitle], new Integer(tid))
     val query = OqlBuilder.from(classOf[Teacher], "l")
     query.select("l.department.id, count(*) as num")
-    query.where("l.title.id=:tid", tid)
+    query.where("l.teaching = true")
+    if("undefined".equals(get("tid").get)){
+       query.where("l.title.id is null")
+    }else{
+      query.where("l.title.id=:tid", tid)
+    }
+//    query.where("l.department.id is not null")
     query.groupBy("l.department.id")
-    query.orderBy("l.department.id")
+    query.orderBy("count(*) desc")
     val datas = entityDao.search(query)
     val map = getDepartmentMap()
     putNamesAndValues(datas, data => map(data(0).toString))
+    put("title", title)
     forward()
   }
 
