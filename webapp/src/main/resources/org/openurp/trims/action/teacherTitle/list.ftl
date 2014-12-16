@@ -6,8 +6,8 @@
       bg.Go('${b.url('!department')}?tid='+ids[param.dataIndex],'teacherTitleDepartDiv')
     }
   </script>
-  [@echarts id="student_year_chart" title="按职称统计"
-    xname='职称' yname='教师人数'
+  [@echarts id="student_year_chart" title="按职称统计" title2="点击图表查看某职称按院系统计"
+    xname='职称' yname='教师人数' maxAndMin=false 
     names=names values=values onclick="selectTitle"/]
 [@b.div id="teacherTitleDepartDiv"/]
 [@b.foot/]
