@@ -1,5 +1,5 @@
 [#macro echarts id title title2='' names=[] values=[] onclick='' type='bar' xname='' yname='' interval=0 color=true showSeriesLable=true xrotate=-30
- barMinHeight=20]
+ barMinHeight=20 maxAndMin=true]
 
 [#if datas?size gt 0]
 <div id="${id}" style="height:300px;">
@@ -60,12 +60,14 @@
                             }
                         },
                         "data":[[#list values as d][#if d_index gt 0],[/#if]${d}[/#list]],
+                        [#if maxAndMin]
                         markPoint : {
                             data : [
                                 {type : 'max', name: '最大值'},
                                 {type : 'min', name: '最小值'}
                             ]
                         },
+                        [/#if]
                         markLine : {
                             data : [
                                 {type : 'average', name: '平均值'}
