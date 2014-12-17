@@ -7,7 +7,7 @@
       bg.Go('${b.url('!yearDepart')}?year='+years[param.dataIndex],'yearDepartDiv')
     }
   </script>
-  [@echarts id="student_year_chart" title="按年级统计" title2="点击图表显示某年级按学院统计"
+  [@echarts id="student_year_chart" title="按年级统计" title2="点击图表显示某年级按院系统计"
     xname='年级' yname='学生人数'
     names=names values=values onclick="selectYear" type='line'/]
   [@b.div id="yearDepartDiv"/]

@@ -10,6 +10,7 @@ import com.sun.org.apache.bcel.internal.generic.ClassObserver
 import org.openurp.trims.action.PeriodStatisticsAction
 import org.openurp.trims.action.DepartPeriodCountAction
 import org.openurp.trims.action.DepartTeacherCountAction
+import org.openurp.trims.action.TitlePeriodCountAction
 
 class DefaultModule extends AbstractBindModule {
 
@@ -22,5 +23,6 @@ class DefaultModule extends AbstractBindModule {
     bind(classOf[PeriodStatisticsAction])
     bind(classOf[DepartPeriodCountAction])
     bind(classOf[DepartTeacherCountAction])
+    bind(classOf[TitlePeriodCountAction])
   }
 }

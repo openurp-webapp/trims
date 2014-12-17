@@ -1,5 +1,5 @@
 [#ftl]
-[@b.head title="本科学院专业设置一览表"/]
+[@b.head title="本科院系专业设置一览表"/]
 [#assign base=request.contextPath/]
 <script language="JavaScript" type="text/JavaScript" src="${base}/static/scripts/frame.js"></script>
 <table>

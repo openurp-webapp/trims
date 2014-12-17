@@ -10,7 +10,7 @@
 			<td nowrap="nowrap">
 				课程编号<input name="course.code" maxlength="15" size="8" value="" type="text">
 				课程名称<input name="course.name" maxlength="50" size="20" value="" type="text">
-				开课学院
+				开课院系
 				<@htm.i18nSelect datas=departments selected="" name="course.extInfo.department.id" style="width:100px;">
    	     			<option value="">...</option>
    	  			</@>

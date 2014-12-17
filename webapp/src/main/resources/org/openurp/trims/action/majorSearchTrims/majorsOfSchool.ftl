@@ -4,7 +4,7 @@
   <tbody><tr>
 	<td align="middle">
 		<b class="LargerText">
-		[#if type=="major"]本科学院专业设置一览表
+		[#if type=="major"]本科院系专业设置一览表
 		[#elseif type=="plan"]培养方案
 		[#elseif type=="thesis"]毕业论文
 		[/#if]</b>
@@ -21,7 +21,7 @@
 >
 <tbody>
     <tr class="TrHead">
-  		<td align="middle" nowrap="nowrap" width="13%">学院</td>
+  		<td align="middle" nowrap="nowrap" width="13%">院系</td>
   		<td align="middle" nowrap="nowrap" width="10%">专业代码</td>
   		<td align="middle" nowrap="nowrap" width="40%">专业名称</td>
   		<td align="middle" nowrap="nowrap" width="10%">培养类型</td>
