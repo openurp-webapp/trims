@@ -46,7 +46,7 @@ class LessonPeriodAction extends AbsEamsAction[Lesson] {
     query.select("l.semester.code, sum(l.course.period) as num")
     query.where("l.teachDepart.id=:did", did)
     query.groupBy("l.semester.code")
-    query.orderBy("l.semester.code  desc")
+    query.orderBy("l.semester.code")
     put("datas", entityDao.search(query))
     put("department", department)
     forward()

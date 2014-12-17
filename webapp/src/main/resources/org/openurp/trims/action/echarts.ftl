@@ -1,8 +1,8 @@
 [#macro echarts id title title2='' names=[] values=[] onclick='' type='bar' xname='' yname='' interval=0 color=true showSeriesLable=true xrotate=-30
- barMinHeight=20 maxAndMin=true]
+ barMinHeight=20 maxAndMin=true series='' height=300 legend='']
 
-[#if datas?size gt 0]
-<div id="${id}" style="height:300px;">
+[#if names?size gt 0]
+<div id="${id}" style="height:${height}px;">
 
 </div>
 <script src="${base}/static/js/echarts/echarts-all.js"></script>
@@ -17,9 +17,17 @@
                 , subtext : '${title2}'
                 [/#if]},
                 //renderAsImage:true,
-                tooltip: {
-                    show: true
+                tooltip : {
+                    trigger: 'item',
+                    axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    }
                 },
+                [#if legend != '']
+                legend: {
+                    data:${legend}
+                },
+                [/#if]
                 xAxis : [
                     {
                         [#if xname != '']name : '${xname}',[/#if]
@@ -34,6 +42,7 @@
                         type : 'value'
                     }
                 ],
+                [#if series == '']
                 series : [
                     {
                         "type":"${type}",
@@ -75,6 +84,9 @@
                         }
                     }
                 ]
+                [#else]
+                series : ${series}
+                [/#if]
             };
             // 为echarts对象加载数据 
             myChart.setOption(option); 

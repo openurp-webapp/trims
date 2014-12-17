@@ -10,13 +10,14 @@
             var myChart = echarts.init(document.getElementById('lessonTrimsChart')); 
             
             var option = {
-                title: {text:'[#if year??]${year}学年[/#if][#if term??]  第${term}学期[/#if] '},
+                title: {text:'[#if year??]${year}学年[/#if][#if term??]  第${term}学期[/#if] 按开课学时统计',  subtext : '点击图表显示某院系按学期统计'},
                 //renderAsImage:true,
                 tooltip: {
                     show: true
                 },
                 xAxis : [
                     {
+                        name : '院系',
                         type : 'category',
                         axisLabel:{interval:0, rotate:-25},
                         data : [[#list datas as d][#if d_index gt 0],[/#if]'${dempartmentMap[d[0]?string]}'[/#list]]
@@ -24,6 +25,7 @@
                 ],
                 yAxis : [
                     {
+                        name : '开课课时',
                         type : 'value'
                     }
                 ],

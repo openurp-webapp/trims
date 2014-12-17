@@ -56,7 +56,9 @@ class TitlePeriodCountAction extends AbsEamsAction{
 		join teach.courses c on c.id = l.course_id
 		join base.teachers t on t.id =  lt.teacher_id
 		join base.departments d on d.id = t.department_id
-		where t.title_id=${tid}
+		where """ +
+    (if(tid == 0){"t.title_id is null"}else{"t.title_id="+tid}) +
+    """
 		group by lt.teacher_id,t.department_id,t.title_id,lt.teacher_id,s.school_year,s.name)a
 		group by a.department_id,a.teacher_id)b
 		group by b.department_id
