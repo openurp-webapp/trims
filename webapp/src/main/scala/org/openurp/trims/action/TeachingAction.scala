@@ -9,6 +9,7 @@ import org.beangle.data.model.dao.Query
 import org.openurp.teach.lesson.Lesson
 import org.beangle.data.jpa.dao.OqlBuilder
 import org.openurp.teach.grade.CourseGrade
+import java.util.HashMap
 
 /**
  * 教学情况
@@ -92,13 +93,14 @@ class TeachingAction extends RestfulAction[Teacher] {
   @mapping(value = "grade/{id}")
   def grade(@param("id") id: String): String = {
     lesson(id)
-    putExamGrade(id)
-    putGaGrade(id)
+    val curYear=request.getAttribute("curYear").asInstanceOf[String]
+    putExamGrade(id,curYear)
+    putGaGrade(id,curYear)
     forward()
 
   }
   //期末成绩examGrade.end
-  private def putExamGrade(id: String) {
+  private def putExamGrade(id: String,curYear:String) {
     val sql = s"""select id,score,count(*) from
 			(select l.id, case 
 			when cg.score>=60 then 1
@@ -108,7 +110,7 @@ class TeachingAction extends RestfulAction[Teacher] {
 			join teach.lessons l on cg.lesson_id=l.id
     		join base.semesters s on l.semester_id = s.id
 			join teach.lessons_teachers lt on lt.lesson_id = l.id
-			where lt.teacher_id=${id}
+			where lt.teacher_id=${id} and s.school_year='${curYear}'
 			 ) t group by id,score"""
     val query = SqlBuilder.sql(sql)
     val examGrades = entityDao.search(query)
@@ -118,7 +120,7 @@ class TeachingAction extends RestfulAction[Teacher] {
   }
 
   //总评成绩gaGrade.endGa
-  private def putGaGrade(id: String) {
+  private def putGaGrade(id: String,curYear:String) {
     val sql = s"""select id,score,count(*) from
 			(select l.id, case 
 			when cg.score>=60 then 1
@@ -128,7 +130,7 @@ class TeachingAction extends RestfulAction[Teacher] {
 			join teach.lessons l on cg.lesson_id=l.id
     		join base.semesters s on l.semester_id = s.id
 			join teach.lessons_teachers lt on lt.lesson_id = l.id
-			where lt.teacher_id=${id}
+			where lt.teacher_id=${id} and s.school_year='${curYear}'
 			 ) t group by id,score"""
     val query = SqlBuilder.sql(sql)
     val gaGrades = entityDao.search(query)
@@ -158,6 +160,36 @@ class TeachingAction extends RestfulAction[Teacher] {
       }
       val total = map(key)
       map.put(key, total + new Integer(data(2).toString).intValue())
+    })
+    map.toMap
+  }
+  
+  /**
+   * 评教情况
+   */
+  @mapping(value = "quality/{id}")
+  def quality(@param("id") id: String): String = {
+    lesson(id)
+    val curYear=request.getAttribute("curYear")
+    val sql = s"""select q.lesson_id,q.score
+		from quality.lesson_questionnaire_stats q
+		join teach.lessons l on l.id = q.lesson_id
+		join base.semesters s on s.id = l.semester_id 
+		join teach.lessons_teachers lt on l.id = lt.lesson_id 
+		where lt.teacher_id=${id} and s.school_year='${curYear}'"""
+    val query = SqlBuilder.sql(sql)
+    val datas = entityDao .search(query)
+    val lessonScoreMap = getLessonScoreMap(datas)
+    put("lessonScoreMap", lessonScoreMap)
+    forward()
+
+  } 
+  
+  private def getLessonScoreMap(datas:Seq[Any]): Map[String,Float] = {
+    val map = new collection.mutable.HashMap[String,Float]
+    datas.foreach(d=>{
+      val data = d.asInstanceOf[Array[Any]]
+      map.put(data(0).toString, data(1).asInstanceOf[Float])
     })
     map.toMap
   }
