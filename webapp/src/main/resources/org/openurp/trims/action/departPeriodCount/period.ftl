@@ -11,7 +11,7 @@
             
             var option = {
                 title: {text:'[#if year??]${year}学年[/#if][#if term??]  第${term}学期[/#if]  部门人平均课时'
-                , subtext : '点击图标查看部门平均课时人数统计'},
+                , subtext : '点击图标查看部门平均课时人数统计', padding: 0},
                 //renderAsImage:true,
                 tooltip: {
                     show: true

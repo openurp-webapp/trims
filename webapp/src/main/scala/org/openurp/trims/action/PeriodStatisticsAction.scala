@@ -66,7 +66,7 @@ class PeriodStatisticsAction extends  RestfulAction[Lesson]{
 		join base.semesters s on l.semester_id = s.id 
 		join base.teachers t on t.id = lt.teacher_id
 		join base.people p on p.id=t.person_id
-		join base.departments d on d.id=l.teach_depart_id
+		join base.departments d on d.id=p.department_id
 		join teach.courses c on c.id = l.course_id where 1=1"""+  
 		(if(year.isDefined && Strings.isNotBlank(year.get))s" and s.school_year = '${year.get}'"else"")+
 		(if(term.isDefined && Strings.isNotBlank(term.get))s" and s.name = '${term.get}'"else"")+
