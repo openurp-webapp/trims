@@ -16,30 +16,27 @@ class LessonPeriodAction extends AbsEamsAction[Lesson] {
   def search(): String = {
     val query = OqlBuilder.from(classOf[Lesson], "l")
     query.select("l.teachDepart.id, sum(l.course.period) as num")
-    get("year").map(year=>{
-      if(Strings.isNotBlank(year)){
+    get("year").map(year => {
+      if (Strings.isNotBlank(year)) {
         put("year", year)
         query.where("l.semester.schoolYear=:year", year)
       }
     })
-    get("term").map(term=>{
-      if(Strings.isNotBlank(term)){
+    get("term").map(term => {
+      if (Strings.isNotBlank(term)) {
         put("term", term)
         query.where("l.semester.name=:term", term)
       }
     })
     query.groupBy("l.teachDepart.id")
     query.orderBy("sum(l.course.period) desc")
-    put("datas", entityDao.search(query))
-    val map = new collection.mutable.HashMap[String, String]
-    entityDao.getAll(classOf[Department]).foreach( d => {
-      map.put(d.id.toString(), if(Strings.isNotBlank(d.shortName)) d.shortName else d.name)
-    })
-    put("dempartmentMap", map)
+    val datas = entityDao.search(query)
+    val map = getDepartmentMap
+    putNamesAndValues(datas, d => map(d(0).toString))
     forward()
   }
-  
-  def department():String = {
+
+  def department(): String = {
     val did = getInt("did").get
     val department = entityDao.get(classOf[Department], new Integer(did))
     val query = OqlBuilder.from(classOf[Lesson], "l")

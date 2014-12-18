@@ -13,9 +13,9 @@ class CourseTakeReStudyAction extends AbsEamsAction[CourseTake] {
 
   def search(): String = {
     val query = OqlBuilder.from(classOf[CourseTake], "ct")
-    query.select("ct.semester.id, count(*) as num")
-    query.groupBy("ct.semester.id")
-//    query.orderBy("ct.semester.id")
+    query.select("ct.semester.code, count(*) as num")
+    query.groupBy("ct.semester.code")
+    query.orderBy("ct.semester.code")
     query.where("ct.courseTakeType.id=:type", CourseTakeType.RESTUDY)
     putNamesAndValues(entityDao.search(query))
     forward()

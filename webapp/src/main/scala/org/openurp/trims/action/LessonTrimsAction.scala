@@ -30,12 +30,10 @@ class LessonTrimsAction extends AbsEamsAction[Lesson] {
     })
     query.groupBy("l.teachDepart.id")
     query.orderBy("count(*) desc")
-    put("datas", entityDao.search(query))
-    val map = new collection.mutable.HashMap[String, String]
-    entityDao.getAll(classOf[Department]).foreach( d => {
-      map.put(d.id.toString(), if(Strings.isNotBlank(d.shortName)) d.shortName else d.name)
-    })
+    val datas = entityDao.search(query)
+    val map = getDepartmentMap()
     put("dempartmentMap", map)
+    putNamesAndValues(datas, d => map(d(0).toString))
     forward()
   }
   

@@ -7,6 +7,6 @@
   }
 </script>
 [@echarts id="course_take_re_study_div" title="按学期统计重修门次" title2="点击图表显示某学期按院系统计"
-  xname='学期' yname='重修人次' names=names values=values onclick="selectGrade"/]
+  xname='学期' yname='重修人次' names=names values=values onclick="selectGrade" type='line'/]
 [@b.div id="semesterDepartDiv"/]
 [@b.foot/]

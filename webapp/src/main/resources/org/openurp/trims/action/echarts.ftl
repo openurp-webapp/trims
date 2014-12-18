@@ -15,7 +15,7 @@
                 title: {text:'${title}'
                 [#if title2 != '']
                 , subtext : '${title2}'
-                [/#if]},
+                [/#if], padding: 0},
                 //renderAsImage:true,
                 tooltip : {
                     trigger: 'item',
