@@ -35,7 +35,7 @@
                         name:'学年学期',
                         type : 'category',
                         boundaryGap : false,
-                        data : [[#list datas as data][#if data_index gt 0],[/#if]'${data[0]?substring(0,4)}-${data[1]}'[/#list]]
+                        data : [[#list datas as data][#if data_index gt 0],[/#if]'${data[0]}'[/#list]]
                     }
                 ],
                 yAxis : [
@@ -51,7 +51,7 @@
                     {
                         name:'学期课时',
                         type:'line',
-                        data:[[#list datas as data][#if data_index gt 0],[/#if]${data[2]}[/#list]],
+                        data:[[#list datas as data][#if data_index gt 0],[/#if]${data[1]}[/#list]],
                         markPoint : {
                             data : [
                                 {type : 'max', name: '最大值'},

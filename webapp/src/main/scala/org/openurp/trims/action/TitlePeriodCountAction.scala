@@ -22,13 +22,13 @@ class TitlePeriodCountAction extends AbsEamsAction{
   def search():String={
     val sql = """select b.title_id,cast(avg(num) as int) num from
 		(select a.teacher_id,a.title_id,cast(avg(num) as int) num from 
-		(select lt.teacher_id,t.title_id,s.school_year,s.name, sum(c.period) num
+		(select lt.teacher_id,t.title_id, sum(c.period) num
 		from teach.lessons l 
 		join teach.lessons_teachers lt on lt.lesson_id=l.id
 		join base.semesters s on l.semester_id = s.id 
 		join teach.courses c on c.id = l.course_id
 		join base.teachers t on t.id =  lt.teacher_id
-		group by lt.teacher_id,t.title_id,lt.teacher_id,s.school_year,s.name)a
+		group by lt.teacher_id,t.title_id,s.id)a
 		group by a.title_id,a.teacher_id)b
 		group by b.title_id
 		order by num desc"""
@@ -49,7 +49,7 @@ class TitlePeriodCountAction extends AbsEamsAction{
     val tid = getInt("tid").get
     val sql = s"""select b.department_id,cast(avg(num) as int) num from 
 		(select a.department_id,a.teacher_id,cast(avg(num) as int) num from 
-		(select t.department_id,lt.teacher_id,t.title_id,s.school_year,s.name, sum(c.period) num
+		(select t.department_id,lt.teacher_id, sum(c.period) num
 		from teach.lessons l 
 		join teach.lessons_teachers lt on lt.lesson_id=l.id
 		join base.semesters s on l.semester_id = s.id 
@@ -59,7 +59,7 @@ class TitlePeriodCountAction extends AbsEamsAction{
 		where """ +
     (if(tid == 0){"t.title_id is null"}else{"t.title_id="+tid}) +
     """
-		group by lt.teacher_id,t.department_id,t.title_id,lt.teacher_id,s.school_year,s.name)a
+		group by lt.teacher_id,t.department_id,s.id)a
 		group by a.department_id,a.teacher_id)b
 		group by b.department_id
 		order by num desc"""

@@ -48,19 +48,19 @@ class TeachingAction extends RestfulAction[Teacher] {
     var id = get("id").get
     val teacher = entityDao.get(classOf[Teacher], new Integer(id))
     put(shortName, teacher)
-    val sql = s"""select  s.school_year, s.name, sum(c.period)
+    val sql = s"""select  s.code, sum(c.period)
 			from teach.lessons l 
 			join teach.lessons_teachers lt on lt.lesson_id=l.id 
 			join base.semesters s on l.semester_id = s.id 
 			join teach.courses c on c.id = l.course_id
 			where lt.teacher_id = ${id} 
-			group by s.school_year,s.name
-    		order by s.school_year desc,s.name  desc"""
+			group by s.code
+    		order by s.code"""
     val query = SqlBuilder.sql(sql)
     val datas = entityDao.search(query)
     var sum = 0
     for (i <- 0 until datas.size) {
-      sum = sum + new Integer(datas(i).asInstanceOf[Array[Any]](2).toString)
+      sum = sum + new Integer(datas(i).asInstanceOf[Array[Any]](1).toString)
     }
     val avg = sum/datas.size
     put("avg", avg)
