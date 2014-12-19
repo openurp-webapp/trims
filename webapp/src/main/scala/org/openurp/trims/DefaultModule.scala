@@ -11,6 +11,7 @@ import org.openurp.trims.action.PeriodStatisticsAction
 import org.openurp.trims.action.DepartPeriodCountAction
 import org.openurp.trims.action.DepartTeacherCountAction
 import org.openurp.trims.action.TitlePeriodCountAction
+import org.openurp.trims.action.ResearchAction
 
 class DefaultModule extends AbstractBindModule {
 
@@ -24,5 +25,6 @@ class DefaultModule extends AbstractBindModule {
     bind(classOf[DepartPeriodCountAction])
     bind(classOf[DepartTeacherCountAction])
     bind(classOf[TitlePeriodCountAction])
+    bind(classOf[ResearchAction])
   }
 }
