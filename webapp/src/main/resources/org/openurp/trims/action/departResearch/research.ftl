@@ -27,5 +27,6 @@
   [@echarts id="student_year_chart" title="按院系职称统计"
     xname='院系' yname='科研成果数量'
     names=names series=series legend=legend height=500/]
-[@b.div id="teacherTitleDepartDiv"/]
+[@b.div id="departResearchDiv"/]
+[@b.div href="!top10"/]
 [@b.foot/]
