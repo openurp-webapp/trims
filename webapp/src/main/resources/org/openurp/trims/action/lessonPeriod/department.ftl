@@ -10,7 +10,7 @@
             var myChart = echarts.init(document.getElementById('lessonTrimsDepartmentChart')); 
             
             var option = {
-                title: {text:'${department.name}历年开课情况'},
+                title: {text:'${department.name}历年开课课时情况'},
                 //renderAsImage:true,
                 tooltip: {
                     show: true
@@ -25,7 +25,7 @@
                 ],
                 yAxis : [
                     {
-                        name : '开课数量',
+                        name : '课时数',
                         type : 'value'
                     }
                 ],

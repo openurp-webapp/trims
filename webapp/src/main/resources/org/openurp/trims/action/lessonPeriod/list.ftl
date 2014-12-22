@@ -10,7 +10,7 @@
 </script>
 [#assign title][#if year??]${year}学年[/#if][#if term??]  第${term}学期[/#if] 按开课学时统计[/#assign]
 [@echarts id="lessonTrimsChart" title=title title2="点击图表显示某院系按学期统计"
-  xname='职称' yname='教师人数' maxAndMin=false 
+  xname='开课院系' yname='课时数' maxAndMin=false 
   names=names values=values onclick="selectTitle"/]
   
 [@b.div id="LessonDepartmentChartDiv"/]

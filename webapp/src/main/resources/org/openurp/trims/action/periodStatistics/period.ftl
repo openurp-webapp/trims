@@ -39,7 +39,7 @@
                 ],
                 yAxis : [
                     {
-                        name:'人数',
+                        name:'教师人数',
                         type : 'value',
                         axisLabel : {
                             formatter: '{value}'

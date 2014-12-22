@@ -17,6 +17,7 @@ class StudentDepartStatisticsAction extends AbsEamsAction[Student] {
     val query = OqlBuilder.from(classOf[Student], "s")
     query.select("substring(s.grade, 1, 4), count(*) as num")
     where(query, "s.department.id = :did", "departmentId", getInt("departmentId"))
+    query.where("substring(s.grade, 1, 4) > '2003'")
     query.groupBy("substring(s.grade, 1, 4)")
     query.orderBy("substring(s.grade, 1, 4)")
     putNamesAndValues(entityDao.search(query))
