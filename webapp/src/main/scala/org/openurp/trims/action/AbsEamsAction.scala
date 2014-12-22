@@ -21,6 +21,10 @@ abstract class AbsEamsAction[T <: Entity[_ <: java.io.Serializable]] extends Abs
     entityDao.findBy(classOf[Department], "teaching", Array(true))
   }
   
+  protected def getAllDepartments() = {
+    entityDao.getAll(classOf[Department])
+  }
+  
   protected def getDepartmentMap() = {
     val map = new collection.mutable.HashMap[String, String]
     entityDao.getAll(classOf[Department]).foreach( d => {

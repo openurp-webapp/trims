@@ -1,17 +1,8 @@
 package org.openurp.trims
 
+import org.openurp.trims.action._
 import org.beangle.commons.inject.bind.AbstractBindModule
-import org.openurp.trims.action.TeacherAction
-import org.openurp.trims.action.TeacherInfoAction
-import org.openurp.trims.action.TeachingAction
-import org.openurp.trims.action.ExpCourseSearchTrimsAction
-import org.openurp.trims.action.MajorSearchTrimsAction
 import com.sun.org.apache.bcel.internal.generic.ClassObserver
-import org.openurp.trims.action.PeriodStatisticsAction
-import org.openurp.trims.action.DepartPeriodCountAction
-import org.openurp.trims.action.DepartTeacherCountAction
-import org.openurp.trims.action.TitlePeriodCountAction
-import org.openurp.trims.action.ResearchAction
 
 class DefaultModule extends AbstractBindModule {
 
@@ -26,5 +17,6 @@ class DefaultModule extends AbstractBindModule {
     bind(classOf[DepartTeacherCountAction])
     bind(classOf[TitlePeriodCountAction])
     bind(classOf[ResearchAction])
+    bind(classOf[DepartResearchAction])
   }
 }
