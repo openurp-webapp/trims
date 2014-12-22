@@ -17,6 +17,7 @@ class LessonTeachClassStdCountAction extends AbsEamsAction[Lesson] {
   def search(): String = {
     val query = OqlBuilder.from(classOf[Lesson], "l")
     query.select("l.teachClass.stdCount, count(*)")
+    query.where("l.teachClass.stdCount > 0")
     get("year").map(year => {
       if (Strings.isNotBlank(year)) {
         put("year", year)
