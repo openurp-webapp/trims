@@ -22,7 +22,8 @@ class ResearchAction extends AbsEamsAction {
 		join research.researchers r on r.id = t.researcher_id
 		join base.people pe on pe.id = r.person_id
 		join base.teachers te on te.person_id = pe.id
-		where te.id=${id}"""
+		where te.id=${id}
+        order by p.published_date desc"""
     val query = SqlBuilder.sql(sql)
     val datas = entityDao .search(query)
     println(sql)
@@ -42,7 +43,8 @@ class ResearchAction extends AbsEamsAction {
         join research.researchers r on r.id = l.researcher_id
         join base.people pe on pe.id = r.person_id
         join base.teachers te on te.person_id = pe.id
-        where te.id=${id}"""
+        where te.id=${id}
+        order by l.publish_date desc"""
     val query = SqlBuilder.sql(sql)
     val datas = entityDao .search(query)
     put("datas", datas)
