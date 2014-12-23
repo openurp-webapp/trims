@@ -23,10 +23,11 @@
   [/#list]
   ]
   [/#assign]
+  [#assign title][#if beginYear??]${beginYear}年[#if endYear??]到[/#if][/#if][#if endYear??]${endYear}年[/#if]  按院系统计[/#assign]
   [#assign legend]['论文', '专著'][/#assign]
-  [@echarts id="student_year_chart" title="按院系职称统计"
+  [@echarts id="student_year_chart" title=title
     xname='院系' yname='科研成果数量'
     names=names series=series legend=legend height=500/]
 [@b.div id="departResearchDiv"/]
-[@b.div href="!top10"/]
+[@b.div href="!top10?beginYear=${beginYear!}&endYear=${endYear!}"/]
 [@b.foot/]

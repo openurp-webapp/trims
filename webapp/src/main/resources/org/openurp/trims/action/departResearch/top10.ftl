@@ -1,5 +1,5 @@
 [@b.head/]
-<h4>论文成果 Top10</h4>
+<h4>[#if beginYear??]${beginYear}年[#if endYear??]到[/#if][/#if][#if endYear??]${endYear}年[/#if]  论文成果 Top10</h4>
 <table class="gridtable">
   <tr>
     <th>教师姓名</th>
@@ -14,7 +14,7 @@
   </tr>
     [/#list]
 </table>
-<h4>专著成果 Top10</h4>
+<h4>[#if beginYear??]${beginYear}年[#if endYear??]到[/#if][/#if][#if endYear??]${endYear}年[/#if]  专著成果 Top10</h4>
 <table class="gridtable">
   <tr>
     <th>教师姓名</th>
