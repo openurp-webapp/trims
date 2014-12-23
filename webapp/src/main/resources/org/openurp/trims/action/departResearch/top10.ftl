@@ -16,7 +16,7 @@
     [/#list]
 </table>
 [/#if]
-[#if thesises?size gt 0]
+[#if literatures?size gt 0]
 <h4>[#if beginYear??]${beginYear}年[/#if][#if endYear?? && ((beginYear!) != endYear)][#if beginYear??]到[/#if]${endYear}年[/#if]  专著成果 Top10</h4>
 <table class="gridtable">
   <tr>

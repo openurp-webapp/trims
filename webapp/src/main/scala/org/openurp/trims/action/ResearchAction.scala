@@ -18,13 +18,14 @@ class ResearchAction extends AbsEamsAction {
 		from research.thesis_harvests t
 		join research.published_situations p on p.id = t.published_situation_id
 		join research.harvest_types h on h.id = p.harvest_type_id
-		join research.published_ranges pr on pr.id = p.published_range_id
+		left outer join research.published_ranges pr on pr.id = p.published_range_id
 		join research.researchers r on r.id = t.researcher_id
 		join base.people pe on pe.id = r.person_id
 		join base.teachers te on te.person_id = pe.id
 		where te.id=${id}"""
     val query = SqlBuilder.sql(sql)
     val datas = entityDao .search(query)
+    println(sql)
     put("datas", datas)
     put("id", get("id"))
     forward()
