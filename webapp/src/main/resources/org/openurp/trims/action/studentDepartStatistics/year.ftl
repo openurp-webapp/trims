@@ -1,6 +1,6 @@
 [@b.head/]
 [#include "../echarts.ftl"/]
-<div style="max-width:1000px; margin:10px auto; border:1px solid #ccc; border-radius:5px; padding:10px;">
+<div style="margin:0; border:1px solid #ccc; border-radius:5px; padding:10px;">
   <script>
     function selectYear(param){
       var years = [[#list datas as d][#if d_index gt 0],[/#if]'${d[0]}'[/#list]]
