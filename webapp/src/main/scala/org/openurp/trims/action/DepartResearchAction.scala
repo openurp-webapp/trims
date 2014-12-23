@@ -38,8 +38,10 @@ class DepartResearchAction extends AbsEamsAction {
     val map = getDepartmentMap
     departsIds.foreach(id => names += map(id.toString()))
     val values = new ListBuffer[ListBuffer[Any]]
-    values += getValues(departsIds, thesises)
-    values += getValues(departsIds, literatures)
+    if(departsIds.length > 0){
+      values += getValues(departsIds, thesises)
+      values += getValues(departsIds, literatures)
+    }
     put("names", names)
     put("values", values)
     put("beginYear", get("beginYear"))

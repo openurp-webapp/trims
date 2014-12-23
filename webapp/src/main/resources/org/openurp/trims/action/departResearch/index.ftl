@@ -10,9 +10,9 @@
     $('#beginYear').change(function (){
       var beginYear = this.value
       var endYear = $('#endYear')
-      endYear.val('')
+      if(beginYear > endYear.val()) endYear.val('')
       endYear.find('option').show().filter(function (){
-        return this.value < beginYear
+        return this.value < beginYear && this.value != ''
       }).hide()
     });
   </script>
