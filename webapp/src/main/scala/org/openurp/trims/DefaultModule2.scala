@@ -4,6 +4,7 @@ import org.beangle.commons.inject.bind.AbstractBindModule
 import org.openurp.trims.action._
 import org.openurp.trims.service.impl._
 import org.openurp.teach.code.service.internal.BaseCodeServiceImpl
+import org.openurp.trims.security.DaoUserStore
 
 class DefaultModule2 extends AbstractBindModule {
 

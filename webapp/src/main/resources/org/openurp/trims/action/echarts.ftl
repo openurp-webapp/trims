@@ -38,6 +38,7 @@
                 ],
                 yAxis : [
                     {
+                        scale:true,
                         [#if yname != '']name : '${yname}',[/#if]
                         type : 'value'
                     }
