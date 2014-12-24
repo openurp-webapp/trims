@@ -103,3 +103,5 @@
 <div style="padding:100px; font-size:20px; text-align:center">暂无数据</div>
 [/#if]
 [/#macro]
+
+[#macro beginAndEnd][#if beginYear?? && beginYear!=""]${beginYear}年[/#if][#if endYear?? && endYear!="" && ((beginYear!) != endYear)][#if beginYear?? && beginYear!=""]到[/#if]${endYear}年[/#if][/#macro]
