@@ -12,20 +12,20 @@
 
 <table class="gridtable">
   <tr>
-    <th>学年学期</th>
-    <th>课程代码</th>
-    <th>课程名称</th>
-    <th>教学任务</th>
-    <th>课程类别</th>
-    <th>期末成绩及格率</th>
-    <th>期末总评及格率</th>
+    <th width="10%">学年学期</th>
+    <th width="10%">课程代码</th>
+    <th width="15%">课程名称</th>
+    <th width="30%">面向学生</th>
+    <th width="15%">课程类别</th>
+    <th width="10%">期末成绩及格率</th>
+    <th width="10%">期末总评及格率</th>
   </tr>
   [#list lessons as lesson]
     <tr>
       <td>${lesson.semester.schoolYear}-${lesson.semester.name}</td>
       <td>${lesson.course.code}</td>
       <td>${lesson.course.name}</td>
-      <td>${(lesson.teachClass.fullName)!}</td>
+      <td>${(lesson.teachClass.fullname)!}</td>
       <td>${lesson.courseType.name}</td>
       <td>${((examGradesMap["" + lesson.id + 1]/examTotalMap[""+lesson.id])?string.percent)!}</td>
       <td>${((gaGradesMap["" + lesson.id + 1]/gaTotalMap[""+lesson.id])?string.percent)!}</td>

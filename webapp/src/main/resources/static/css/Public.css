@@ -1,0 +1,187 @@
+body
+{
+	margin: 0px;
+	background-color: #EDF4F8
+}
+select
+{
+	font-size: 13px;
+}
+br
+{
+	font-size: 13px;
+}
+div
+{
+	font-size: 13px;
+}
+input
+{
+	font-size: 13px;
+}
+textarea
+{
+	font-size: 13px;
+}
+table
+{
+	font-size: 13px;
+}
+.hasMargin
+{
+	margin: 5px;
+}
+.LargerText
+{
+	font-size: 16px
+}
+.HeadText
+{
+	font-size: 18px
+}
+.NormalText
+{
+	font-size: 13px
+}
+
+.TailText
+{
+	font-size: 13px;
+	line-height: 20px;
+}
+
+.MenuText
+{
+	font-size: 13px;
+	line-height: 24px;
+}
+
+
+a.CompanyUrl:link
+{
+	color: #000000;
+	text-decoration: none
+}
+a.CompanyUrl:visited
+{
+	color: #000000;
+	text-decoration: none
+}
+a.CompanyUrl:active
+{
+	color: #000000;
+	text-decoration: none
+}
+a.CompanyUrl:hover
+{
+	color: #ff9900;
+	text-decoration: none
+}
+
+a:link
+{
+	color: #1100ff;
+	text-decoration: underline
+}
+a:visited
+{
+	color: #444444;
+	text-decoration: underline
+}
+a:active
+{
+	color: #f78009;
+	text-decoration: none
+}
+a:hover
+{
+	color: #ff9900;
+	text-decoration: underline
+}
+
+.thinGroove
+{
+	border: thin groove;
+	font-size: 13px;
+	padding: 4px;
+	margin:  5px;
+}
+.Width100Percent
+{
+	width: 100%;
+}
+
+
+.TableNormal
+{
+	border-collapse:	collapse;
+	line-height:		24px;
+}
+.TableHighLight
+{
+	border-collapse:	collapse;
+	line-height:		24px;
+	table-layout:		fixed;
+}
+.TrHead
+{
+	background-color:	#489cd4;
+	color:				#000000;
+}
+.TrNormal
+{
+	background-color: #ffffff;
+	word-wrap:		break-word;
+	word-break:		break-all;
+}
+.TrHighlight
+{
+	background-color: #eeeeee;
+}
+.TrSelected
+{
+	background-color: #B8D6FF;
+}
+.TrPaginate
+{
+	background-color: #dddddd;
+}
+
+
+.CountText
+{
+	color: #5a8dc2;
+}
+.HighlightText
+{
+	color:	#ff0000;
+}
+
+.SelectTop
+{
+	color: #0000ff;
+}
+
+.FlatInput
+{
+	font-size: 13px;
+	background-color: #eeeeee;
+	border: #666666 solid 1px;
+}
+
+.EditMask
+{
+	font-size	: 12px;
+}
+.FormTable
+{
+	background-color: #e6e6e6;
+}
+.SearchTable
+{
+}
+
+.ReadOnlyInput
+{
+	background: #eeeeee;
+}

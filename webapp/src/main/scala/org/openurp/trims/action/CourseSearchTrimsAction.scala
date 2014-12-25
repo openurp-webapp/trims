@@ -50,6 +50,7 @@ class CourseSearchTrimsAction extends AbsEamsAction[Course] {
     //    super.search()
     val project = getProject()
     val entityQuery = OqlBuilder.from(classOf[Course], "course")
+    entityQuery.where("course.enabled=true")
     QueryHelper.populateConditions(entityQuery)
     put("courses", entityDao.search(getQueryBuilder()))
     put("courseHourTypes", baseCodeService.getCodes(project, classOf[CourseHourType]))

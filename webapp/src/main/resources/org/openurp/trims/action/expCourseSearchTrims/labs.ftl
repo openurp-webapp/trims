@@ -6,7 +6,7 @@
 <table class="TableNormal" border='1' cellPadding='1' cellSpacing='0' bordercolor='#666666' width="100%" align='center'>
   <tr class='TrHead'>
 	<td align='center' nowrap width="60%">实验室（实习基地）名称</td>
-	<td align='center' nowrap width="40%">所属学院（系）</td>
+	<td align='center' nowrap width="40%">所属院系（系）</td>
   </tr>
   <#list labs! as lab>
   <tr class='TrNormal'>

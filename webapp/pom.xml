@@ -23,6 +23,15 @@
       <version>0.0.2-SNAPSHOT</version>
     </dependency>
     <dependency>
+      <groupId>org.openurp.platform.security</groupId>
+      <artifactId>openurp-platform-security-user</artifactId>
+      <version>0.0.2-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>org.beangle.security</groupId>
+      <artifactId>beangle-security-cas</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.openurp.teach</groupId>
       <artifactId>openurp-teach-core</artifactId>
       <version>${project.version}</version>
@@ -36,6 +45,11 @@
       <groupId>org.openurp.base</groupId>
       <artifactId>openurp-base-model</artifactId>
       <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.openurp.app</groupId>
+      <artifactId>teach-home</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
     </dependency>
   </dependencies>
 </project>

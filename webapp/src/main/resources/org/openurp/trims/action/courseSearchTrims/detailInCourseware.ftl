@@ -12,7 +12,7 @@
 	  <@table.td id="courseware.course.name" text="适用课程" width="20%"/>
 	  <@table.td id="courseware.type" text="文件类型" width="10%"/>
 	  <@table.td id="courseware.developer" text="开发者" width="15%"/>
-	  <@table.td id="courseware.department.name" text="学院" width="15%"/>
+	  <@table.td id="courseware.department.name" text="院系" width="15%"/>
 	</@>
 	<@table.tbody datas=coursewares!;courseware>
 	  <td style="word-wrap:break-word;word-break:break-all;"><a href="${base}/coursewareSearchTrims.action?method=download&courseware.id=${courseware.id!}">${(courseware.seqNo)!}</a></td>

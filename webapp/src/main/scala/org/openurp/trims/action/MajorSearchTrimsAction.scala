@@ -10,6 +10,8 @@ import org.beangle.webmvc.entity.helper.QueryHelper
 import javax.security.auth.Subject
 import org.openurp.teach.code.service.BaseCodeService
 import scala.collection.mutable.ListBuffer
+import org.openurp.teach.core.States
+import org.openurp.teach.core.Direction
 
 class MajorSearchTrimsAction extends AbsEamsAction[Major] {
 
@@ -27,32 +29,23 @@ class MajorSearchTrimsAction extends AbsEamsAction[Major] {
    * @return
    */
   def majorsOfSchool(): String = {
-
-    val hql = new StringBuilder()
-    hql
-      .append("select distinct plan.program.department, plan.program.major, majorField\n")
-      .append(" from " + classOf[MajorPlan].getName() + " plan \n")
-      .append(
-        " left outer join plan.majorField majorField where plan.isConfirm=true\n")
-      .append(
-        " order by plan.department.code, major.code, majorField.code desc")
-    val res = entityDao.search(OqlBuilder.oql[Department](hql.toString()))
+    val query = OqlBuilder.from(classOf[MajorPlan],"plan")
+    query.orderBy("plan.program.department.code, plan.program.major.code, plan.program.direction.code")
+    val res = entityDao .search(query)
     val departMajorFieldMap = new collection.mutable.HashMap[String, ListBuffer[Object]]
     for (i <- 0 until res.size) {
-      val data = res(i).asInstanceOf[Array[Any]]
-      val depart = data(0).asInstanceOf[Department]
-      val major = data(1).asInstanceOf[Major]
-      //val majorField =data(2).asInstanceOf[MajorField]
-      val majorField = null
+      val data = res(i)
+      val depart =data.program.department
+      val major = data.program.major
+      val direction =data.program.direction
       if (departMajorFieldMap.get(depart.code) == null) {
         departMajorFieldMap.put(depart.code, new ListBuffer[Object])
       }
-      departMajorFieldMap.get(depart.code).get ++= Array(depart, major, majorField)
+      departMajorFieldMap.get(depart.code).get ++= Array(depart, major, direction)
     }
-
     put("departMajorFieldMap", departMajorFieldMap)
     put("sum", res.size)
-    put("type", get("type"))
+    put("type", get("type").get)
     forward()
   }
 

@@ -63,7 +63,7 @@
 	</td>
   </tr>
   <tr class='TrNormal'>
-	<td align="center" width="90" nowrap class="TdLabel">开课学院</td>
+	<td align="center" width="90" nowrap class="TdLabel">开课院系</td>
 	<td nowrap class="TdContent" colspan="3">&nbsp;${(course.extInfo.department.name)!}</td>
   </tr>
 
@@ -91,7 +91,7 @@
   <tr class="TrNormal">
 	<td class="TdLabel" align="center" nowrap="nowrap" width="90">任课教师</td>
 	<td class="TdContent" width="50%" colspan="3">
-		&nbsp;<#list teachers as t><#if t_index gt 0>、</#if>${t.name}</#list>
+		&nbsp;<#list teachers as t><#if t_index gt 0>、</#if>${(t.person.name)!t.id}</#list>
 	</td>
   </tr>
   <tr class="TrNormal">

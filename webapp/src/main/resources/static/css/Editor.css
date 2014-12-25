@@ -1,0 +1,146 @@
+body
+{
+	border:	0px;
+	margin: 0px;
+	background-color: #d4d0c8;
+}
+select
+{
+	font: 12px ËÎÌו;
+}
+table
+{
+	position: relative
+}
+
+.button
+{
+	font: 14px Tahoma, Arial Black;
+	background-color: #f8dc98;
+	color: #437180;
+	border: 1px solid #b97a45;
+}
+.Gen
+{
+	position: relative
+}
+.Heading
+{
+}
+.Composition
+{
+	position: relative;
+	background-color: #d4d0c8;
+	font: 14px ËÎÌו;
+	width: 100%;
+	height: 100%;
+}
+.yToolbar
+{
+	position: relative;
+	background-color: #d4d0c8;
+	border-bottom: #808080	1px solid;
+	border-left: #ffffff 1px solid;
+	border-right: #808080 1px solid;
+	border-top:	#ffffff	1px solid;
+	left: 0px;
+	top: 0px;
+	height: 27px;
+}
+
+.Btn
+{
+	position: absolute;
+	background-color: #d4d0c8;
+	border:	#d4d0c8 1px solid;
+	top: 1px;
+	width: 23px;
+	height: 23px;
+}
+.Ico
+{
+	position: absolute;
+	left: -1px;
+	top: -1px;
+	width: 22px;
+	height: 22px;
+}
+.TBSep
+{
+	position: absolute;
+	border-left: #808080 1px solid;
+	border-right: #ffffff 1px solid;
+	font-size: 0px;
+	top: 1px;
+	width:1px;
+	height: 22px;
+}
+.TBGen
+{
+	position: absolute;
+	font: 14px arial,sans-serif;
+	top: 2px;
+	height: 22px;
+}
+.TBInput
+{
+	font: 14px arial,sans-serif;
+	height: 18px;
+	top: 2px;
+}
+.TBHandle
+{
+	position: absolute;
+	background-color: #d4d0c8;
+	border-left: #ffffff 1px solid;
+	border-right: #808080 1px solid;
+	border-top:	#ffffff	1px solid;
+	top: 1px;
+	width: 3px;
+	height: 22px;
+	font-size: 1px;
+}
+.BtnMouseOverUp
+{
+	position: absolute;
+	background-color: #b5bed6;
+	border:	#08246b	1px solid;
+	top: 1px;
+	width: 24px;
+	height: 23px;
+}
+.BtnMouseOverDown
+{
+	position: absolute;
+	background-color: #8492b5;
+	border: #08246b 1px solid;
+	top: 1px;
+	width: 24px;
+	height: 23px;
+}
+.BtnDown
+{
+	position: absolute;
+	background-color: #dcdcdc;
+	border-bottom: #ffffff 1px solid;
+	border-left: #808080 1px solid;
+	border-right: #ffffff 1px solid;
+	border-top:	#808080 1px solid;
+	top: 1px;
+	width: 24px;
+	height: 23px;
+}
+.IcoDown
+{
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 24px;
+	height: 23px;
+}
+.IcoDownPressed
+{
+	position: absolute;
+	left: 1px;
+	top: 1px;
+}
