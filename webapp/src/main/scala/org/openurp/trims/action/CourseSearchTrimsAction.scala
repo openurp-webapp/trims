@@ -18,7 +18,7 @@ import org.beangle.commons.collection.Order
 import org.openurp.teach.plan.PlanCourse
 import org.openurp.teach.plan.CoursePlan
 import org.openurp.teach.plan.MajorPlan
-import org.openurp.base.Teacher
+import org.openurp.edu.base.Teacher
 import org.openurp.trims.service.CecService
 
 class CourseSearchTrimsAction extends AbsEamsAction[Course] {

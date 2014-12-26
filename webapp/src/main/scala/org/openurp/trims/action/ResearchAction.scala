@@ -3,7 +3,7 @@ package org.openurp.trims.action
 import org.beangle.webmvc.api.annotation.mapping
 import org.beangle.webmvc.api.annotation.param
 import org.beangle.data.jpa.dao.SqlBuilder
-import org.openurp.base.Teacher
+import org.openurp.edu.base.Teacher
 
 class ResearchAction extends AbsEamsAction {
 
