@@ -31,10 +31,10 @@ class PeriodStatisticsAction extends  RestfulAction[Lesson]{
     val sql = """select num * 10, count(*) from
 		(select t.teacher_id, cast(avg(num) / 10 as int) num from 
 		(select  lt.teacher_id,s.school_year, s.name, sum(c.period) num
-		from teach.lessons l 
-		join teach.lessons_teachers lt on lt.lesson_id=l.id 
+		from edu_teach.lessons l 
+		join edu_teach.lessons_teachers lt on lt.lesson_id=l.id 
 		join base.semesters s on l.semester_id = s.id 
-		join teach.courses c on c.id = l.course_id where 1=1 """ + 
+		join edu_teach.courses c on c.id = l.course_id where 1=1 """ + 
 		(if(year.isDefined && Strings.isNotBlank(year.get))s" and s.school_year = '${year.get}'"else"")+
 		(if(term.isDefined && Strings.isNotBlank(term.get))s" and s.name = '${term.get}'"else"")+
 		(if(departmentId.isDefined)s" and l.teach_depart_id = '${departmentId.get}'"else"")+
@@ -61,13 +61,13 @@ class PeriodStatisticsAction extends  RestfulAction[Lesson]{
     val term = get("term")
     val departmentId = getInt("departmentId")
     val sql="""	select  p.name p_name,s.school_year, s.name s_name, sum(c.period) num, d.name d_name
-		from teach.lessons l 
-		join teach.lessons_teachers lt on lt.lesson_id=l.id 
+		from edu_teach.lessons l 
+		join edu_teach.lessons_teachers lt on lt.lesson_id=l.id 
 		join base.semesters s on l.semester_id = s.id 
-		join base.teachers t on t.id = lt.teacher_id
+		join edu_base.teachers t on t.id = lt.teacher_id
 		join base.people p on p.id=t.person_id
 		join base.departments d on d.id=p.department_id
-		join teach.courses c on c.id = l.course_id where 1=1"""+  
+		join edu_teach.courses c on c.id = l.course_id where 1=1"""+  
 		(if(year.isDefined && Strings.isNotBlank(year.get))s" and s.school_year = '${year.get}'"else"")+
 		(if(term.isDefined && Strings.isNotBlank(term.get))s" and s.name = '${term.get}'"else"")+
 		(if(departmentId.isDefined)s" and l.teach_depart_id = '${departmentId.get}'"else"")+

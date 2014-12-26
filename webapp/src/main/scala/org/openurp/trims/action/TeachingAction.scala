@@ -50,10 +50,10 @@ class TeachingAction extends RestfulAction[Teacher] {
     val teacher = entityDao.get(classOf[Teacher], new Integer(id))
     put(shortName, teacher)
     val sql = s"""select  s.code, sum(c.period)
-			from teach.lessons l 
-			join teach.lessons_teachers lt on lt.lesson_id=l.id 
+			from edu_teach.lessons l 
+			join edu_teach.lessons_teachers lt on lt.lesson_id=l.id 
 			join base.semesters s on l.semester_id = s.id 
-			join teach.courses c on c.id = l.course_id
+			join edu_teach.courses c on c.id = l.course_id
 			where lt.teacher_id = ${id} 
 			group by s.code
     		order by s.code"""
@@ -79,7 +79,7 @@ class TeachingAction extends RestfulAction[Teacher] {
 
   private def getSchoolYears(id: String): Seq[Any] = {
     val sql = s"""select s.school_year, count(*)
-		from teach.lessons l join teach.lessons_teachers lt on l.id = lt.lesson_id 
+		from edu_teach.lessons l join edu_teach.lessons_teachers lt on l.id = lt.lesson_id 
 		join base.semesters s on l.semester_id = s.id
 		where lt.teacher_id = ${id}
 		group by s.school_year
@@ -106,11 +106,11 @@ class TeachingAction extends RestfulAction[Teacher] {
 			(select l.id, case 
 			when cg.score>=60 then 1
 			else 0 end  score
-			from teach.course_grades cg
-			join teach.exam_grades eg on eg.course_grade_id = cg.id and eg.grade_type_id=2
-			join teach.lessons l on cg.lesson_id=l.id
+			from edu_teach.course_grades cg
+			join edu_teach.exam_grades eg on eg.course_grade_id = cg.id and eg.grade_type_id=2
+			join edu_teach.lessons l on cg.lesson_id=l.id
     		join base.semesters s on l.semester_id = s.id
-			join teach.lessons_teachers lt on lt.lesson_id = l.id
+			join edu_teach.lessons_teachers lt on lt.lesson_id = l.id
 			where lt.teacher_id=${id} and s.school_year='${curYear}'
 			 ) t group by id,score"""
     val query = SqlBuilder.sql(sql)
@@ -126,11 +126,11 @@ class TeachingAction extends RestfulAction[Teacher] {
 			(select l.id, case 
 			when cg.score>=60 then 1
 			else 0 end  score
-			from teach.course_grades cg
-			join teach.ga_grades gg on gg.course_grade_id = cg.id and gg.grade_type_id=7
-			join teach.lessons l on cg.lesson_id=l.id
+			from edu_teach.course_grades cg
+			join edu_teach.ga_grades gg on gg.course_grade_id = cg.id and gg.grade_type_id=7
+			join edu_teach.lessons l on cg.lesson_id=l.id
     		join base.semesters s on l.semester_id = s.id
-			join teach.lessons_teachers lt on lt.lesson_id = l.id
+			join edu_teach.lessons_teachers lt on lt.lesson_id = l.id
 			where lt.teacher_id=${id} and s.school_year='${curYear}'
 			 ) t group by id,score"""
     val query = SqlBuilder.sql(sql)
@@ -171,11 +171,11 @@ class TeachingAction extends RestfulAction[Teacher] {
   @mapping(value = "quality/{id}")
   def quality(@param("id") id: String): String = {
     val sql = s"""select s.school_year, c.id, c.name, q.score
-    from quality.lesson_questionnaire_stats q
-    join teach.lessons l on l.id = q.lesson_id
-    join teach.courses c on c.id = l.course_id
+    from edu_quality.lesson_questionnaire_stats q
+    join edu_teach.lessons l on l.id = q.lesson_id
+    join edu_teach.courses c on c.id = l.course_id
     join base.semesters s on s.id = l.semester_id 
-    join teach.lessons_teachers lt on l.id = lt.lesson_id 
+    join edu_teach.lessons_teachers lt on l.id = lt.lesson_id 
     where lt.teacher_id=${id}"""
     val query = SqlBuilder.sql(sql)
     val datas = entityDao.search(query)
@@ -218,10 +218,10 @@ class TeachingAction extends RestfulAction[Teacher] {
     lesson(id)
     val curYear = request.getAttribute("curYear")
     val sql = s"""select q.lesson_id,q.score
-		from quality.lesson_questionnaire_stats q
-		join teach.lessons l on l.id = q.lesson_id
+		from edu_quality.lesson_questionnaire_stats q
+		join edu_teach.lessons l on l.id = q.lesson_id
 		join base.semesters s on s.id = l.semester_id 
-		join teach.lessons_teachers lt on l.id = lt.lesson_id 
+		join edu_teach.lessons_teachers lt on l.id = lt.lesson_id 
 		where lt.teacher_id=${id} and s.school_year='${curYear}'"""
     val query = SqlBuilder.sql(sql)
     val datas = entityDao.search(query)
