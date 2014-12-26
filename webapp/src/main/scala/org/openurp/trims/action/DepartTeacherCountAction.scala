@@ -13,7 +13,7 @@ class DepartTeacherCountAction extends RestfulAction[Teacher]{
 
   def list(): String = {
     val sql = """select t.department_id,count(*)
-		from base.teachers t
+		from edu_base.teachers t
     	where t.teaching=true
 		group by t.department_id
 		order by count(*) desc"""

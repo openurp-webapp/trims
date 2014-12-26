@@ -23,11 +23,11 @@ class TitlePeriodCountAction extends AbsEamsAction {
     val sql = """select b.title_id,cast(avg(num) as int) num from
 		(select a.teacher_id,a.title_id,cast(avg(num) as int) num from 
 		(select lt.teacher_id,t.title_id, sum(c.period) num
-		from teach.lessons l 
-		join teach.lessons_teachers lt on lt.lesson_id=l.id
+		from edu_teach.lessons l 
+		join edu_teach.lessons_teachers lt on lt.lesson_id=l.id
 		join base.semesters s on l.semester_id = s.id 
-		join teach.courses c on c.id = l.course_id
-		join base.teachers t on t.id =  lt.teacher_id
+		join edu_teach.courses c on c.id = l.course_id
+		join edu_base.teachers t on t.id =  lt.teacher_id
 		group by lt.teacher_id,t.title_id,s.id)a
 		group by a.title_id,a.teacher_id)b
 		group by b.title_id
@@ -50,11 +50,11 @@ class TitlePeriodCountAction extends AbsEamsAction {
     val sql = s"""select b.department_id,cast(avg(num) as int) num from 
 		(select a.department_id,a.teacher_id,cast(avg(num) as int) num from 
 		(select t.department_id,lt.teacher_id, sum(c.period) num
-		from teach.lessons l 
-		join teach.lessons_teachers lt on lt.lesson_id=l.id
+		from edu_teach.lessons l 
+		join edu_teach.lessons_teachers lt on lt.lesson_id=l.id
 		join base.semesters s on l.semester_id = s.id 
-		join teach.courses c on c.id = l.course_id
-		join base.teachers t on t.id =  lt.teacher_id
+		join edu_teach.courses c on c.id = l.course_id
+		join edu_base.teachers t on t.id =  lt.teacher_id
 		join base.departments d on d.id = t.department_id
 		where """ +
       (if (tid == 0) { "t.title_id is null" } else { "t.title_id=" + tid }) +
@@ -77,11 +77,11 @@ class TitlePeriodCountAction extends AbsEamsAction {
     val did = getInt("did").get
     val sql = s"""select a.p_name,cast(avg(num) as int) num from 
 		(select p.name p_name,lt.teacher_id,s.school_year,s.name, sum(c.period) num
-		from teach.lessons l 
-		join teach.lessons_teachers lt on lt.lesson_id=l.id
+		from edu_teach.lessons l 
+		join edu_teach.lessons_teachers lt on lt.lesson_id=l.id
 		join base.semesters s on l.semester_id = s.id 
-		join teach.courses c on c.id = l.course_id
-		join base.teachers t on t.id =  lt.teacher_id
+		join edu_teach.courses c on c.id = l.course_id
+		join edu_base.teachers t on t.id =  lt.teacher_id
 		join base.people p on t.person_id = p.id
 		where """ +
       (if (tid == 0) "t.title_id is null" else "t.title_id=" + tid) +
