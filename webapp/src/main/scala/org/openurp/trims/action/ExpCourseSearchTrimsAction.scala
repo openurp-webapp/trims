@@ -21,11 +21,11 @@ class ExpCourseSearchTrimsAction extends CourseSearchTrimsAction {
     val departs = entityDao.search(query)
     put("departments", departs)
     val project = getProject()
-    put("stdTypes", baseCodeService.getCodes(project, classOf[StdType]))
-    put("examModes", baseCodeService.getCodes(project, classOf[ExamMode]))
-    put("educationTypes", baseCodeService.getCodes(project, classOf[Education]))
-    put("categorys", baseCodeService.getCodes(project, classOf[CourseCategory]))
-    put("courseHourTypes", baseCodeService.getCodes(project, classOf[CourseHourType]))
+    put("stdTypes", getCodes(project, classOf[StdType]))
+    put("examModes", getCodes(project, classOf[ExamMode]))
+    put("educationTypes", getCodes(project, classOf[Education]))
+    put("categorys", getCodes(project, classOf[CourseCategory]))
+    put("courseHourTypes", getCodes(project, classOf[CourseHourType]))
     forward()
   }
 
