@@ -4,7 +4,7 @@ import org.beangle.data.jpa.dao.OqlBuilder
 import org.openurp.base.Department
 import org.beangle.commons.lang.Strings
 import org.openurp.teach.lesson.Lesson
-import org.openurp.base.Teacher
+import org.openurp.edu.base.Teacher
 import org.openurp.base.code.TeacherTitle
 
 class TeacherTitleAction extends AbsEamsAction{

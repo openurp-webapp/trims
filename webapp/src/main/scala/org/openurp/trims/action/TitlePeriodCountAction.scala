@@ -4,7 +4,7 @@ import org.beangle.data.jpa.dao.SqlBuilder
 import org.openurp.base.code.TeacherTitle
 import ch.qos.logback.classic.db.SQLBuilder
 import org.beangle.data.jpa.dao.OqlBuilder
-import org.openurp.base.Teacher
+import org.openurp.edu.base.Teacher
 import org.openurp.base.Department
 /**
  * 按职称对课时统计
