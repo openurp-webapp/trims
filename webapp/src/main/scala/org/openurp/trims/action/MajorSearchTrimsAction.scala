@@ -1,17 +1,17 @@
 package org.openurp.trims.action
 
-import org.openurp.teach.core.Major
+import org.openurp.edu.base.Major
 import scala.collection.immutable.TreeMap
 import org.beangle.data.jpa.dao.OqlBuilder
-import org.openurp.teach.plan.MajorPlan
-import org.openurp.teach.core.Major
+import org.openurp.edu.teach.plan.MajorPlan
+import org.openurp.edu.base.Major
 import org.openurp.base.Department
 import org.beangle.webmvc.entity.helper.QueryHelper
 import javax.security.auth.Subject
-import org.openurp.teach.code.service.BaseCodeService
+import org.openurp.edu.base.code.service.BaseCodeService
 import scala.collection.mutable.ListBuffer
-import org.openurp.teach.core.States
-import org.openurp.teach.core.Direction
+import org.openurp.edu.base.States
+import org.openurp.edu.base.Direction
 
 class MajorSearchTrimsAction extends AbsEamsAction[Major] {
 

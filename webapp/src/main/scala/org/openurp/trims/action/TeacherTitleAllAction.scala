@@ -3,10 +3,10 @@ package org.openurp.trims.action
 import org.beangle.data.jpa.dao.OqlBuilder
 import org.openurp.base.Department
 import org.beangle.commons.lang.Strings
-import org.openurp.teach.lesson.Lesson
+import org.openurp.edu.teach.lesson.Lesson
 import org.openurp.edu.base.Teacher
-import org.openurp.base.code.TeacherTitle
 import scala.collection.mutable.ListBuffer
+import org.openurp.base.code.ProfessionalTitle
 
 class TeacherTitleAllAction extends AbsEamsAction {
 
@@ -22,7 +22,7 @@ class TeacherTitleAllAction extends AbsEamsAction {
     query.orderBy("count(*) desc")
     val datas = entityDao.search(query).asInstanceOf[Seq[Array[Any]]]
     val departs = getDepartments()
-    val titles = entityDao.getAll(classOf[TeacherTitle])
+    val titles = entityDao.getAll(classOf[ProfessionalTitle])
     val ititles = new collection.mutable.HashSet[String]
     val names = new ListBuffer[String]
     departs.foreach(d => names += (if (d.shortName != null) d.shortName else d.name))

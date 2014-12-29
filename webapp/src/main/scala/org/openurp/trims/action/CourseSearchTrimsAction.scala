@@ -1,23 +1,23 @@
 package org.openurp.trims.action
 
-import org.openurp.teach.core.Course
+import org.openurp.edu.teach.Course
 import org.beangle.webmvc.entity.action.RestfulAction
 import org.beangle.data.jpa.dao.OqlBuilder
 import org.openurp.base.Department
 import org.beangle.data.model.dao.Condition
-import org.openurp.teach.code.service.BaseCodeService
-import org.openurp.teach.code.StdType
-import org.openurp.teach.code.ExamMode
+import org.openurp.edu.base.code.service.BaseCodeService
+import org.openurp.edu.base.code.StdType
+import org.openurp.edu.teach.code.ExamMode
 import org.openurp.base.code.Education
-import org.openurp.teach.code.CourseCategory
-import org.openurp.teach.code.CourseHourType
+import org.openurp.edu.teach.code.CourseCategory
+import org.openurp.edu.teach.code.CourseHourType
 import org.beangle.webmvc.entity.helper.QueryHelper
 import org.beangle.commons.lang.Strings
-import org.openurp.teach.lesson.Lesson
+import org.openurp.edu.teach.lesson.Lesson
 import org.beangle.commons.collection.Order
-import org.openurp.teach.plan.PlanCourse
-import org.openurp.teach.plan.CoursePlan
-import org.openurp.teach.plan.MajorPlan
+import org.openurp.edu.teach.plan.PlanCourse
+import org.openurp.edu.teach.plan.CoursePlan
+import org.openurp.edu.teach.plan.MajorPlan
 import org.openurp.edu.base.Teacher
 import org.openurp.trims.service.CecService
 

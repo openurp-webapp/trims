@@ -1,7 +1,7 @@
 package org.openurp.trims.action
 
 import org.beangle.webmvc.entity.action.RestfulAction
-import org.openurp.teach.lesson.Lesson
+import org.openurp.edu.teach.lesson.Lesson
 import org.beangle.data.jpa.dao.OqlBuilder
 import org.beangle.commons.lang.Strings
 import org.openurp.base.Department

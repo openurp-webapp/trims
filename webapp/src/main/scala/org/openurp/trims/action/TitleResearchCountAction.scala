@@ -4,7 +4,7 @@ import org.beangle.data.jpa.dao.SqlBuilder
 import scala.collection.mutable.ListBuffer
 import java.util.Calendar
 import org.beangle.commons.lang.Strings
-import org.openurp.base.code.TeacherTitle
+import org.openurp.base.code.ProfessionalTitle
 
 class TitleResearchCountAction extends AbsEamsAction {
 
@@ -31,7 +31,7 @@ class TitleResearchCountAction extends AbsEamsAction {
     val query = SqlBuilder.sql(sql)
     val thesises = entityDao.search(query)
     val map = new collection.mutable.HashMap[String, String]
-    entityDao.getAll(classOf[TeacherTitle]).foreach( d => {
+    entityDao.getAll(classOf[ProfessionalTitle]).foreach( d => {
       map.put(d.id.toString(), d.name)
     })
     putNamesAndValues(thesises, data => map.get(data(0)+"").getOrElse("无职称"))
@@ -56,7 +56,7 @@ class TitleResearchCountAction extends AbsEamsAction {
     val query = SqlBuilder.sql(sql)
     val literatures = entityDao.search(query)
     val map = new collection.mutable.HashMap[String, String]
-    entityDao.getAll(classOf[TeacherTitle]).foreach( d => {
+    entityDao.getAll(classOf[ProfessionalTitle]).foreach( d => {
       map.put(d.id.toString(), d.name)
     })
     putNamesAndValues(literatures, data => map.get(data(0)+"").getOrElse("无职称"))

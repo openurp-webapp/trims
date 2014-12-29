@@ -3,9 +3,10 @@ package org.openurp.trims.action
 import org.beangle.data.jpa.dao.OqlBuilder
 import org.openurp.base.Department
 import org.beangle.commons.lang.Strings
-import org.openurp.teach.lesson.Lesson
+import org.openurp.edu.teach.lesson.Lesson
 import org.openurp.edu.base.Teacher
-import org.openurp.base.code.TeacherTitle
+import org.openurp.base.code.ProfessionalTitle
+//import org.openurp.edu.base.code.TeacherTitle
 
 class TeacherTitleAction extends AbsEamsAction{
 
@@ -22,7 +23,7 @@ class TeacherTitleAction extends AbsEamsAction{
     query.orderBy("count(*) desc")
     val datas = entityDao.search(query)
     val map = new collection.mutable.HashMap[String, String]
-    entityDao.getAll(classOf[TeacherTitle]).foreach( d => {
+    entityDao.getAll(classOf[ProfessionalTitle]).foreach( d => {
       map.put(d.id.toString(), d.name)
     })
     putNamesAndValues(datas, data => map.get(data(0)+"").getOrElse("无职称"))
@@ -31,7 +32,7 @@ class TeacherTitleAction extends AbsEamsAction{
   
   def department():String = {
     val tid = getInt("tid").get
-    val title = entityDao.get(classOf[TeacherTitle], new Integer(tid))
+    val title = entityDao.get(classOf[ProfessionalTitle], new Integer(tid))
     val query = OqlBuilder.from(classOf[Teacher], "l")
     query.select("l.department.id, count(*) as num")
     query.where("l.teaching = true")
