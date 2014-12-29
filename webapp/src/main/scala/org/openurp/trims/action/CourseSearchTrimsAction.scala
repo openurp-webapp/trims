@@ -207,10 +207,4 @@ class CourseSearchTrimsAction extends AbsEamsAction[Course] {
     return forward()
   }
 
-  protected def getCodes[T <: BaseCode](project: Project, clazz: Class[T]): Seq[T] = {
-    val query = OqlBuilder.from(clazz, "code").where("code.beginOn <=:now and (code.endOn is null or code.endOn >=:now)", new java.util.Date)
-    query.orderBy("code.code")
-    entityDao.search(query)
-  }
-
 }
