@@ -1,22 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans>
 
-  <bean id="org.beangle.security.realm.cas.vendor.NeusoftCasTicketValidator" class="org.beangle.security.realm.cas.TicketValidator" primary="true"/>
+  <bean id="security.TicketValidator.neusoft" class="org.beangle.security.realm.cas.TicketValidator" primary="true"/>
 
-  <bean id="security.Authenticator.realm">
-    <constructor-arg>
-     <list>
-       <ref bean="org.beangle.security.realm.cas.DefaultCasRealm"/>
-     </list>
-    </constructor-arg>
-  </bean>
-
-  <bean id="org.beangle.security.realm.cas.CasEntryPoint" class="org.beangle.security.web.EntryPoint"  primary="true"/>
+  <bean id="security.EntryPoint.cas" class="org.beangle.security.web.EntryPoint"  primary="true"/>
   
     <bean id="web.Interceptor.security">
       <constructor-arg >
         <list>
-<ref bean="org.beangle.security.realm.cas.CasPreauthFilter"/>
+<ref bean="security.Filter.cas"/>
 <ref bean="security.Filter.authorization"/>
         </list>
       </constructor-arg>
@@ -28,7 +20,7 @@
   <bean id="security.Authenticator.realm">
     <constructor-arg>
      <list>
-       <ref bean="org.beangle.security.realm.cas.DefaultCasRealm"/>
+       <ref bean="security.Realm.cas"/>
      </list>
     </constructor-arg>
   </bean>
