@@ -22,7 +22,8 @@ class CourseTakeReStudyAction extends AbsEamsAction[CourseTake] {
   }
 
   def department(): String = {
-    val semester = entityDao.get(classOf[Semester], new Integer(getInt("semesterId").get))
+    val code = get("semesterId").get
+    val semester = entityDao.findBy(classOf[Semester], "code", Array(code))(0)
     val query = OqlBuilder.from(classOf[CourseTake], "ct")
     query.select("ct.std.department.id, count(*) as num")
     query.where("ct.semester.id=:sid", semester.id)
