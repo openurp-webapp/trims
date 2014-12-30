@@ -5,7 +5,6 @@ import org.beangle.webmvc.entity.action.RestfulAction
 import org.beangle.data.jpa.dao.OqlBuilder
 import org.openurp.base.Department
 import org.beangle.data.model.dao.Condition
-import org.openurp.edu.base.code.service.BaseCodeService
 import org.openurp.edu.base.code.StdType
 import org.openurp.edu.teach.code.ExamMode
 import org.openurp.base.code.Education
@@ -205,12 +204,6 @@ class CourseSearchTrimsAction extends AbsEamsAction[Course] {
     //    val coursewares = entityDao.load(classOf[Courseware], "course.id", courseid)   
     //    put("coursewares", coursewares)    
     return forward()
-  }
-
-  protected def getCodes[T <: BaseCode](project: Project, clazz: Class[T]): Seq[T] = {
-    val query = OqlBuilder.from(clazz, "code").where("code.beginOn <=:now and (code.endOn is null or code.endOn >=:now)", new java.util.Date)
-    query.orderBy("code.code")
-    entityDao.search(query)
   }
 
 }

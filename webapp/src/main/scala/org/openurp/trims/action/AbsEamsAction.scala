@@ -13,6 +13,7 @@ import org.beangle.commons.lang.Strings
 import org.beangle.data.jpa.dao.SqlBuilder
 import scala.collection.mutable.ListBuffer
 import java.util.Calendar
+import org.openurp.code.BaseCode
 
 abstract class AbsEamsAction[T <: Entity[_ <: java.io.Serializable]] extends AbstractEntityAction[T] {
 
@@ -25,7 +26,10 @@ abstract class AbsEamsAction[T <: Entity[_ <: java.io.Serializable]] extends Abs
   }
 
   protected def getAllDepartments() = {
-    entityDao.getAll(classOf[Department])
+    val query = OqlBuilder.from(classOf[Department])
+    query.orderBy("name")
+    entityDao .search(query)
+    
   }
 
   protected def getDepartmentMap() = {
@@ -99,6 +103,12 @@ abstract class AbsEamsAction[T <: Entity[_ <: java.io.Serializable]] extends Abs
       years += year
     }
     years
+  }
+
+  protected def getCodes[T <: BaseCode](project: Project, clazz: Class[T]): Seq[T] = {
+    val query = OqlBuilder.from(clazz, "code").where("code.beginOn <=:now and (code.endOn is null or code.endOn >=:now)", new java.util.Date)
+    query.orderBy("code.code")
+    entityDao.search(query)
   }
 
 }

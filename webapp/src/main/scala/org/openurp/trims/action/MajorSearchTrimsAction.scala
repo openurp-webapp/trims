@@ -8,14 +8,11 @@ import org.openurp.edu.base.Major
 import org.openurp.base.Department
 import org.beangle.webmvc.entity.helper.QueryHelper
 import javax.security.auth.Subject
-import org.openurp.edu.base.code.service.BaseCodeService
 import scala.collection.mutable.ListBuffer
 import org.openurp.edu.base.States
 import org.openurp.edu.base.Direction
 
 class MajorSearchTrimsAction extends AbsEamsAction[Major] {
-
-  var baseCodeService: BaseCodeService = _
 
   def index(): String = {
     //		val s :String=getSystemConfig().getItems().get("trims.url.nation_master")//获取全国硕博士点设置的后台维护
