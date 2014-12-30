@@ -5,7 +5,6 @@ import org.beangle.webmvc.entity.action.RestfulAction
 import org.beangle.data.jpa.dao.OqlBuilder
 import org.openurp.base.Department
 import org.beangle.data.model.dao.Condition
-import org.openurp.edu.base.code.service.BaseCodeService
 import org.openurp.edu.base.code.StdType
 import org.openurp.edu.teach.code.ExamMode
 import org.openurp.base.code.Education

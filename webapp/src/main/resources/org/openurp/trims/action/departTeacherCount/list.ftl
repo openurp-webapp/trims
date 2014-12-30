@@ -9,7 +9,7 @@
             var myChart = echarts.init(document.getElementById('departTeacherChart')); 
             
             var option = {
-                title: {text:'部门人数统计'},
+                title: {text:'任课教师人数统计'},
                 //renderAsImage:true,
                 tooltip: {
                     show: true
