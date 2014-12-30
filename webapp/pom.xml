@@ -12,9 +12,6 @@
   <packaging>war</packaging>
   <name>OpenURP TRIMS Webapp</name>
 
-  <properties>
-    <beangle.data.version>4.1.6</beangle.data.version>
-  </properties>
 
   <dependencies>
     <dependency>
@@ -35,11 +32,6 @@
       <groupId>org.openurp.edu.teach</groupId>
       <artifactId>openurp-edu-teach-model</artifactId>
       <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.beangle.data</groupId>
-      <artifactId>beangle-data-serializer</artifactId>
-      <version>4.1.8</version>
     </dependency>
     <dependency>
       <groupId>org.openurp.base</groupId>
