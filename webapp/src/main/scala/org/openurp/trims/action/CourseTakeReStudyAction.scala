@@ -1,8 +1,8 @@
 package org.openurp.trims.action
 
-import org.openurp.teach.lesson.CourseTake
+import org.openurp.edu.teach.lesson.CourseTake
 import org.beangle.data.jpa.dao.OqlBuilder
-import org.openurp.teach.code.CourseTakeType
+import org.openurp.edu.teach.code.CourseTakeType
 import org.openurp.base.Semester
 
 class CourseTakeReStudyAction extends AbsEamsAction[CourseTake] {
@@ -22,7 +22,8 @@ class CourseTakeReStudyAction extends AbsEamsAction[CourseTake] {
   }
 
   def department(): String = {
-    val semester = entityDao.get(classOf[Semester], new Integer(getInt("semesterId").get))
+    val code = get("semesterId").get
+    val semester = entityDao.findBy(classOf[Semester], "code", Array(code))(0)
     val query = OqlBuilder.from(classOf[CourseTake], "ct")
     query.select("ct.std.department.id, count(*) as num")
     query.where("ct.semester.id=:sid", semester.id)

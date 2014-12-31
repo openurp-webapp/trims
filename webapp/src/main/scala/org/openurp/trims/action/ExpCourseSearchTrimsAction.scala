@@ -3,11 +3,11 @@ package org.openurp.trims.action
 import org.beangle.data.jpa.dao.OqlBuilder
 import org.openurp.base.Department
 import com.sun.org.apache.bcel.internal.generic.ClassObserver
-import org.openurp.teach.code.StdType
-import org.openurp.teach.code.ExamMode
+import org.openurp.edu.base.code.StdType
+import org.openurp.edu.teach.code.ExamMode
 import org.openurp.base.code.Education
-import org.openurp.teach.code.CourseHourType
-import org.openurp.teach.code.CourseCategory
+import org.openurp.edu.teach.code.CourseHourType
+import org.openurp.edu.teach.code.CourseCategory
 
 class ExpCourseSearchTrimsAction extends CourseSearchTrimsAction {
 
@@ -21,11 +21,11 @@ class ExpCourseSearchTrimsAction extends CourseSearchTrimsAction {
     val departs = entityDao.search(query)
     put("departments", departs)
     val project = getProject()
-    put("stdTypes", baseCodeService.getCodes(project, classOf[StdType]))
-    put("examModes", baseCodeService.getCodes(project, classOf[ExamMode]))
-    put("educationTypes", baseCodeService.getCodes(project, classOf[Education]))
-    put("categorys", baseCodeService.getCodes(project, classOf[CourseCategory]))
-    put("courseHourTypes", baseCodeService.getCodes(project, classOf[CourseHourType]))
+    put("stdTypes", getCodes(project, classOf[StdType]))
+    put("examModes", getCodes(project, classOf[ExamMode]))
+    put("educationTypes", getCodes(project, classOf[Education]))
+    put("categorys", getCodes(project, classOf[CourseCategory]))
+    put("courseHourTypes", getCodes(project, classOf[CourseHourType]))
     forward()
   }
 

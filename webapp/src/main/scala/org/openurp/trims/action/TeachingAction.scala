@@ -6,9 +6,9 @@ import org.beangle.webmvc.api.annotation.mapping
 import org.beangle.webmvc.api.annotation.param
 import org.beangle.data.jpa.dao.SqlBuilder
 import org.beangle.data.model.dao.Query
-import org.openurp.teach.lesson.Lesson
+import org.openurp.edu.teach.lesson.Lesson
 import org.beangle.data.jpa.dao.OqlBuilder
-import org.openurp.teach.grade.CourseGrade
+import org.openurp.edu.teach.grade.CourseGrade
 import java.util.HashMap
 import scala.collection.mutable.ListBuffer
 

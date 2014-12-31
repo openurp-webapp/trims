@@ -1,29 +1,28 @@
 package org.openurp.trims.action
 
-import org.openurp.teach.core.Course
+import org.openurp.edu.teach.Course
 import org.beangle.webmvc.entity.action.RestfulAction
 import org.beangle.data.jpa.dao.OqlBuilder
 import org.openurp.base.Department
 import org.beangle.data.model.dao.Condition
-import org.openurp.teach.code.service.BaseCodeService
-import org.openurp.teach.code.StdType
-import org.openurp.teach.code.ExamMode
+import org.openurp.edu.base.code.StdType
+import org.openurp.edu.teach.code.ExamMode
 import org.openurp.base.code.Education
-import org.openurp.teach.code.CourseCategory
-import org.openurp.teach.code.CourseHourType
+import org.openurp.edu.teach.code.CourseCategory
+import org.openurp.edu.teach.code.CourseHourType
 import org.beangle.webmvc.entity.helper.QueryHelper
 import org.beangle.commons.lang.Strings
-import org.openurp.teach.lesson.Lesson
+import org.openurp.edu.teach.lesson.Lesson
 import org.beangle.commons.collection.Order
-import org.openurp.teach.plan.PlanCourse
-import org.openurp.teach.plan.CoursePlan
-import org.openurp.teach.plan.MajorPlan
+import org.openurp.edu.teach.plan.PlanCourse
+import org.openurp.edu.teach.plan.CoursePlan
+import org.openurp.edu.teach.plan.MajorPlan
 import org.openurp.edu.base.Teacher
 import org.openurp.trims.service.CecService
+import org.openurp.edu.base.Project
+import org.openurp.code.BaseCode
 
 class CourseSearchTrimsAction extends AbsEamsAction[Course] {
-
-  var baseCodeService: BaseCodeService = _
 
   var cecService: CecService = _
 
@@ -35,11 +34,11 @@ class CourseSearchTrimsAction extends AbsEamsAction[Course] {
     val departs = entityDao.search(query)
     put("departments", departs)
     val project = getProject()
-    put("stdTypes", baseCodeService.getCodes(project, classOf[StdType]))
-    put("examModes", baseCodeService.getCodes(project, classOf[ExamMode]))
-    put("educationTypes", baseCodeService.getCodes(project, classOf[Education]))
-    put("categorys", baseCodeService.getCodes(project, classOf[CourseCategory]))
-    put("courseHourTypes", baseCodeService.getCodes(project, classOf[CourseHourType]))
+    put("stdTypes", getCodes(project, classOf[StdType]))
+    put("examModes", getCodes(project, classOf[ExamMode]))
+    put("educationTypes", getCodes(project, classOf[Education]))
+    put("categorys", getCodes(project, classOf[CourseCategory]))
+    put("courseHourTypes", getCodes(project, classOf[CourseHourType]))
     forward()
   }
 
@@ -53,7 +52,7 @@ class CourseSearchTrimsAction extends AbsEamsAction[Course] {
     entityQuery.where("course.enabled=true")
     QueryHelper.populateConditions(entityQuery)
     put("courses", entityDao.search(getQueryBuilder()))
-    put("courseHourTypes", baseCodeService.getCodes(project, classOf[CourseHourType]))
+    put("courseHourTypes", getCodes(project, classOf[CourseHourType]))
 
     put("type", get("type").orNull)
     return forward()
@@ -85,7 +84,7 @@ class CourseSearchTrimsAction extends AbsEamsAction[Course] {
     //    put("outlines", outlines)
 
     val project = getProject()
-    put("courseHourTypes", baseCodeService.getCodes(project, classOf[CourseHourType]))
+    put("courseHourTypes", getCodes(project, classOf[CourseHourType]))
     put("type", type_)
     val courseid = get("course.id").get
     val course = getModel[Course](entityName,convertId(courseid))
@@ -159,7 +158,7 @@ class CourseSearchTrimsAction extends AbsEamsAction[Course] {
     put("planCourse", planCourse)
     put("teachPlan", teachPlan)
     val project = getProject()
-    put("courseHourTypes", baseCodeService.getCodes(project, classOf[CourseHourType]))
+    put("courseHourTypes", getCodes(project, classOf[CourseHourType]))
   }
 
   private def detailInOutline() {

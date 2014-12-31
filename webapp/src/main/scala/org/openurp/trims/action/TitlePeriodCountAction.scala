@@ -1,11 +1,11 @@
 package org.openurp.trims.action
 
 import org.beangle.data.jpa.dao.SqlBuilder
-import org.openurp.base.code.TeacherTitle
 import ch.qos.logback.classic.db.SQLBuilder
 import org.beangle.data.jpa.dao.OqlBuilder
 import org.openurp.edu.base.Teacher
 import org.openurp.base.Department
+import org.openurp.base.code.ProfessionalTitle
 /**
  * 按职称对课时统计
  */
@@ -35,7 +35,7 @@ class TitlePeriodCountAction extends AbsEamsAction {
     val query = SqlBuilder.sql(sql)
     val datas = entityDao.search(query)
     val map = new collection.mutable.HashMap[String, String]
-    entityDao.getAll(classOf[TeacherTitle]).foreach(d => {
+    entityDao.getAll(classOf[ProfessionalTitle]).foreach(d => {
       map.put(d.id.toString(), d.name)
     })
     putNamesAndValues(datas, data => map.get(data(0) + "").getOrElse("无职称"))
@@ -66,7 +66,7 @@ class TitlePeriodCountAction extends AbsEamsAction {
     val query = SqlBuilder.sql(sql)
     val datas = entityDao.search(query)
     val map = getDepartmentMap
-    val title = entityDao.get(classOf[TeacherTitle], new Integer(tid))
+    val title = entityDao.get(classOf[ProfessionalTitle], new Integer(tid))
     put("title", title)
     putNamesAndValues(datas, data => map.get(data(0) + ""))
     forward()
@@ -92,7 +92,7 @@ class TitlePeriodCountAction extends AbsEamsAction {
     val query = SqlBuilder.sql(sql)
     val datas = entityDao.search(query)
     val department = entityDao.get(classOf[Department], new Integer(did))
-    val title = entityDao.get(classOf[TeacherTitle], new Integer(tid))
+    val title = entityDao.get(classOf[ProfessionalTitle], new Integer(tid))
     put("title", title)
     put("department", department)
     put("datas", datas)
