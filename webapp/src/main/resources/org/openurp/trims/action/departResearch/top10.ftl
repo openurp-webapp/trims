@@ -20,7 +20,7 @@
 <div style="padding:50px; font-size:20px; text-align:center">暂无论文成果数据</div>
 [/#if]
 [#if literatures?size gt 0]
-<h4>[@beginAndEnd/]  专著成果 Top10</h4>
+<h4>[@beginAndEnd/]  著作成果 Top10</h4>
 <table class="gridtable">
   <tr>
     <th>教师姓名</th>
@@ -36,6 +36,6 @@
     [/#list]
 </table>
 [#else]
-<div style="padding:50px; font-size:20px; text-align:center">暂无专著成果数据</div>
+<div style="padding:50px; font-size:20px; text-align:center">暂无著作成果数据</div>
 [/#if]
 [@b.foot/]

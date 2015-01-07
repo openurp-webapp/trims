@@ -4,7 +4,7 @@
 [@b.grid  items=teachers var="teacher"]
   [@b.row]
     [@b.col width="30%" property="person.code" title="工号"][/@]
-    [@b.col width="30%" property="person.name" title="姓名"][@b.a href="teacher-info!nav?id=${teacher.id}" target="teacher_div"]${(teacher.person.name)!}[/@][/@]
+    [@b.col width="30%" property="person.name" title="姓名"][@b.a href="teacher-info!nav?id=${teacher.id}"]${(teacher.person.name)!}[/@][/@]
     [@b.col width="40%" property="department.name" title="所属部门"][/@]
   [/@]
 [/@]

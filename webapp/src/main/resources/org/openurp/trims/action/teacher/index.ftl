@@ -4,7 +4,7 @@
   [@b.form name="teacherSearchForm" action="!search" target="teacherlist" title="ui.searchForm"]
     教师姓名<input name="teacher.person.name" maxlength="15" size="8" value="" type="text"/>
     所属部门
-    [@b.select items=departments selected="" name="course.department.id" style="width:150px;"]
+    [@b.select items=departments selected="" name="teacher.department.id" style="width:150px;"]
       <option value="">...</option>
     [/@]
     [@b.submit value="查询"/]

@@ -1,6 +1,6 @@
 [#ftl]
 [@b.head/]
-<h4>专著成果</h4>
+<h4>著作成果</h4>
 [#if datas?size gt 0]
   <table class="gridtable">
     <tr>
@@ -21,6 +21,6 @@
      [/#list]
   </table>
 [#else]
-<div style="padding:50px; font-size:20px; text-align:center">暂无专著成果数据</div>
+<div style="padding:50px; font-size:20px; text-align:center">暂无著作成果数据</div>
 [/#if]
 [@b.foot/]
