@@ -20,5 +20,6 @@ class DefaultModule extends AbstractBindModule {
     bind(classOf[DepartResearchAction])
     bind(classOf[HarvestTypeCountAction])
     bind(classOf[TitleResearchCountAction])
+    bind(classOf[TitleResearchAvgCountAction])
   }
 }
