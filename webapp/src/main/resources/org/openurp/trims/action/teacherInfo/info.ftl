@@ -23,7 +23,7 @@
   </tr>
   <tr>
     <td class="title" width="20%">职称</td>
-    <td class="content">${(teacher.title.name)!}</td>
+    <td class="content">${(staff.post.head.title.name)!}</td>
     <td class="title" width="20%">邮箱</td>
     <td class="content">${teacher.person.email}</td>
   </tr>

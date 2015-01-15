@@ -5,7 +5,7 @@
   [@b.row]
     [@b.col width="30%" property="person.code" title="工号"][/@]
     [@b.col width="30%" property="person.name" title="姓名"][@b.a href="teacher-info!nav?id=${teacher.id}"]${(teacher.person.name)!}[/@][/@]
-    [@b.col width="40%" property="department.name" title="所属部门"][/@]
+    [@b.col width="40%" property="person.department.name" title="所属部门"][/@]
   [/@]
 [/@]
 [@b.foot/]

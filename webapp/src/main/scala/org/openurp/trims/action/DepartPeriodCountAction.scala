@@ -24,7 +24,7 @@ class DepartPeriodCountAction extends RestfulAction[Lesson] {
     val year = get("year")
     val term = get("term")
     val sql = """select teach_depart_id, cast(avg(num) as int) num from 
-		(select  l.teach_depart_id,lt.teacher_id,s.school_year, s.name, sum(c.period) num
+		(select  l.teach_depart_id,lt.person_id,s.school_year, s.name, sum(c.period) num
 		from edu_teach.lessons l 
 		join edu_teach.lessons_teachers lt on lt.lesson_id=l.id 
 		join base.semesters s on l.semester_id = s.id 
@@ -32,8 +32,8 @@ class DepartPeriodCountAction extends RestfulAction[Lesson] {
 		where 1=1 """ + 
 		(if(year.isDefined && Strings.isNotBlank(year.get))s" and s.school_year = '${year.get}'"else"")+
 		(if(term.isDefined && Strings.isNotBlank(term.get))s" and s.name = '${term.get}'"else"")+
-		"""group by l.teach_depart_id,s.school_year,s.name,lt.teacher_id
-		order by lt.teacher_id) t
+		"""group by l.teach_depart_id,s.school_year,s.name,lt.person_id
+		order by lt.person_id) t
 		group by teach_depart_id order by avg(num) desc"""
 	if(year.isDefined && Strings.isNotBlank(year.get)) put("year", year.orNull)
 	if(term.isDefined && Strings.isNotBlank(term.get)) put("term", term)

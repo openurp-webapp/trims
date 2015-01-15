@@ -11,7 +11,7 @@ class TeacherAction extends AbsEamsAction[Teacher] {
   def index():String={
     put("departments", getAllDepartments())
     forward()
-  }  
+  }
   
   def search(): String = {
     put(shortName + "s", entityDao.search(getQueryBuilder()))

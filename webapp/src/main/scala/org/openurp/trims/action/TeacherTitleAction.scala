@@ -5,7 +5,8 @@ import org.openurp.base.Department
 import org.beangle.commons.lang.Strings
 import org.openurp.edu.teach.lesson.Lesson
 import org.openurp.edu.base.Teacher
-import org.openurp.base.code.ProfessionalTitle
+import org.openurp.hr.base.code.ProfessionalTitle
+import org.openurp.hr.base.Staff
 //import org.openurp.edu.base.code.TeacherTitle
 
 class TeacherTitleAction extends AbsEamsAction{
@@ -15,9 +16,9 @@ class TeacherTitleAction extends AbsEamsAction{
   }
 
   def search(): String = {
-    val query = OqlBuilder.from(classOf[Teacher], "l")
+    val query = OqlBuilder.from(classOf[Staff], "staff").join("staff.post.head", "l")
     query.select("l.title.id, count(*) as num")
-    query.where("l.teaching = true")
+//    query.where("l.teaching = true")
 //    query.where("l.title.id is not null")
     query.groupBy("l.title.id")
     query.orderBy("count(*) desc")
@@ -33,9 +34,9 @@ class TeacherTitleAction extends AbsEamsAction{
   def department():String = {
     val tid = getInt("tid").get
     val title = entityDao.get(classOf[ProfessionalTitle], new Integer(tid))
-    val query = OqlBuilder.from(classOf[Teacher], "l")
+    val query = OqlBuilder.from(classOf[Staff], "staff").join("staff.post.head", "l")
     query.select("l.department.id, count(*) as num")
-    query.where("l.teaching = true")
+//    query.where("l.teaching = true")
     if("undefined".equals(get("tid").get)){
        query.where("l.title.id is null")
     }else{

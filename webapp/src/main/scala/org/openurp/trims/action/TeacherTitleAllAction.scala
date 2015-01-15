@@ -6,7 +6,8 @@ import org.beangle.commons.lang.Strings
 import org.openurp.edu.teach.lesson.Lesson
 import org.openurp.edu.base.Teacher
 import scala.collection.mutable.ListBuffer
-import org.openurp.base.code.ProfessionalTitle
+import org.openurp.hr.base.code.ProfessionalTitle
+import org.openurp.hr.base.Staff
 
 class TeacherTitleAllAction extends AbsEamsAction {
 
@@ -15,9 +16,9 @@ class TeacherTitleAllAction extends AbsEamsAction {
   }
 
   def search(): String = {
-    val query = OqlBuilder.from(classOf[Teacher], "l")
+    val query = OqlBuilder.from(classOf[Staff], "staff").join("staff.post.head", "l")
     query.select("l.department.id, l.title.id, count(*) as num")
-    query.where("l.teaching = true")
+//    query.where("l.teaching = true")
     query.groupBy("l.department.id, l.title.id")
     query.orderBy("count(*) desc")
     val datas = entityDao.search(query).asInstanceOf[Seq[Array[Any]]]
