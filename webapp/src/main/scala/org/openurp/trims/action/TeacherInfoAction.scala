@@ -9,22 +9,15 @@ import org.beangle.commons.codec.digest.Digests
 import org.openurp.platform.ws.ServiceConfig
 import org.beangle.data.jpa.dao.OqlBuilder
 import org.openurp.hr.base.Staff
+import org.openurp.base.Person
 
-class TeacherInfoAction extends RestfulAction[Teacher] {
+class TeacherInfoAction extends RestfulAction[Staff] {
 
   @mapping(value = "{id}")
   override def info(@param("id") id: String): String = {
-    val teacher = entityDao.get(classOf[Teacher], new Integer(id))
-    put(shortName, teacher)
-    val query = OqlBuilder.from(classOf[Staff], "staff")
-    query.where("staff.person=:person",teacher.person)
-    val staffs = entityDao .search(query)
-    if(staffs.length>0){
-      val staff = staffs(0)
-      put("staff", staff)
-    }
-    
-    val birthday = teacher.person.birthday
+    val staff = entityDao.get(classOf[Staff], new Integer(id))
+    val person = staff.person
+    val birthday = person.birthday
     if (birthday != null) {
       val now = Calendar.getInstance()
       val cbirthday = Calendar.getInstance()
@@ -34,7 +27,9 @@ class TeacherInfoAction extends RestfulAction[Teacher] {
       put("age", age)
     }
     put("service_base", ServiceConfig.wsBase)
-    put("photo_url", Digests.md5Hex(teacher.person.code + "@sfu.edu.cn"))
+    put("person", person)
+    put("photo_url", Digests.md5Hex(person.code + "@sfu.edu.cn"))
+    put("staff", staff)
     forward()
   }
 

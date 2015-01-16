@@ -4,6 +4,7 @@ import org.beangle.webmvc.api.annotation.mapping
 import org.beangle.webmvc.api.annotation.param
 import org.beangle.data.jpa.dao.SqlBuilder
 import org.openurp.edu.base.Teacher
+import org.openurp.hr.base.Staff
 
 class ResearchAction extends AbsEamsAction {
 
@@ -12,8 +13,8 @@ class ResearchAction extends AbsEamsAction {
    */
   @mapping(value = "thesis/{id}")
   def thesis(@param("id") id: String): String = {
-    val teacher = entityDao.get(classOf[Teacher], new Integer(id))
-    put("teacher", teacher)
+    val staff = entityDao.get(classOf[Staff], new Integer(id))
+    put("staff", staff)
     val sql = s"""select t.name tname,t.count,p.name pname,h.name hname,pr.name prname,p.published_date
 		from sin_harvest.thesis_harvests t
 		join sin_harvest.published_situations p on p.id = t.published_situation_id

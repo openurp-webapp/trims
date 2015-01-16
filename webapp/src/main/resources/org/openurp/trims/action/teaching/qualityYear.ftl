@@ -1,13 +1,14 @@
 [#ftl]
 [@b.head/]
 [#include "../nav.ftl"/]
+[#if curYear??]
 [@nav3 "year${curYear!}"]
   [#list years as v]
-    <li class="year${v[0]}" [#if curYear == v[0]]class="active"[/#if]>[@b.a href="teaching!qualityYear?id=${teacher.id}&year=${v[0]}"]${v[0]}(<span style="color: red;">${v[1]}</span>)[/@]</li>
+    <li class="year${v[0]}" [#if curYear?? && curYear == v[0]]class="active"[/#if]>[@b.a href="teaching!qualityYear?id=${staff.id}&year=${v[0]}"]${v[0]}(<span style="color: red;">${v[1]}</span>)[/@]</li>
   [/#list]
 [/@]
 <script>
-  $(".year${curYear}").addClass("active").siblings().removeClass("active");
+  $(".year${curYear!}").addClass("active").siblings().removeClass("active");
 </script>
 
 <table class="gridtable">
@@ -28,4 +29,6 @@
     </tr>
    [/#list]
 </table>
+[#else]
+[/#if]
 [@b.foot/]

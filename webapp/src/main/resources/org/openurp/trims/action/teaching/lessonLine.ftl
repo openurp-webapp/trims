@@ -1,6 +1,7 @@
 [@b.head/]
 <h4>学期平均上课课时:${avg}</h4>
 [#assign base=request.contextPath/]
+[#if datas?size gt 0]
 <div id="lessonLineChart" style="height:250px;">
 </div>
 <script src="${base}/static/js/echarts/echarts.js"></script>
@@ -73,6 +74,8 @@
         }
     );
 </script>
-
-[@b.div id="lessonDiv" href="!lesson?id=${teacher.id}"/]
+[#else]
+<div style="padding:100px; font-size:20px; text-align:center">暂无数据</div>
+[/#if]
+[@b.div id="lessonDiv" href="!lesson?id=${staff.id}"/]
 [@b.foot/]

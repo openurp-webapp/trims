@@ -16,6 +16,6 @@
   [#assign legend][[#list titles as t][#if t_index gt 0],[/#if]'${t}'[/#list]][/#assign]
   [@echarts id="student_year_chart" title="按院系职称统计"
     xname='院系' yname='教师人数' maxAndMin=false 
-    names=names series=series legend=legend height=500/]
+    names=names series=series legend=legend height=500 trigger='axis'/]
 [@b.div id="teacherTitleDepartDiv"/]
 [@b.foot/]

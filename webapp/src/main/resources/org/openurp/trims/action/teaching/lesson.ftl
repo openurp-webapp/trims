@@ -2,13 +2,14 @@
 [@b.head/]
 [#include "../nav.ftl"/]
 <h4>学年详细上课情况</h4>
+[#if curYear??]
 [@nav3 "year${curYear!}"]
   [#list years as v]
-    <li class="year${v[0]}" [#if curYear == v[0]]class="active"[/#if]>[@b.a href="teaching!lesson?id=${teacher.id}&year=${v[0]}"]${v[0]}(<span style="color: red;">${v[1]}</span>)[/@]</li>
+    <li class="year${v[0]}" [#if curYear?? && curYear == v[0]]class="active"[/#if]>[@b.a href="teaching!lesson?id=${staff.id}&year=${v[0]}"]${v[0]}(<span style="color: red;">${v[1]}</span>)[/@]</li>
   [/#list]
 [/@]
 <script>
-  $(".year${curYear}").addClass("active").siblings().removeClass("active");
+  $(".year${curYear!}").addClass("active").siblings().removeClass("active");
 </script>
 
 <table class="gridtable">
@@ -31,4 +32,7 @@
     </tr>
    [/#list]
 </table>
+[#else]
+<div style="padding:100px; font-size:20px; text-align:center">暂无数据</div>
+[/#if]
 [@b.foot/]

@@ -66,7 +66,7 @@
             // 为echarts对象加载数据 
             myChart.setOption(option);
             myChart.on('click', function (param){
-              bg.Go('${b.url('period-statistics!period')}?beginYear=${beginYear!}&endYear=${endYear!}&teaching=${teaching!}&departmentId='+departmentIds[param.dataIndex],'periodStatisticsChartDiv')
+              bg.Go('${b.url('period-statistics!period')}?beginYear=${beginYear!}&endYear=${endYear!}&teaching=${(teaching?string(1,0))!}&departmentId='+departmentIds[param.dataIndex],'periodStatisticsChartDiv')
             }); 
         });
 </script>

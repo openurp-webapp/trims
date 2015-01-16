@@ -1,9 +1,10 @@
 [#ftl]
 [@b.head/]
 [#include "../nav.ftl"/]
+[#if curYear??]
 [@nav3 "year${curYear!}"]
   [#list years as v]
-    <li class="year${v[0]}" [#if curYear == v[0]]class="active"[/#if]>[@b.a href="teaching!grade?id=${teacher.id}&year=${v[0]}"]${v[0]}(<span style="color: red;">${v[1]}</span>)[/@]</li>
+    <li class="year${v[0]}" [#if curYear == v[0]]class="active"[/#if]>[@b.a href="teaching!grade?id=${staff.id}&year=${v[0]}"]${v[0]}(<span style="color: red;">${v[1]}</span>)[/@]</li>
   [/#list]
 [/@]
 <script>
@@ -32,4 +33,7 @@
     </tr>
    [/#list]
 </table>
+[#else]
+<div style="padding:100px; font-size:20px; text-align:center">暂无数据</div>
+[/#if]
 [@b.foot/]

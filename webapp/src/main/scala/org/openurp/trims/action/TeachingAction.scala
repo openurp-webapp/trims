@@ -11,11 +11,13 @@ import org.beangle.data.jpa.dao.OqlBuilder
 import org.openurp.edu.teach.grade.CourseGrade
 import java.util.HashMap
 import scala.collection.mutable.ListBuffer
+import org.openurp.base.Person
+import org.openurp.hr.base.Staff
 
 /**
  * 教学情况
  */
-class TeachingAction extends RestfulAction[Teacher] {
+class TeachingAction extends RestfulAction[Person] {
   /**
    * 上课情况
    */
@@ -28,16 +30,16 @@ class TeachingAction extends RestfulAction[Teacher] {
 
   @mapping(value = "lesson/{id}/{year}")
   def lesson(@param("id") id: String, @param("year") curYear: String): String = {
-    val teacher = entityDao.get(classOf[Teacher], new Integer(id))
+    val staff = entityDao.get(classOf[Staff], new Integer(id))
     val years = getSchoolYears(id)
     val curYear = get("year").getOrElse(if (years.length > 0) years(0).asInstanceOf[Array[Any]](0) else null)
     put("id", id)
     put("curYear", curYear)
     put("years", years)
-    put(shortName, teacher)
+    put("staff", staff)
     val builder = OqlBuilder.from(classOf[Lesson], "lesson")
     builder.join("lesson.teachers", "t")
-    builder.where("t=:teacher", teacher.person).where("lesson.semester.schoolYear=:curYear", curYear)
+    builder.where("t=:teacher", staff.person).where("lesson.semester.schoolYear=:curYear", curYear)
     val lessons = entityDao.search(builder)
     put("lessons", lessons)
     forward()
@@ -46,9 +48,9 @@ class TeachingAction extends RestfulAction[Teacher] {
    * 教师平均课时折线图
    */
   def lessonLine(): String = {
-    var id = get("id").get
-    val teacher = entityDao.get(classOf[Teacher], new Integer(id))
-    put(shortName, teacher)
+    val id = get("id").get
+    val staff = entityDao.get(classOf[Staff], new Integer(id))
+    put("staff", staff)
     val sql = s"""select  s.code, sum(c.period)
             from edu_teach.lessons l 
             join edu_teach.lessons_teachers lt on lt.lesson_id=l.id 
@@ -63,7 +65,7 @@ class TeachingAction extends RestfulAction[Teacher] {
     for (i <- 0 until datas.size) {
       sum = sum + new Integer(datas(i).asInstanceOf[Array[Any]](1).toString)
     }
-    val avg = sum / datas.size
+    val avg = if(datas.size == 0) 0 else (sum / datas.size)
     put("avg", avg)
     put("datas", datas)
     forward()
@@ -72,19 +74,19 @@ class TeachingAction extends RestfulAction[Teacher] {
   def nav(): String = {
     val id = get("id").get
     put("id", id)
-    val teacher = entityDao.get(classOf[Teacher], new Integer(id))
-    put(shortName, teacher)
+    val staff = entityDao.get(classOf[Staff], new Integer(id))
+    put("person", staff.person)
     forward()
   }
 
   private def getSchoolYears(id: String): Seq[Any] = {
     val sql = s"""select s.school_year, count(*)
-		from edu_teach.lessons l join edu_teach.lessons_teachers lt on l.id = lt.lesson_id 
-		join base.semesters s on l.semester_id = s.id
-        join edu_base.teachers t on t.person_id = lt.person_id
-        where t.id = ${id}
-		group by s.school_year
-		order by s.school_year"""
+  		from edu_teach.lessons l join edu_teach.lessons_teachers lt on l.id = lt.lesson_id 
+  		join base.semesters s on l.semester_id = s.id
+      join hr_base.staffs f on lt.person_id = f.person_id
+      where f.id = ${id}
+  		group by s.school_year
+  		order by s.school_year"""
     val query = SqlBuilder.sql(sql)
     entityDao.search(query)
   }

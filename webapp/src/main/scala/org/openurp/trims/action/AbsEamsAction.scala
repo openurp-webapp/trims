@@ -27,7 +27,7 @@ abstract class AbsEamsAction[T <: Entity[_ <: java.io.Serializable]] extends Abs
 
   protected def getAllDepartments() = {
     val query = OqlBuilder.from(classOf[Department])
-    query.orderBy("name")
+    query.orderBy("code")
     entityDao .search(query)
     
   }

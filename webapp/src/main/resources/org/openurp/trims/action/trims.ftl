@@ -1,11 +1,13 @@
 [#ftl]
-[#macro yearAndDepartCondition years term=false teaching=-1]
+[#macro yearAndDepartCondition years=[] term=false teaching=-1]
+  [#if years?size gt 0]
   <b>起止时间</b>：<select name="beginYear"id="beginYear" class="form-control">
   <option value="">...</option>
   [#list years as d][#if term]<option value="${d[0]}">${d[1]}</option>[#else]<option>${d}</option>[/#if][/#list]</select>
   ～<select name="endYear" id="endYear" class="form-control"><option value="">...</option>
   [#list years as d][#if term]<option value="${d[0]}">${d[1]}</option>[#else]<option>${d}</option>[/#if][/#list]</select>
   <a id="jsnBtn" class="btn btn-default">近三年</a>
+  [/#if]
   <div class="btn-group departBtn pull-right">
     <button type="button" class="btn btn-default departBtn [#if teaching == 1]active[/#if]" value="1">教学部门</button>
     <button type="button" class="btn btn-default departBtn [#if teaching == 0]active[/#if]" value="0">职能部门</button>
@@ -36,14 +38,14 @@
       return submitSearchForm();
     });
     function submitSearchForm(){
-      bg.form.submit($('#beginYear').closest('form').attr('id'),null,null,null);
+      bg.form.submit($('#teachingIpt').closest('form').attr('id'),null,null,null);
       return false;
     }
     $('#beginYear').closest('form').addClass('form-inline');
   </script>
 [/#macro]
 
-[#macro termAndDepartCondition years teaching]
+[#macro termAndDepartCondition years=[] teaching=1]
   [@yearAndDepartCondition years=years term=true teaching=teaching/]
 [/#macro]
 

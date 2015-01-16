@@ -31,7 +31,8 @@ class PeriodStatisticsAction extends  AbsEamsAction[Lesson]{
 		from edu_teach.lessons l 
     join base.departments d on l.teach_depart_id = d.id
 		join edu_teach.lessons_teachers lt on lt.lesson_id=l.id 
-		join edu_teach.courses c on c.id = l.course_id where 1=1 """ + 
+    join hr_base.staffs f on lt.person_id = f.person_id
+		join edu_teach.courses c on c.id = l.course_id where f.state_id = 1 """ + 
     (if(teaching.isDefined)s" and d.teaching = '${teaching.get}'"else"")+
 		(if(beginYear.isDefined)s" and l.semester_id >= ${beginYear.get}"else"")+
 		(if(endYear.isDefined)s" and l.semester_id <= '${endYear.get}'"else"")+
@@ -63,16 +64,17 @@ class PeriodStatisticsAction extends  AbsEamsAction[Lesson]{
     val sql="""	select  p.name p_name,s.code, sum(c.period) num, d.name d_name
 		from edu_teach.lessons l 
 		join edu_teach.lessons_teachers lt on lt.lesson_id=l.id 
-		join edu_base.teachers t on t.person_id = lt.person_id
-		join base.people p on p.id=t.person_id
-		join base.departments d on d.id=p.department_id
+    join base.people p on p.id=lt.person_id
+    join hr_base.staffs f on p.id = f.person_id
+    join hr_base.staff_post_infoes pi on f.post_head_id = pi.id
+    join base.departments d on pi.department_id=d.id
     join base.semesters s on l.semester_id = s.id
-		join edu_teach.courses c on c.id = l.course_id where 1=1"""+  
+		join edu_teach.courses c on c.id = l.course_id where f.state_id = 1"""+  
     (if(teaching.isDefined)s" and d.teaching = '${teaching.get}'"else"")+
     (if(beginYear.isDefined)s" and s.id >= '${beginYear.get}'"else"")+
     (if(endYear.isDefined)s" and s.id <= '${endYear.get}'"else"")+
 		(if(departmentId.isDefined)s" and l.teach_depart_id = '${departmentId.get}'"else"")+
-		""" group by s.code,p.name, d.name
+		""" group by s.code,p.id, p.name, d.name
 		order by num desc limit 10"""
   	if(departmentId.isDefined){
   	  val departId = departmentId.get

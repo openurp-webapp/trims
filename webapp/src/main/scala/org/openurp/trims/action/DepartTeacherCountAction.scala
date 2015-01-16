@@ -5,26 +5,57 @@ import org.openurp.edu.base.Teacher
 import org.beangle.data.jpa.dao.SqlBuilder
 import org.openurp.base.Department
 import org.beangle.commons.lang.Strings
+import scala.collection.mutable.ListBuffer
+import org.openurp.hr.base.code.TeacherType
 /**
  * 各部门教师人数分布
  * *
  */
-class DepartTeacherCountAction extends RestfulAction[Teacher]{
+class DepartTeacherCountAction extends AbsEamsAction{
 
+  def index(): String = {
+    forward()
+  }
+  
   def list(): String = {
-    val sql = """select t.department_id,count(*)
-		from edu_base.teachers t
-    	where t.teaching=true
-		group by t.department_id
-		order by count(*) desc"""
+    val teaching = getBoolean("teaching")
+    val sql = """select d.id, pi.teacher_type_id,count(*)
+    from hr_base.staffs f
+    join hr_base.staff_post_infoes pi on f.post_head_id = pi.id
+    join base.departments d on pi.department_id=d.id
+    where f.state_id = 1 """ +
+    (if(teaching.isDefined)s" and d.teaching = '${teaching.get}'"else"")+
+    """ and pi.teacher_type_id is not null
+    group by d.id, pi.teacher_type_id
+    order by count(*) desc"""
     val query = SqlBuilder.sql(sql)
     val datas = entityDao .search(query)
-    val map = new collection.mutable.HashMap[String, String]
-    entityDao.getAll(classOf[Department]).foreach( d => {
-      map.put(d.id.toString(), if(Strings.isNotBlank(d.shortName)) d.shortName else d.name)
+    val ids = new collection.mutable.HashSet[Integer]
+    datas.foreach(d => {
+      ids += d(0).asInstanceOf[Integer]
     })
-    put("dempartmentMap", map)
-    put("datas", datas)
+    val names = new ListBuffer[String]
+    val values = new ListBuffer[Any]()
+    val teacherTypes = entityDao.getAll(classOf[TeacherType])
+    val ititles = new collection.mutable.HashSet[String]
+    val departs = getDepartmentMap()
+    ids.foreach(id =>{
+      names += departs(id.toString())
+    })
+    teacherTypes.foreach(t => {
+      val value = new ListBuffer[Any]()
+      value += t.name
+      ids.foreach(id => {
+        val data = datas.find(o => id.equals(o(0)) && t.id.equals(o(1)))
+        val num = (if (data.isDefined) { ititles.add(t.name); (data.get)(2) } else 0)
+        value += num
+      })
+      values += value
+    })
+    
+    put("names", names)
+    put("values", values)
+    put("titles", ititles)
     forward()
   }
 

@@ -1,7 +1,7 @@
 [#ftl]
 [@b.head/]
 [#include "../nav.ftl"/]
-[@b.toolbar title="${teacher.person.name} 科研情况"][/@]
+[@b.toolbar title="${staff.person.name} 科研情况"][/@]
 <h4>论文成果</h4>
 [#if datas?size gt 0]
   <table class="gridtable">

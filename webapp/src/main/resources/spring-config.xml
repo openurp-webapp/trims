@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans>
 
+  <bean id="HibernateConfig.default">
+    <property name="properties">
+      <props merge="true">
+        <prop key="hibernate.show_sql">true</prop>
+        <!-- <prop key="hibernate.hbm2ddl.auto">update</prop> <prop key="hibernate.default_schema">security</prop> -->
+        <prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQL82Dialect</prop>
+      </props>
+    </property>
+  </bean>
+  
   <bean id="security.TicketValidator.neusoft" class="org.beangle.security.realm.cas.TicketValidator" primary="true"/>
 
   <bean id="security.EntryPoint.cas" class="org.beangle.security.web.EntryPoint"  primary="true"/>
