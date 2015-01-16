@@ -81,6 +81,8 @@ class PeriodStatisticsAction extends  AbsEamsAction[Lesson]{
   	}
     val query = SqlBuilder.sql(sql)
     val datas = entityDao .search(query)
+    put("beginYear", beginYear)
+    put("endYear", endYear)
     put("datas", datas)
     forward()
   }

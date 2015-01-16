@@ -34,15 +34,15 @@ class DepartPeriodCountAction extends AbsEamsAction[Lesson] {
 		"""group by l.teach_depart_id,s.school_year,s.name,lt.person_id
 		order by lt.person_id) t
 		group by teach_depart_id order by avg(num) desc"""
-        put("beginYear", beginYear)
-    put("endYear", endYear)
-    put("teaching", teaching)
     val query = SqlBuilder.sql(sql)
     val datas = entityDao.search(query)
     val map = new collection.mutable.HashMap[String, String]
     entityDao.getAll(classOf[Department]).foreach( d => {
       map.put(d.id.toString(), if(Strings.isNotBlank(d.shortName)) d.shortName else d.name)
     })
+    put("beginYear", beginYear)
+    put("endYear", endYear)
+    put("teaching", teaching)
     put("dempartmentMap", map)
     put("datas", datas)
     forward()

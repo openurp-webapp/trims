@@ -1,5 +1,6 @@
 [@b.head/]
-<h4>[#if beginYear??]${beginYear}[/#if][#if beginYear?? && endYear??]-[/#if][#if endYear??]${endYear}[/#if]  平均课时 Top10</h4>
+[#include "../trims.ftl"/]
+<h4>[@beginYearAndEndYear/] 平均课时 Top10</h4>
 <table class="gridtable">
   <tr>
     <th>学年学期</th>

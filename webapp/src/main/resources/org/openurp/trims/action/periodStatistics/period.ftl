@@ -1,4 +1,5 @@
 [@b.head/]
+[#include "../trims.ftl"/]
 [#assign base=request.contextPath/]
 <div id="periodStatisticsChart" style="height:400px;">
 </div>
@@ -23,7 +24,7 @@
             
             var option = {
                 title : {
-                    text: '[#if year??]${year}学年[/#if][#if term??]  第${term}学期[/#if]  [#if department??]${department.name}[/#if]  平均课时人数统计',
+                    text: '[@beginYearAndEndYear/]  平均课时人数统计',
                 },
                 tooltip : {
                     trigger: 'axis'

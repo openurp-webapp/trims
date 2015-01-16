@@ -22,13 +22,13 @@ class LessonTeachClassStdCountAction extends AbsEamsAction[Lesson] {
     getInt("beginYear").map(year=>{
       if(year!=0){
         put("beginYear", year)
-        query.where("l.semester.id>=:year", year)
+        query.where("l.semester.id>=:beginYear", year)
       }
     })
     getInt("endYear").map(year=>{
       if(year!=0){
         put("endYear", year)
-        query.where("l.semester.id<=:year", year)
+        query.where("l.semester.id<=:endYear", year)
       }
     })
     if(teaching.isDefined){

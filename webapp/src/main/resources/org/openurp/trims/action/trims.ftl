@@ -46,3 +46,6 @@
 [#macro termAndDepartCondition years teaching]
   [@yearAndDepartCondition years=years term=true teaching=teaching/]
 [/#macro]
+
+[#macro beginYearAndEndYear][#if beginYear??][@showYearOrYearAndTerm beginYear/][/#if][#if beginYear?? && endYear??] 到 [/#if][#if endYear??][@showYearOrYearAndTerm endYear/][/#if][/#macro]
+[#macro showYearOrYearAndTerm year][#if year?length gt 4]${year[0..3]}-${year[4]}[#else]${year}[/#if][/#macro]
