@@ -1,15 +1,15 @@
 [#ftl]
-[#macro yearAndDepartCondition years term=false]
+[#macro yearAndDepartCondition years term=false teaching=-1]
   起止时间：<select name="beginYear"id="beginYear" class="form-control">
   <option value="">...</option>
-  [#list years as d]<option>${d}</option>[/#list]</select>
+  [#list years as d][#if term]<option value="${d[0]}">${d[1]}</option>[#else]<option>${d}</option>[/#if][/#list]</select>
   ～<select name="endYear" id="endYear" class="form-control"><option value="">...</option>
-  [#list years as d]<option>${d}</option>[/#list]</select>
+  [#list years as d][#if term]<option value="${d[0]}">${d[1]}</option>[#else]<option>${d}</option>[/#if][/#list]</select>
   <a id="jsnBtn" class="btn btn-default">近三年</a>
   <div class="btn-group departBtn pull-right">
-    <button type="button" class="btn btn-default departBtn" value="1">教学部门</button>
-    <button type="button" class="btn btn-default departBtn" value="0">职能部门</button>
-    <button type="button" class="btn btn-default departBtn active" value="">全部</button>
+    <button type="button" class="btn btn-default departBtn [#if teaching == 1]active[/#if]" value="1">教学部门</button>
+    <button type="button" class="btn btn-default departBtn [#if teaching == 0]active[/#if]" value="0">职能部门</button>
+    <button type="button" class="btn btn-default departBtn [#if teaching == -1]active[/#if]" value="">全部</button>
   </div>
   <input type="hidden" id="teachingIpt" name="teaching" value=""/>
   <script>
@@ -43,6 +43,6 @@
   </script>
 [/#macro]
 
-[#macro termAndDepartCondition years]
-  [@yearAndDepartCondition years=years term=true/]
+[#macro termAndDepartCondition years teaching]
+  [@yearAndDepartCondition years=years term=true teaching=teaching/]
 [/#macro]

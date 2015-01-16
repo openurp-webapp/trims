@@ -9,7 +9,7 @@
   </tr>
     [#list datas as data]
   <tr>
-      <td>${data[1]}}</td>
+      <td>${data[1]}</td>
       <td>${data[0]}</td>
       <td>${data[3]}</td>
       <td>${data[2]}</td>

@@ -15,9 +15,9 @@ class PeriodStatisticsAction extends  RestfulAction[Lesson]{
   
   override def index(): String = {
     val query = OqlBuilder.from(classOf[Lesson], "l")
-    query.select("l.semester.id")
-    query.groupBy("l.semester.id")
-    query.orderBy("l.semester.id")
+    query.select("l.semester.id, l.semester.code")
+    query.groupBy("l.semester.id, l.semester.code")
+    query.orderBy("l.semester.id, l.semester.code")
     put("years", entityDao.search(query))
     val departs = entityDao .findBy(classOf[Department], "teaching", Array(true))
     put("departs", departs)
@@ -63,17 +63,18 @@ class PeriodStatisticsAction extends  RestfulAction[Lesson]{
     val beginYear = getInt("beginYear")
     val endYear = getInt("endYear")
     val departmentId = getInt("departmentId")
-    val sql="""	select  p.name p_name,l.semester_id, sum(c.period) num, d.name d_name
+    val sql="""	select  p.name p_name,s.code, sum(c.period) num, d.name d_name
 		from edu_teach.lessons l 
 		join edu_teach.lessons_teachers lt on lt.lesson_id=l.id 
 		join edu_base.teachers t on t.person_id = lt.person_id
 		join base.people p on p.id=t.person_id
 		join base.departments d on d.id=p.department_id
+    join base.semesters s on l.semester_id = s.id
 		join edu_teach.courses c on c.id = l.course_id where 1=1"""+  
-    (if(beginYear.isDefined)s" and l.semester_id >= '${beginYear.get}'"else"")+
-    (if(endYear.isDefined)s" and l.semester_id <= '${endYear.get}'"else"")+
+    (if(beginYear.isDefined)s" and s.id >= '${beginYear.get}'"else"")+
+    (if(endYear.isDefined)s" and s.id <= '${endYear.get}'"else"")+
 		(if(departmentId.isDefined)s" and l.teach_depart_id = '${departmentId.get}'"else"")+
-		""" group by l.semester_id,p.name, d.name
+		""" group by s.code,p.name, d.name
 		order by num desc limit 10"""
   	if(departmentId.isDefined){
   	  val departId = departmentId.get
