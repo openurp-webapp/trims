@@ -14,8 +14,9 @@ class DepartResearchAction extends AbsEamsAction {
   }
 
   def research(): String = {
-    val thesises = getThesis
-    val literatures = getLiterature
+    val teaching = getBoolean("teaching")
+    val thesises = getThesis(teaching)
+    val literatures = getLiterature(teaching)
     val departsIdSet = new collection.mutable.HashSet[Integer]
     addDepartId(departsIdSet, thesises)
     addDepartId(departsIdSet, literatures)
@@ -32,6 +33,7 @@ class DepartResearchAction extends AbsEamsAction {
     put("values", values)
     put("beginYear", get("beginYear"))
     put("endYear", get("endYear"))
+    put("teaching", get("teaching"))
     forward()
   }
 
@@ -58,13 +60,15 @@ class DepartResearchAction extends AbsEamsAction {
   }
 
   /**论文*/
-  private def getThesis(): Seq[Any] = {
+  private def getThesis(teaching:Option[Boolean]): Seq[Any] = {
     val beginYear = get("beginYear")
     val endYear = get("endYear")
     val sql = """select t.department_id, count(*)
         from sin_harvest.thesis_harvests t
-        join sin_harvest.published_situations p on p.id = t.published_situation_id
-        where 1=1 """ +
+        join sin_harvest.published_situations p on p.id = t.published_situation_id""" +
+        (if(teaching.isDefined){" join base.departments d on t.department_id = d.id"} else "") +
+        """ where 1=1 """ +
+        (if (teaching.isDefined) s" and d.teaching = ${teaching.get}" else "") +
         (if (beginYear.isDefined && Strings.isNotBlank(beginYear.get)) " and to_char(p.published_date,'YYYY') >= '" + beginYear.get + "'" else "") +
         (if (endYear.isDefined && Strings.isNotBlank(endYear.get)) " and to_char(p.published_date,'YYYY') <= '" + endYear.get + "'" else "") +
         """ group by t.department_id"""
@@ -73,12 +77,14 @@ class DepartResearchAction extends AbsEamsAction {
   }
 
   /**专著*/
-  private def getLiterature(): Seq[Any] = {
+  private def getLiterature(teaching:Option[Boolean]): Seq[Any] = {
     val beginYear = get("beginYear")
     val endYear = get("endYear")
-    val sql = """select department_id,count(*)
-        from sin_harvest.literatures
-        where 1=1 """ +
+    val sql = """select l.department_id,count(*)
+        from sin_harvest.literatures l""" +
+        (if(teaching.isDefined){" join base.departments d on l.department_id = d.id"} else "") +
+        """ where 1=1 """ +
+        (if (teaching.isDefined) s" and d.teaching = ${teaching.get}" else "") +
         (if (beginYear.isDefined && Strings.isNotBlank(beginYear.get)) " and to_char(publish_date,'YYYY') >= '" + beginYear.get + "'" else "") +
         (if (endYear.isDefined && Strings.isNotBlank(endYear.get)) " and to_char(publish_date,'YYYY') <= '" + endYear.get + "'" else "") +
         """ group by department_id"""
@@ -87,8 +93,9 @@ class DepartResearchAction extends AbsEamsAction {
   }
 
   def top10(): String = {
-    val thesises = getThesisTop10
-    val literatures = getLiteratureTop10
+    val teaching = getBoolean("teaching")
+    val thesises = getThesisTop10(teaching)
+    val literatures = getLiteratureTop10(teaching)
     put("thesises", thesises)
     put("literatures", literatures)
     put("beginYear", get("beginYear"))
@@ -96,7 +103,7 @@ class DepartResearchAction extends AbsEamsAction {
     forward()
   }
 
-  private def getThesisTop10(): Seq[Any] = {
+  private def getThesisTop10(teaching:Option[Boolean]): Seq[Any] = {
     val beginYear = get("beginYear")
     val endYear = get("endYear")
     val sql = """select pe.name,d.name dname,count(*) num
@@ -106,6 +113,7 @@ class DepartResearchAction extends AbsEamsAction {
         join base.departments d on d.id=t.department_id
         join sin_harvest.published_situations p on p.id = t.published_situation_id
         where 1=1 """ +
+        (if (teaching.isDefined) s" and d.teaching = ${teaching.get}" else "") +
         (if (beginYear.isDefined && Strings.isNotBlank(beginYear.get)) " and to_char(p.published_date,'YYYY') >= '" + beginYear.get + "'" else "") +
         (if (endYear.isDefined && Strings.isNotBlank(endYear.get)) " and to_char(p.published_date,'YYYY') <= '" + endYear.get + "'" else "") +
         """ group by pe.name,d.name
@@ -114,7 +122,7 @@ class DepartResearchAction extends AbsEamsAction {
     entityDao.search(query)
   }
 
-  private def getLiteratureTop10(): Seq[Any] = {
+  private def getLiteratureTop10(teaching:Option[Boolean]): Seq[Any] = {
     val beginYear = get("beginYear")
     val endYear = get("endYear")
     val sql = """select pe.name,d.name dname,count(*) num
@@ -123,6 +131,7 @@ class DepartResearchAction extends AbsEamsAction {
         join base.people pe on pe.id = r.person_id
         join base.departments d on d.id=l.department_id
         where 1=1 """ +
+        (if (teaching.isDefined) s" and d.teaching = ${teaching.get}" else "") +
         (if (beginYear.isDefined && Strings.isNotBlank(beginYear.get)) " and to_char(l.publish_date,'YYYY') >= '" + beginYear.get + "'" else "") +
         (if (endYear.isDefined && Strings.isNotBlank(endYear.get)) " and to_char(l.publish_date,'YYYY') <= '" + endYear.get + "'" else "") +
         """ group by pe.name,d.name

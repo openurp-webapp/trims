@@ -15,41 +15,44 @@ class PeriodStatisticsAction extends  RestfulAction[Lesson]{
   
   override def index(): String = {
     val query = OqlBuilder.from(classOf[Lesson], "l")
-    query.select("l.semester.schoolYear")
-    query.groupBy("l.semester.schoolYear")
-    query.orderBy("l.semester.schoolYear desc")
-    put("datas", entityDao.search(query))
+    query.select("l.semester.id")
+    query.groupBy("l.semester.id")
+    query.orderBy("l.semester.id")
+    put("years", entityDao.search(query))
     val departs = entityDao .findBy(classOf[Department], "teaching", Array(true))
     put("departs", departs)
     forward()
   }
   
   def period():String={
-    val year = get("year")
-    val term = get("term")
+    val beginYear = getInt("beginYear")
+    val endYear = getInt("endYear")
+    val teaching = getBoolean("teaching")
     val departmentId = getInt("departmentId")
     val sql = """select num * 10, count(*) from
 		(select t.person_id, cast(avg(num) / 10 as int) num from 
-		(select  lt.person_id,s.school_year, s.name, sum(c.period) num
+		(select  lt.person_id,l.semester_id, sum(c.period) num
 		from edu_teach.lessons l 
+    join base.departments d on l.teach_depart_id = d.id
 		join edu_teach.lessons_teachers lt on lt.lesson_id=l.id 
-		join base.semesters s on l.semester_id = s.id 
 		join edu_teach.courses c on c.id = l.course_id where 1=1 """ + 
-		(if(year.isDefined && Strings.isNotBlank(year.get))s" and s.school_year = '${year.get}'"else"")+
-		(if(term.isDefined && Strings.isNotBlank(term.get))s" and s.name = '${term.get}'"else"")+
+    (if(teaching.isDefined)s" and d.teaching = '${teaching.get}'"else"")+
+		(if(beginYear.isDefined)s" and l.semester_id >= ${beginYear.get}"else"")+
+		(if(endYear.isDefined)s" and l.semester_id <= '${endYear.get}'"else"")+
 		(if(departmentId.isDefined)s" and l.teach_depart_id = '${departmentId.get}'"else"")+
-		""" group by s.school_year,s.name,lt.person_id
+		""" group by l.semester_id,lt.person_id
 		order by lt.person_id) t
 		group by person_id order by avg(num) desc) t
 		group by num 
 		order by num"""
-	if(year.isDefined && Strings.isNotBlank(year.get)) put("year", year)
-	if(term.isDefined && Strings.isNotBlank(term.get)) put("term", term)
-	if(departmentId.isDefined){
-	  val departId = departmentId.get
-	  val department = entityDao .get(classOf[Department], new Integer(departId))
-	  put("department",department)
-	}
+		put("beginYear", beginYear)
+    put("endYear", endYear)
+    put("teaching", teaching)
+  	if(departmentId.isDefined){
+  	  val departId = departmentId.get
+  	  val department = entityDao .get(classOf[Department], new Integer(departId))
+  	  put("department",department)
+  	}
     val query = SqlBuilder.sql(sql)
     val datas = entityDao .search(query)
     put("datas", datas)
@@ -57,29 +60,26 @@ class PeriodStatisticsAction extends  RestfulAction[Lesson]{
   }
   
   def top10():String={
-    val year = get("year")
-    val term = get("term")
+    val beginYear = getInt("beginYear")
+    val endYear = getInt("endYear")
     val departmentId = getInt("departmentId")
-    val sql="""	select  p.name p_name,s.school_year, s.name s_name, sum(c.period) num, d.name d_name
+    val sql="""	select  p.name p_name,l.semester_id, sum(c.period) num, d.name d_name
 		from edu_teach.lessons l 
 		join edu_teach.lessons_teachers lt on lt.lesson_id=l.id 
-		join base.semesters s on l.semester_id = s.id 
-		join edu_base.teachers t on t.id = lt.person_id
+		join edu_base.teachers t on t.person_id = lt.person_id
 		join base.people p on p.id=t.person_id
 		join base.departments d on d.id=p.department_id
 		join edu_teach.courses c on c.id = l.course_id where 1=1"""+  
-		(if(year.isDefined && Strings.isNotBlank(year.get))s" and s.school_year = '${year.get}'"else"")+
-		(if(term.isDefined && Strings.isNotBlank(term.get))s" and s.name = '${term.get}'"else"")+
+    (if(beginYear.isDefined)s" and l.semester_id >= '${beginYear.get}'"else"")+
+    (if(endYear.isDefined)s" and l.semester_id <= '${endYear.get}'"else"")+
 		(if(departmentId.isDefined)s" and l.teach_depart_id = '${departmentId.get}'"else"")+
-		"""group by s.school_year,s.name,p.name, d.name
+		""" group by l.semester_id,p.name, d.name
 		order by num desc limit 10"""
-	if(year.isDefined && Strings.isNotBlank(year.get)) put("year", year)
-	if(term.isDefined && Strings.isNotBlank(term.get)) put("term", term)
-	if(departmentId.isDefined){
-	  val departId = departmentId.get
-	  val department = entityDao .get(classOf[Department], new Integer(departId))
-	  put("department",department)
-	}
+  	if(departmentId.isDefined){
+  	  val departId = departmentId.get
+  	  val department = entityDao .get(classOf[Department], new Integer(departId))
+  	  put("department",department)
+  	}
     val query = SqlBuilder.sql(sql)
     val datas = entityDao .search(query)
     put("datas", datas)

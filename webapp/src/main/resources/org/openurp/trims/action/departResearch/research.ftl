@@ -29,5 +29,5 @@
     xname='院系' yname='科研成果数量'
     names=names series=series legend=legend height=500/]
 [@b.div id="departResearchDiv"/]
-[@b.div href="!top10?beginYear=${beginYear!}&endYear=${endYear!}"/]
+[@b.div href="!top10?beginYear=${beginYear!}&endYear=${endYear!}&teaching=${teaching!}"/]
 [@b.foot/]

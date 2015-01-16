@@ -69,5 +69,5 @@
         }
     );
 </script>
-[@b.div href="!top10?year=${year!}&term=${term!}&departmentId=${(department.id)!}"/]
+[@b.div href="!top10?beginYear=${beginYear!}&endYear=${endYear!}&teaching=${(teaching?string('1','0'))!}&departmentId=${(department.id)!}"/]
 [@b.foot/]
