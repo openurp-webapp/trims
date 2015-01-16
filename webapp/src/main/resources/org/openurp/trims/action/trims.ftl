@@ -1,6 +1,6 @@
 [#ftl]
 [#macro yearAndDepartCondition years term=false teaching=-1]
-  起止时间：<select name="beginYear"id="beginYear" class="form-control">
+  <b>起止时间</b>：<select name="beginYear"id="beginYear" class="form-control">
   <option value="">...</option>
   [#list years as d][#if term]<option value="${d[0]}">${d[1]}</option>[#else]<option>${d}</option>[/#if][/#list]</select>
   ～<select name="endYear" id="endYear" class="form-control"><option value="">...</option>
