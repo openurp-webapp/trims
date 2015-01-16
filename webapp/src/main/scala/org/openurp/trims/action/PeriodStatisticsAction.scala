@@ -62,6 +62,7 @@ class PeriodStatisticsAction extends  RestfulAction[Lesson]{
   def top10():String={
     val beginYear = getInt("beginYear")
     val endYear = getInt("endYear")
+    val teaching = getBoolean("teaching")
     val departmentId = getInt("departmentId")
     val sql="""	select  p.name p_name,s.code, sum(c.period) num, d.name d_name
 		from edu_teach.lessons l 
@@ -71,6 +72,7 @@ class PeriodStatisticsAction extends  RestfulAction[Lesson]{
 		join base.departments d on d.id=p.department_id
     join base.semesters s on l.semester_id = s.id
 		join edu_teach.courses c on c.id = l.course_id where 1=1"""+  
+    (if(teaching.isDefined)s" and d.teaching = '${teaching.get}'"else"")+
     (if(beginYear.isDefined)s" and s.id >= '${beginYear.get}'"else"")+
     (if(endYear.isDefined)s" and s.id <= '${endYear.get}'"else"")+
 		(if(departmentId.isDefined)s" and l.teach_depart_id = '${departmentId.get}'"else"")+
