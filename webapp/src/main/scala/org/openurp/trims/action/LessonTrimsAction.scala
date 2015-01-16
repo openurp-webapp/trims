@@ -9,25 +9,29 @@ import org.openurp.base.Department
 class LessonTrimsAction extends AbsEamsAction[Lesson] {
 
   def index(): String = {
-    put("datas", getLessonYears())
+    put("years", getLessonYears())
     forward()
   }
 
   def search(): String = {
+    val teaching = getBoolean("teaching")
     val query = OqlBuilder.from(classOf[Lesson], "l")
     query.select("l.teachDepart.id, count(*) as num")
-    get("year").map(year=>{
-      if(Strings.isNotBlank(year)){
-        put("year", year)
-        query.where("l.semester.schoolYear=:year", year)
+    getInt("beginYear").map(year=>{
+      if(year!=0){
+        put("beginYear", year)
+        query.where("l.semester.id>=:year", year)
       }
     })
-    get("term").map(term=>{
-      if(Strings.isNotBlank(term)){
-        put("term", term)
-        query.where("l.semester.name=:term", term)
+    getInt("endYear").map(year=>{
+      if(year!=0){
+        put("endYear", year)
+        query.where("l.semester.id<=:year", year)
       }
     })
+    if(teaching.isDefined){
+      query.where("l.teachDepart.teaching=:teaching", teaching.get)
+    }
     query.groupBy("l.teachDepart.id")
     query.orderBy("count(*) desc")
     val datas = entityDao.search(query)

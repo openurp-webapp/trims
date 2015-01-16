@@ -15,21 +15,25 @@ class LessonTeachClassStdCountAction extends AbsEamsAction[Lesson] {
   }
 
   def search(): String = {
+    val teaching = getBoolean("teaching")
     val query = OqlBuilder.from(classOf[Lesson], "l")
     query.select("l.teachClass.stdCount, count(*)")
     query.where("l.teachClass.stdCount > 0")
-    get("year").map(year => {
-      if (Strings.isNotBlank(year)) {
-        put("year", year)
-        query.where("l.semester.schoolYear=:year", year)
+    getInt("beginYear").map(year=>{
+      if(year!=0){
+        put("beginYear", year)
+        query.where("l.semester.id>=:year", year)
       }
     })
-    get("term").map(term => {
-      if (Strings.isNotBlank(term)) {
-        put("term", term)
-        query.where("l.semester.name=:term", term)
+    getInt("endYear").map(year=>{
+      if(year!=0){
+        put("endYear", year)
+        query.where("l.semester.id<=:year", year)
       }
     })
+    if(teaching.isDefined){
+      query.where("l.teachDepart.teaching=:teaching", teaching.get)
+    }
     getInt("departmentId").map(departmentId => {
       put("department", entityDao.get(classOf[Department], new Integer(departmentId)))
       query.where("l.teachDepart.id=:did", departmentId)

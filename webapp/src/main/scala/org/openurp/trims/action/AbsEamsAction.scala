@@ -42,9 +42,9 @@ abstract class AbsEamsAction[T <: Entity[_ <: java.io.Serializable]] extends Abs
 
   protected def getLessonYears() = {
     val query = OqlBuilder.from(classOf[Lesson], "l")
-    query.select("l.semester.schoolYear")
-    query.groupBy("l.semester.schoolYear")
-    query.orderBy("l.semester.schoolYear desc")
+    query.select("l.semester.id, l.semester.code")
+    query.groupBy("l.semester.id, l.semester.code")
+    query.orderBy("l.semester.id, l.semester.code")
     entityDao.search(query)
   }
 

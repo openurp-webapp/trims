@@ -1,9 +1,9 @@
 [@b.head/]
+[#include "../trims.ftl"/]
 <div style="margin:0; border:1px solid #ccc; border-radius:5px; padding:10px;">
-  [@b.form action="!thesis" target="harvestTypeDiv"]
-    起始年份：<select name="beginYear"id="beginYear"><option value="">请选择起始年份</option>[#list years as d]<option>${d}</option>[/#list]</select>
-    截止年份：<select name="endYear" id="endYear"><option value="">请选择截止年份</option>[#list years as d]<option>${d}</option>[/#list]</select>
-    [@b.submit value="查询"/]
+  [@b.form action="!thesis" target="harvestTypeDiv" class="form-inline" role="form"]
+    [@yearAndDepartCondition years=years/]
+    [@b.submit value="查询" class="btn btn-default"/]
   [/@]
   [@b.div id="harvestTypeDiv" href="!thesis"/]
   <script>

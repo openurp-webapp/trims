@@ -9,34 +9,34 @@ import org.openurp.base.Department
 /**
  * 各部门学期平均课时统计
  * */
-class DepartPeriodCountAction extends RestfulAction[Lesson] {
+class DepartPeriodCountAction extends AbsEamsAction[Lesson] {
   
-  override def index(): String = {
-    val query = OqlBuilder.from(classOf[Lesson], "l")
-    query.select("l.semester.schoolYear")
-    query.groupBy("l.semester.schoolYear")
-    query.orderBy("l.semester.schoolYear desc")
-    put("datas", entityDao.search(query))
+  def index(): String = {
+    put("years", getLessonYears())
     forward()
   }
 
   def period(): String = {
-    val year = get("year")
-    val term = get("term")
+    val beginYear = getInt("beginYear")
+    val endYear = getInt("endYear")
+    val teaching = getBoolean("teaching")
     val sql = """select teach_depart_id, cast(avg(num) as int) num from 
 		(select  l.teach_depart_id,lt.person_id,s.school_year, s.name, sum(c.period) num
 		from edu_teach.lessons l 
 		join edu_teach.lessons_teachers lt on lt.lesson_id=l.id 
 		join base.semesters s on l.semester_id = s.id 
 		join edu_teach.courses c on c.id = l.course_id
+    join base.departments d on l.teach_depart_id = d.id
 		where 1=1 """ + 
-		(if(year.isDefined && Strings.isNotBlank(year.get))s" and s.school_year = '${year.get}'"else"")+
-		(if(term.isDefined && Strings.isNotBlank(term.get))s" and s.name = '${term.get}'"else"")+
+    (if(teaching.isDefined)s" and d.teaching = '${teaching.get}'"else"")+
+        (if(beginYear.isDefined)s" and l.semester_id >= ${beginYear.get}"else"")+
+        (if(endYear.isDefined)s" and l.semester_id <= '${endYear.get}'"else"")+
 		"""group by l.teach_depart_id,s.school_year,s.name,lt.person_id
 		order by lt.person_id) t
 		group by teach_depart_id order by avg(num) desc"""
-	if(year.isDefined && Strings.isNotBlank(year.get)) put("year", year.orNull)
-	if(term.isDefined && Strings.isNotBlank(term.get)) put("term", term)
+        put("beginYear", beginYear)
+    put("endYear", endYear)
+    put("teaching", teaching)
     val query = SqlBuilder.sql(sql)
     val datas = entityDao.search(query)
     val map = new collection.mutable.HashMap[String, String]

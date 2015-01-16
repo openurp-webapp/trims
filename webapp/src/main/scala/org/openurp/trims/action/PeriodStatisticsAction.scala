@@ -11,14 +11,10 @@ import org.openurp.base.Department
 /**
  * 平均课时人数统计
  * */
-class PeriodStatisticsAction extends  RestfulAction[Lesson]{
+class PeriodStatisticsAction extends  AbsEamsAction[Lesson]{
   
-  override def index(): String = {
-    val query = OqlBuilder.from(classOf[Lesson], "l")
-    query.select("l.semester.id, l.semester.code")
-    query.groupBy("l.semester.id, l.semester.code")
-    query.orderBy("l.semester.id, l.semester.code")
-    put("years", entityDao.search(query))
+  def index(): String = {
+    put("years", getLessonYears())
     val departs = entityDao .findBy(classOf[Department], "teaching", Array(true))
     put("departs", departs)
     forward()
