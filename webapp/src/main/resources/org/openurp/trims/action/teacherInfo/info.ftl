@@ -29,7 +29,7 @@
   </tr>
   <tr>
     <td class="title" width="20%">部门</td>
-    <td class="content">${teacher.person.department.name}</td>
+    <td class="content">${staff.post.head.department.name}</td>
     <td class="title" width="20%">职务</td>
     <td class="content"> </td>
   </tr>
