@@ -18,6 +18,7 @@ class TeacherTitleAllAction extends AbsEamsAction {
   def search(): String = {
     val query = OqlBuilder.from(classOf[Staff], "staff").join("staff.post.head", "l")
     query.select("l.department.id, l.title.id, count(*) as num")
+    query.where("staff.state.id = 1")
 //    query.where("l.teaching = true")
     query.groupBy("l.department.id, l.title.id")
     query.orderBy("count(*) desc")

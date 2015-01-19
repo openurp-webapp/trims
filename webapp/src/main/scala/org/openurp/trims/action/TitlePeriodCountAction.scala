@@ -29,6 +29,7 @@ class TitlePeriodCountAction extends AbsEamsAction {
 		join edu_teach.courses c on c.id = l.course_id
         join hr_base.staffs staff on staff.person_id=lt.person_id
         join hr_base.staff_post_infoes post on staff.post_head_id=post.id
+        where staff.state_id = 1
 		group by lt.person_id,post.title_id,s.id)a
 		group by a.title_id,a.person_id)b
 		group by b.title_id
@@ -73,8 +74,8 @@ class TitlePeriodCountAction extends AbsEamsAction {
 		join hr_base.staffs staff on staff.person_id=lt.person_id
         join hr_base.staff_post_infoes post on staff.post_head_id=post.id
 		join base.departments d on d.id = post.department_id
-		where """ +
-      (if (tid == 0) { "post.title_id is null" } else { "post.title_id=" + tid }) +
+		where staff.state_id = 1""" +
+      (if (tid == 0) { " and post.title_id is null" } else { " and post.title_id=" + tid }) +
       """
 		group by lt.person_id,post.department_id,s.id)a
 		group by a.department_id,a.person_id)b
@@ -101,8 +102,8 @@ class TitlePeriodCountAction extends AbsEamsAction {
 		join hr_base.staffs staff on staff.person_id=lt.person_id
         join hr_base.staff_post_infoes post on staff.post_head_id=post.id
 		join base.people p on staff.person_id = p.id
-		where """ +
-      (if (tid == 0) "post.title_id is null" else "post.title_id=" + tid) +
+		where staff.state_id = 1""" +
+      (if (tid == 0) "and post.title_id is null" else " and post.title_id=" + tid) +
     s""" and post.department_id=${did}
 		group by lt.person_id,p.name,s.school_year,s.name)a
 		group by a.p_name
