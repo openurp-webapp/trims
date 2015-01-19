@@ -30,10 +30,11 @@ class DepartTeacherCountAction extends AbsEamsAction{
     order by count(*) desc"""
     val query = SqlBuilder.sql(sql)
     val datas = entityDao .search(query)
-    val ids = new collection.mutable.HashSet[Integer]
+    val idsSet = new collection.mutable.HashSet[Integer]
     datas.foreach(d => {
-      ids += d(0).asInstanceOf[Integer]
+      idsSet += d(0).asInstanceOf[Integer]
     })
+    val ids = idsSet.toList
     val names = new ListBuffer[String]
     val values = new ListBuffer[Any]()
     val teacherTypes = entityDao.getAll(classOf[TeacherType])

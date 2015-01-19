@@ -16,28 +16,45 @@ class TeacherTitleAllAction extends AbsEamsAction {
   }
 
   def search(): String = {
-    val query = OqlBuilder.from(classOf[Staff], "staff").join("staff.post.head", "l")
-    query.select("l.department.id, l.title.id, count(*) as num")
+    val teaching = getBoolean("teaching")
+    val query = OqlBuilder.from(classOf[Staff], "staff")
+    query.select("staff.post.head.department.id, staff.post.head.title.id, count(*) as num")
     query.where("staff.state.id = 1")
-//    query.where("l.teaching = true")
-    query.groupBy("l.department.id, l.title.id")
+    if(teaching.isDefined){
+      query.where(s"staff.post.head.department.teaching = ${teaching.get}")
+    }
+    query.where("staff.post.head.title.id is not null")
+    query.groupBy("staff.post.head.department.id, staff.post.head.title.id")
     query.orderBy("count(*) desc")
     val datas = entityDao.search(query).asInstanceOf[Seq[Array[Any]]]
     val titles = entityDao.getAll(classOf[ProfessionalTitle])
     val ititles = new collection.mutable.HashSet[String]
+    val idsSet = new collection.mutable.HashSet[Integer]
+    datas.foreach(d => {
+      idsSet += d(0).asInstanceOf[Integer]
+    })
+    val ids = idsSet.toList
     val names = new ListBuffer[String]
-    val departs = getDepartments()
-    departs.foreach(d => names += (if (d.shortName != null) d.shortName else d.name))
+    val departs = getDepartmentMap()
+    ids.foreach(id =>{
+      names += departs(id.toString())
+    })
     val values = new ListBuffer[Any]()
     titles.foreach(t => {
       val value = new ListBuffer[Any]()
       value += t.name
-      departs.foreach(d => {
-        val data = datas.find(o => d.id.equals(o(0)) && t.id.equals(o(1)))
-        val num = (if (data.isDefined) { ititles.add(t.name); (data.get)(2) } else 0)
+      var sum = 0L
+      ids.foreach(id => {
+        val data = datas.find(o => 
+          id.equals(o(0)) && t.id.equals(o(1)))
+        val num = (if (data.isDefined) { 
+          ititles.add(t.name)
+          (data.get)(2).asInstanceOf[java.lang.Long]
+        } else new java.lang.Long(0))
         value += num
+        sum += num
       })
-      values += value
+      if(sum > 0) values += value
     })
     put("names", names)
     put("values", values)

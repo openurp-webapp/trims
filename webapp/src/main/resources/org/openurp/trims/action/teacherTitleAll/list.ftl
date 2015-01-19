@@ -8,7 +8,7 @@
         type:'bar',
         stack: '职称',
         barMinHeight: 10,
-        data:[[#list 1..(v?size-1) as i][#if i > 1],[/#if]${v[i]}[/#list]]
+        data:[[#list 1..(v?size-1) as i][#if i > 1],[/#if][#if v[i] != 0]${v[i]}[#else]'-'[/#if][/#list]]
     }
   [/#list]
   ]

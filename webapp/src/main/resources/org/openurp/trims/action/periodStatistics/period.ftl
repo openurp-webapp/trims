@@ -74,5 +74,5 @@
 [#else]
 <div style="padding:100px; font-size:20px; text-align:center">暂无数据</div>
 [/#if]
-[@b.div href="!top10?beginYear=${beginYear!}&endYear=${endYear!}&teaching=${(teaching?string('1','0'))!}&departmentId=${(department.id)!}"/]
+[@b.div href="!top10?beginYear=${beginYear!}&endYear=${endYear!}&teaching=${(teaching?string('1','0'))!}&departmentId=${(department.id)!}&teacherTypeId=${teacherTypeId!}"/]
 [@b.foot/]
