@@ -34,7 +34,7 @@ class TitleResearchCountAction extends AbsEamsAction {
     entityDao.getAll(classOf[ProfessionalTitle]).foreach( d => {
       map.put(d.id.toString(), d.name)
     })
-    putNamesAndValues(thesises, data => map.get(data(0)+"").getOrElse("无职称"))
+    putNamesAndValues(thesises, data => map.get(data(0)+"").getOrElse("暂定系列"))
     put("beginYear", beginYear)
     put("endYear", endYear)
     forward()
@@ -59,7 +59,7 @@ class TitleResearchCountAction extends AbsEamsAction {
     entityDao.getAll(classOf[ProfessionalTitle]).foreach( d => {
       map.put(d.id.toString(), d.name)
     })
-    putNamesAndValues(literatures, data => map.get(data(0)+"").getOrElse("无职称"))
+    putNamesAndValues(literatures, data => map.get(data(0)+"").getOrElse("暂定系列"))
     put("beginYear", beginYear)
     put("endYear", endYear)
     forward()

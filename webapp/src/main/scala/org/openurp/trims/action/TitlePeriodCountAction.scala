@@ -55,7 +55,7 @@ class TitlePeriodCountAction extends AbsEamsAction {
     entityDao.getAll(classOf[ProfessionalTitle]).foreach(d => {
       map.put(d.id.toString(), d.name)
     })
-    putNamesAndValues(datas, data => map.get(data(0) + "").getOrElse("无职称"))
+    putNamesAndValues(datas, data => map.get(data(0) + "").getOrElse("暂定系列"))
     forward()
   }
 
