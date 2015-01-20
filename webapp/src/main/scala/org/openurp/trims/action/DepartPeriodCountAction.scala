@@ -34,9 +34,9 @@ class DepartPeriodCountAction extends AbsEamsAction[Lesson] {
     join hr_base.staff_post_infoes pi on pi.id=f.post_head_id
 		where 1=1 and f.state_id=1 """ + 
     (if(teaching.isDefined)s" and d.teaching = '${teaching.get}'"else"")+
-        (if(beginYear.isDefined)s" and l.semester_id >= ${beginYear.get}"else"")+
-        (if(endYear.isDefined)s" and l.semester_id <= '${endYear.get}'"else"")+
-        (if(teacherTypeId.isDefined)s" and pi.teacher_type_id = ${teacherTypeId.get}"else"")+
+    (if(beginYear.isDefined)s" and l.semester_id >= ${beginYear.get}"else"")+
+    (if(endYear.isDefined)s" and l.semester_id <= '${endYear.get}'"else"")+
+    (if(teacherTypeId.isDefined)s" and pi.teacher_type_id = ${teacherTypeId.get}"else"")+
 		"""group by l.teach_depart_id,s.school_year,s.name,lt.person_id
 		order by lt.person_id) t
 		group by teach_depart_id order by avg(num) desc"""

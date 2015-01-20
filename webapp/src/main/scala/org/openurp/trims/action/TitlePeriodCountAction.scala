@@ -9,6 +9,7 @@ import org.openurp.hr.base.code.ProfessionalTitle
 class TitlePeriodCountAction  extends AbsEamsAction {
 
   def index(): String = {
+    put("years", getLessonYears())
     forward()
   }
 
@@ -17,6 +18,8 @@ class TitlePeriodCountAction  extends AbsEamsAction {
    */
 
   def search(): String = {
+    val beginYear = getInt("beginYear")
+    val endYear = getInt("endYear")
     val teaching = getBoolean("teaching")
     val sql = """select b.title_id,cast(avg(num) as int) num from
     (select a.person_id,a.title_id,cast(avg(num) as int) num from 
@@ -30,6 +33,8 @@ class TitlePeriodCountAction  extends AbsEamsAction {
     join base.departments d on post.department_id = d.id
     where staff.state_id = 1 """ +
     (if(teaching.isDefined)s" and d.teaching = ${teaching.get}"else"")+
+    (if(beginYear.isDefined)s" and l.semester_id >= ${beginYear.get}"else"")+
+    (if(endYear.isDefined)s" and l.semester_id <= '${endYear.get}'"else"")+
     """ group by lt.person_id,post.title_id,s.id)a
     group by a.title_id,a.person_id)b
     group by b.title_id
@@ -42,6 +47,8 @@ class TitlePeriodCountAction  extends AbsEamsAction {
     })
     putNamesAndValues(datas, data => map.get(data(0) + "").getOrElse("暂定系列"))
     put("teaching", teaching)
+    put("beginYear", beginYear)
+    put("endYear", endYear)
     forward()
   }
 
@@ -49,6 +56,8 @@ class TitlePeriodCountAction  extends AbsEamsAction {
    * 某职称按院系统计课时
    */
   def department(): String = {
+    val beginYear = getInt("beginYear")
+    val endYear = getInt("endYear")
     val teaching = getBoolean("teaching")
     val tid = getInt("tid").get
     val sql = s"""select b.department_id,cast(avg(num) as int) num from 
@@ -59,11 +68,13 @@ class TitlePeriodCountAction  extends AbsEamsAction {
     join base.semesters s on l.semester_id = s.id 
     join edu_teach.courses c on c.id = l.course_id
     join hr_base.staffs staff on staff.person_id=lt.person_id
-        join hr_base.staff_post_infoes post on staff.post_head_id=post.id
+    join hr_base.staff_post_infoes post on staff.post_head_id=post.id
     join base.departments d on post.department_id = d.id
     where staff.state_id = 1""" +
-      (if (tid == 0) { " and post.title_id is null" } else { " and post.title_id=" + tid }) +
-      (if(teaching.isDefined)s" and d.teaching = ${teaching.get}"else"")+
+    (if (tid == 0) { " and post.title_id is null" } else { " and post.title_id=" + tid }) +
+    (if(teaching.isDefined)s" and d.teaching = ${teaching.get}"else"")+
+    (if(beginYear.isDefined)s" and l.semester_id >= ${beginYear.get}"else"")+
+    (if(endYear.isDefined)s" and l.semester_id <= '${endYear.get}'"else"")+
       """
     group by lt.person_id,post.department_id,s.id)a
     group by a.department_id,a.person_id)b
@@ -74,11 +85,17 @@ class TitlePeriodCountAction  extends AbsEamsAction {
     val map = getDepartmentMap
     val title = entityDao.get(classOf[ProfessionalTitle], new Integer(tid))
     put("title", title)
+    put("teaching", teaching)
+    put("beginYear", beginYear)
+    put("endYear", endYear)
     putNamesAndValues(datas, data => map.get(data(0) + ""))
     forward()
   }
 
   def title(): String = {
+    val beginYear = getInt("beginYear")
+    val endYear = getInt("endYear")
+    val teaching = getBoolean("teaching")
     val tid = getInt("tid").get
     val did = getInt("did").get
     val sql = s"""select a.p_name,cast(avg(num) as int) num from 
@@ -88,10 +105,12 @@ class TitlePeriodCountAction  extends AbsEamsAction {
     join base.semesters s on l.semester_id = s.id 
     join edu_teach.courses c on c.id = l.course_id
     join hr_base.staffs staff on staff.person_id=lt.person_id
-        join hr_base.staff_post_infoes post on staff.post_head_id=post.id
+    join hr_base.staff_post_infoes post on staff.post_head_id=post.id
     join base.people p on staff.person_id = p.id
     where staff.state_id = 1""" +
-      (if (tid == 0) "and post.title_id is null" else " and post.title_id=" + tid) +
+    (if (tid == 0) "and post.title_id is null" else " and post.title_id=" + tid) +
+    (if(beginYear.isDefined)s" and l.semester_id >= ${beginYear.get}"else"")+
+    (if(endYear.isDefined)s" and l.semester_id <= '${endYear.get}'"else"")+
     s""" and post.department_id=${did}
     group by lt.person_id,p.name,s.school_year,s.name)a
     group by a.p_name
@@ -101,6 +120,9 @@ class TitlePeriodCountAction  extends AbsEamsAction {
     val department = entityDao.get(classOf[Department], new Integer(did))
     val title = entityDao.get(classOf[ProfessionalTitle], new Integer(tid))
     put("title", title)
+    put("teaching", teaching)
+    put("beginYear", beginYear)
+    put("endYear", endYear)
     put("department", department)
     put("datas", datas)
     forward()

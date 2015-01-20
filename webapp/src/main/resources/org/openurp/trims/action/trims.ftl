@@ -1,5 +1,5 @@
 [#ftl]
-[#macro yearAndDepartCondition years=[] term=false teaching=-1]
+[#macro yearAndDepartCondition years=[] term=false teaching=""]
   [#if years?size gt 0]
   <b>起止时间</b>：<select name="beginYear"id="beginYear" class="form-control">
   <option value="">...</option>
@@ -9,9 +9,9 @@
   <a id="jsnBtn" class="btn btn-default">近三年</a>
   [/#if]
   <div class="btn-group departBtn pull-right">
-    <button type="button" class="btn btn-default departBtn [#if teaching == 1]active[/#if]" value="1">教学部门</button>
-    <button type="button" class="btn btn-default departBtn [#if teaching == 0]active[/#if]" value="0">职能部门</button>
-    <button type="button" class="btn btn-default departBtn [#if teaching == -1]active[/#if]" value="">全部</button>
+    <button type="button" class="btn btn-default departBtn [#if teaching?string == "1"]active[/#if]" value="1">教学部门</button>
+    <button type="button" class="btn btn-default departBtn [#if teaching?string == "0"]active[/#if]" value="0">职能部门</button>
+    <button type="button" class="btn btn-default departBtn [#if teaching?string == ""]active[/#if]" value="">全部</button>
   </div>
   <input type="hidden" id="teachingIpt" name="teaching" value="${teaching}"/>
   <script>
@@ -45,7 +45,7 @@
   </script>
 [/#macro]
 
-[#macro termAndDepartCondition years=[] teaching=1]
+[#macro termAndDepartCondition years=[] teaching=""]
   [@yearAndDepartCondition years=years term=true teaching=teaching/]
 [/#macro]
 
