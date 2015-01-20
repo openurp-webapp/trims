@@ -32,6 +32,7 @@
                     {
                         [#if xname != '']name : '${xname}',[/#if]
                         type : 'category',
+                        start:0,
                         axisLabel:{interval:'${interval}', rotate:${xrotate}},
                         data : [[#list names as d][#if d_index gt 0],[/#if]'${d}'[/#list]]
                     }

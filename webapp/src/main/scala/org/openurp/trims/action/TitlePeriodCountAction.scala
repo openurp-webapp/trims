@@ -20,17 +20,20 @@ class TitlePeriodCountAction extends AbsEamsAction {
    */
 
   def search(): String = {
+    val teaching = getBoolean("teaching")
     val sql = """select b.title_id,cast(avg(num) as int) num from
 		(select a.person_id,a.title_id,cast(avg(num) as int) num from 
 		(select lt.person_id,post.title_id, sum(c.period) num
 		from edu_teach.lessons l 
+    join base.departments d on l.teach_depart_id = d.id
 		join edu_teach.lessons_teachers lt on lt.lesson_id=l.id
 		join base.semesters s on l.semester_id = s.id 
 		join edu_teach.courses c on c.id = l.course_id
-        join hr_base.staffs staff on staff.person_id=lt.person_id
-        join hr_base.staff_post_infoes post on staff.post_head_id=post.id
-        where staff.state_id = 1
-		group by lt.person_id,post.title_id,s.id)a
+    join hr_base.staffs staff on staff.person_id=lt.person_id
+    join hr_base.staff_post_infoes post on staff.post_head_id=post.id
+    where staff.state_id = 1 """ +
+    (if(teaching.isDefined)s" and d.teaching = '${teaching.get}'"else"")+
+		""" group by lt.person_id,post.title_id,s.id)a
 		group by a.title_id,a.person_id)b
 		group by b.title_id
 		order by num desc"""
@@ -56,6 +59,7 @@ class TitlePeriodCountAction extends AbsEamsAction {
       map.put(d.id.toString(), d.name)
     })
     putNamesAndValues(datas, data => map.get(data(0) + "").getOrElse("暂定系列"))
+    put("teaching", teaching)
     forward()
   }
 

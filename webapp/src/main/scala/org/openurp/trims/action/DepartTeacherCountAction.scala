@@ -54,9 +54,29 @@ class DepartTeacherCountAction extends AbsEamsAction{
       values += value
     })
     
+    put("departIds", ids)
     put("names", names)
     put("values", values)
     put("titles", ititles)
+    forward()
+  }
+  
+  def teachers() = {
+    val teaching = getBoolean("teaching")
+    val departId = getInt("departId").get
+    val sql = s"""select p.code, p.name, tt.name typeName
+    from hr_base.staffs f
+    join base.people p on f.person_id = p.id
+    join hr_base.staff_post_infoes pi on f.post_head_id = pi.id
+    join hr_base.xb_teacher_types tt on pi.teacher_type_id = tt.id
+    where f.state_id = 1 and pi.department_id = ${departId}""" +
+    (if(teaching.isDefined)s" and d.teaching = '${teaching.get}'"else"")+
+    """ and pi.teacher_type_id is not null 
+    order by tt.id"""
+    val query = SqlBuilder.sql(sql)
+    val datas = entityDao .search(query)
+    put("depart", entityDao.get(classOf[Department], new Integer(departId)))
+    put("teachers", datas)
     forward()
   }
 

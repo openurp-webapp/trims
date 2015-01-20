@@ -30,7 +30,7 @@ class PeriodStatisticsAction extends  AbsEamsAction[Lesson]{
     val teaching = getBoolean("teaching")
     val departmentId = getInt("departmentId")
     val teacherTypeId = getInt("teacherTypeId")
-    val sql = """select num * 10, count(*) from
+    val sql = """select num * 10 + 5, count(*) from
 		(select t.person_id, cast(avg(num) / 10 as int) num from 
 		(select  lt.person_id,l.semester_id, sum(c.period) num
 		from edu_teach.lessons l 

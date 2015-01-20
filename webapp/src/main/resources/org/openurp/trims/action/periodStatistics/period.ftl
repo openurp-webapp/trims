@@ -36,7 +36,7 @@
                         name:'平均课时',
                         type : 'category',
                         boundaryGap : false,
-                        data : [[#list datas as data][#if data_index gt 0],[/#if]${data[0]}[/#list]]
+                        data : [[#list datas as data][#if data_index gt 0],[/#if]'${data[0]-5}~${data[0]+5}'[/#list]]
                     }
                 ],
                 yAxis : [
