@@ -13,7 +13,7 @@
     <button type="button" class="btn btn-default departBtn [#if teaching == 0]active[/#if]" value="0">职能部门</button>
     <button type="button" class="btn btn-default departBtn [#if teaching == -1]active[/#if]" value="">全部</button>
   </div>
-  <input type="hidden" id="teachingIpt" name="teaching" value=""/>
+  <input type="hidden" id="teachingIpt" name="teaching" value="${teaching}"/>
   <script>
     $('#beginYear').change(function (){
       var beginYear = this.value
