@@ -92,6 +92,7 @@ class TitleLevelPeriodCountAction extends AbsEamsAction {
     put("title", title)
     putNamesAndValues(datas, data => map.get(data(0) + ""))
     put("teaching", teaching)
+    put("tid", tid)
     put("beginYear", beginYear)
     put("endYear", endYear)
     forward()

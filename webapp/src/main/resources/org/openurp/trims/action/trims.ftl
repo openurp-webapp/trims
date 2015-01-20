@@ -8,7 +8,7 @@
   [#list years as d][#if term]<option value="${d[0]}">${d[1]}</option>[#else]<option>${d}</option>[/#if][/#list]</select>
   <a id="jsnBtn" class="btn btn-default">近三年</a>
   [/#if]
-  <div class="btn-group departBtn pull-right">
+  <div class="btn-group departBtn pull-right" style="z-index:999;">
     <button type="button" class="btn btn-default departBtn [#if teaching?string == "1"]active[/#if]" value="1">教学部门</button>
     <button type="button" class="btn btn-default departBtn [#if teaching?string == "0"]active[/#if]" value="0">职能部门</button>
     <button type="button" class="btn btn-default departBtn [#if teaching?string == ""]active[/#if]" value="">全部</button>
