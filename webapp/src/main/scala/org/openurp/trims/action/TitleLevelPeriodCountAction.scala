@@ -13,7 +13,7 @@ import org.openurp.hr.base.code.ProfessionalTitleLevel
 class TitleLevelPeriodCountAction extends AbsEamsAction {
 
   def index(): String = {
-    put("years", getLessonYears())
+    put("years", getLessonTerms())
     forward()
   }
 

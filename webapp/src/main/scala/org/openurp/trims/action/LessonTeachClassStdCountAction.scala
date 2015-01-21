@@ -9,7 +9,7 @@ import org.openurp.base.Department
 class LessonTeachClassStdCountAction extends AbsEamsAction[Lesson] {
 
   def index(): String = {
-    put("years", getLessonYears())
+    put("years", getLessonTerms())
     put("departments", getDepartments())
     forward()
   }

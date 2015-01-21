@@ -13,7 +13,7 @@ import org.openurp.hr.base.code.TeacherType
 class DepartPeriodCountAction extends AbsEamsAction[Lesson] {
   
   def index(): String = {
-    put("years", getLessonYears())
+    put("years", getLessonTerms())
     put("teacherTypes", entityDao.getAll(classOf[TeacherType]))
     forward()
   }

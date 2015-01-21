@@ -1,4 +1,4 @@
-[#macro echarts id title title2='' names=[] values=[] onclick='' type='bar' xname='' yname='' interval=0 color=true showSeriesLable=true xrotate=-30
+[#macro echarts id title='' title2='' names=[] values=[] onclick='' type='bar' xname='' yname='' interval=0 color=true showSeriesLable=true xrotate=-30
  barMinHeight=20 maxAndMin=true series='' height=300 legend='' trigger='item']
 
 [#if names?size gt 0]
@@ -12,16 +12,17 @@
             var myChart = echarts.init(document.getElementById('${id}')); 
             
             var option = {
-                title: {text:'${title}'
-                [#if title2 != '']
-                , subtext : '${title2}'
-                [/#if], padding: 0},
+                title: {
+                  text:'${title}'
+                  [#if title2 != '']
+                  , subtext : '${title2}'
+                  [/#if], padding: 0},
                 //renderAsImage:true,
                 tooltip : {
-                    trigger: '${trigger}',
-                    axisPointer : {            // 坐标轴指示器，坐标轴触发有效
-                        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-                    }
+                  trigger: '${trigger}',
+                  axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                    type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                  }
                 },
                 [#if legend != '']
                 legend: {

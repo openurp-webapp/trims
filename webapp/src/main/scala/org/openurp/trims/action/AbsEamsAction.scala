@@ -40,12 +40,20 @@ abstract class AbsEamsAction[T <: Entity[_ <: java.io.Serializable]] extends Abs
     map
   }
 
-  protected def getLessonYears() = {
+  protected def getLessonTerms() = {
     val query = OqlBuilder.from(classOf[Lesson], "l")
     query.select("l.semester.id, l.semester.code")
     query.groupBy("l.semester.id, l.semester.code")
     query.orderBy("l.semester.id, l.semester.code")
     entityDao.search(query)
+  }
+
+  protected def getLessonYears() = {
+    val query = OqlBuilder.from(classOf[Lesson], "l")
+    query.select("l.semester.schoolYear, l.semester.schoolYear")
+    query.groupBy("l.semester.schoolYear")
+    query.orderBy("l.semester.schoolYear")
+    entityDao.search(query).asInstanceOf[Seq[Array[Any]]]
   }
 
   protected def getStudentGrade() = {

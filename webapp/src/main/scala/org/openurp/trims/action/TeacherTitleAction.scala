@@ -9,6 +9,7 @@ import org.openurp.hr.base.code.ProfessionalTitle
 import org.openurp.hr.base.Staff
 import org.beangle.data.jpa.dao.SqlBuilder
 import org.openurp.hr.base.code.ProfessionalTitleLevel
+import org.openurp.hr.base.code.model.ProfessionalTitleBean
 //import org.openurp.edu.base.code.TeacherTitle
 
 class TeacherTitleAction extends AbsEamsAction {
@@ -22,7 +23,7 @@ class TeacherTitleAction extends AbsEamsAction {
     query.select("l.title.id, count(*) as num")
     query.where("staff.state.id = 1")
     //    query.where("l.teaching = true")
-    //    query.where("l.title.id is not null")
+//    query.where("l.title.id is not null")
     query.groupBy("l.title.id")
     query.orderBy("count(*) desc")
     val datas = entityDao.search(query)
@@ -30,19 +31,21 @@ class TeacherTitleAction extends AbsEamsAction {
     entityDao.getAll(classOf[ProfessionalTitle]).foreach(d => {
       map.put(d.id.toString(), d.name)
     })
-    putNamesAndValues(datas, data => map.get(data(0) + "").getOrElse("暂定系列"))
+    putNamesAndValues(datas, data => map.get(data(0) + "").getOrElse("无职称"))
     forward()
   }
 
   def department(): String = {
     val tid = getInt("tid").get
-    val title = entityDao.get(classOf[ProfessionalTitle], new Integer(tid))
+    var title = entityDao.get(classOf[ProfessionalTitleBean], new Integer(tid))
     val query = OqlBuilder.from(classOf[Staff], "staff").join("staff.post.head", "l")
     query.where("staff.state.id = 1")
     query.select("l.department.id, count(*) as num")
     //    query.where("l.teaching = true")
     if ("undefined".equals(get("tid").get)) {
       query.where("l.title.id is null")
+      title = new ProfessionalTitleBean
+      title.name = "无职称"
     } else {
       query.where("l.title.id=:tid", tid)
     }

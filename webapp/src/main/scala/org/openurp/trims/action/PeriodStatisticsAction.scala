@@ -16,7 +16,7 @@ import org.openurp.hr.base.code.TeacherType
 class PeriodStatisticsAction extends  AbsEamsAction[Lesson]{
   
   def index(): String = {
-    put("years", getLessonYears())
+    put("years", getLessonTerms())
     val departs = entityDao .findBy(classOf[Department], "teaching", Array(true))
     put("departs", departs)
     println( entityDao.getAll(classOf[PostType]))

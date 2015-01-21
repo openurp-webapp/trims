@@ -3,13 +3,14 @@ package org.openurp.trims.action
 import org.openurp.base.Department
 import org.beangle.data.jpa.dao.SqlBuilder
 import org.openurp.hr.base.code.ProfessionalTitle
+import org.openurp.hr.base.code.model.ProfessionalTitleBean
 /**
  * 按职称对课时统计
  */
 class TitlePeriodCountAction  extends AbsEamsAction {
 
   def index(): String = {
-    put("years", getLessonYears())
+    put("years", getLessonTerms())
     forward()
   }
 
@@ -45,7 +46,7 @@ class TitlePeriodCountAction  extends AbsEamsAction {
     entityDao.getAll(classOf[ProfessionalTitle]).foreach(d => {
       map.put(d.id.toString(), d.name)
     })
-    putNamesAndValues(datas, data => map.get(data(0) + "").getOrElse("暂定系列"))
+    putNamesAndValues(datas, data => map.get(data(0) + "").getOrElse("无职称"))
     put("teaching", teaching)
     put("beginYear", beginYear)
     put("endYear", endYear)
@@ -83,7 +84,12 @@ class TitlePeriodCountAction  extends AbsEamsAction {
     val query = SqlBuilder.sql(sql)
     val datas = entityDao.search(query)
     val map = getDepartmentMap
-    val title = entityDao.get(classOf[ProfessionalTitle], new Integer(tid))
+    var title = entityDao.get(classOf[ProfessionalTitleBean], new Integer(tid))
+    if (tid == 0) {
+      title = new ProfessionalTitleBean
+      title.id = 0
+      title.name = "无职称"
+    }
     put("title", title)
     put("teaching", teaching)
     put("beginYear", beginYear)
@@ -118,7 +124,11 @@ class TitlePeriodCountAction  extends AbsEamsAction {
     val query = SqlBuilder.sql(sql)
     val datas = entityDao.search(query)
     val department = entityDao.get(classOf[Department], new Integer(did))
-    val title = entityDao.get(classOf[ProfessionalTitle], new Integer(tid))
+    var title = entityDao.get(classOf[ProfessionalTitleBean], new Integer(tid))
+    if (tid == 0) {
+      title = new ProfessionalTitleBean
+      title.name = "无职称"
+    }
     put("title", title)
     put("teaching", teaching)
     put("beginYear", beginYear)
