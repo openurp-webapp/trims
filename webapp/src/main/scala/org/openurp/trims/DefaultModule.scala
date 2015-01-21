@@ -1,10 +1,9 @@
 package org.openurp.trims
 
-import org.openurp.trims.action._
 import org.beangle.commons.inject.bind.AbstractBindModule
-import com.sun.org.apache.bcel.internal.generic.ClassObserver
-import org.beangle.commons.lang.ClassLoaders
 import org.beangle.commons.io.IOs
+import org.beangle.commons.lang.ClassLoaders
+import org.openurp.trims.action.{DegreeResearchAvgCountAction, DepartJobRatioAction, DepartPeriodCountAction, DepartResearchAction, DepartTeacherCountAction, ExpCourseSearchTrimsAction, HarvestTypeCountAction, MajorSearchTrimsAction, PeriodStatisticsAction, ResearchAction, TeacherAction, TeacherInfoAction, TeachingAction, TitlePeriodCountAction, TitleResearchAvgCountAction, TitleResearchCountAction}
 
 class DefaultModule extends AbstractBindModule {
 
@@ -24,14 +23,7 @@ class DefaultModule extends AbstractBindModule {
     bind(classOf[TitleResearchCountAction])
     bind(classOf[TitleResearchAvgCountAction])
     bind(classOf[DegreeResearchAvgCountAction])
-  }
-}
-
-object A{
-  def main(args:Array[String]){
-    for( url <- ClassLoaders.getResources("META-INF/hibernate.cfg.xml")){
-      println(url)
-      println(IOs.readLines(url.openStream()))
-    }
+    
+    bind(classOf[DepartJobRatioAction])
   }
 }
