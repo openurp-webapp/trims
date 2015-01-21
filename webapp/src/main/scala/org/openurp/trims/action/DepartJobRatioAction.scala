@@ -46,6 +46,7 @@ class DepartJobRatioAction extends AbsEamsAction {
      join std_job.employment_statuses status on status.id=em.employment_status_id
      join std_job.graduate_batches season on season.id=em.graduate_batch_id
      where std.department_id=:departId
+     and season.enabled=true
      group by season.name order by season.name
     """
     val datas = entityDao.search(SqlBuilder.sql(query).param("departId", departId))
