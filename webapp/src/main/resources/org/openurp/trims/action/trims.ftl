@@ -53,3 +53,20 @@
 
 [#macro beginYearAndEndYear][#if beginYear??][@showYearOrYearAndTerm beginYear/][/#if][#if beginYear?? && endYear??] 到 [/#if][#if endYear??][@showYearOrYearAndTerm endYear/][/#if][/#macro]
 [#macro showYearOrYearAndTerm year][#if year?length gt 4]${year[0..3]}-${year[4]}[#else]${year}[/#if][/#macro]
+
+[#macro btns name datas value]
+  <div class="btn-group">
+    [#list datas as data]
+    <button type="button" class="btn btn-default ${name}Btn [#if data[0]?string == value?string]active[/#if]" value="${data[0]}">${data[1]}</button>
+    [/#list]
+    <input type="hidden" id="${name}Ipt" name="${name}" value="${value}"/>
+  </div>
+  <script>
+    $('.${name}Btn').click(function (){
+      $('#${name}Ipt').val(this.value);
+      $('.${name}Btn').removeClass('active');
+      $(this).addClass('active');
+      bg.form.submit($('#${name}Ipt').closest('form').attr('id'),null,null,null);
+    });
+  </script>
+[/#macro]

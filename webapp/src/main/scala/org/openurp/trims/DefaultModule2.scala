@@ -16,6 +16,7 @@ class DefaultModule2 extends AbstractBindModule {
     bind(classOf[StudentDepartStatisticsAction], classOf[TeacherTitleAction], classOf[TeacherTitleAllAction])
     bind(classOf[TeacherTitleLevelAllAction], classOf[TitleLevelPeriodCountAction])
     bind(classOf[TeachingQualityAction])
+    bind(classOf[StudentAreaAction])
     // TODO should remoed to openurp-teach-core 
 //    bind(classOf[BaseCodeServiceImpl])
   }
