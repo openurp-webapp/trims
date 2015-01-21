@@ -66,8 +66,9 @@ class TeachingQualityAction extends AbsEamsAction {
 
   def top10() = {
     val departId = getInt("departId").get
-    val beginYear = get("beginYear").get
-    val endYear = get("endYear").get
+//    val beginYear = get("beginYear").get
+//    val endYear = get("endYear").get
+    val schoolYear = get("schoolYear").get
     val sql = s"""select s.school_year, p.code, p.name, avg(q.score)
     from edu_quality.lesson_questionnaire_stats q
     join edu_teach.lessons l on l.id = q.lesson_id
@@ -77,10 +78,9 @@ class TeachingQualityAction extends AbsEamsAction {
     join base.people p on p.id = f.person_id
     join hr_base.staff_post_infoes pi on pi.id = f.post_head_id
     where f.state_id = 1 and pi.department_id = ${departId}
-    and s.school_year >= '${beginYear}'
-    and s.school_year <= '${endYear}'
+    and s.school_year = '${schoolYear}'
     group by s.school_year, p.code, p.name
-    order by avg(q.score)
+    order by avg(q.score) desc
     limit 10"""
     val query = SqlBuilder.sql(sql)
     val datas = entityDao.search(query)

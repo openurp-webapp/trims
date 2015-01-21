@@ -1,7 +1,7 @@
 [#macro echarts id title='' title2='' names=[] values=[] onclick='' type='bar' xname='' yname='' interval=0 color=true showSeriesLable=true xrotate=-30
- barMinHeight=20 maxAndMin=true series='' height=300 legend='' trigger='item']
+ barMinHeight=20 maxAndMin=true series='' height=300 legend='' trigger='item' datas=[]]
 
-[#if names?size gt 0]
+[#if (names?size gt 0) || (datas?size gt 0)]
 <div id="${id}" style="height:${height}px;">
 
 </div>
@@ -35,7 +35,11 @@
                         type : 'category',
                         start:0,
                         axisLabel:{interval:'${interval}', rotate:${xrotate}},
+                        [#if datas?size gt 0]
+                        data : [[#list datas as d][#if d_index gt 0],[/#if]'${d[0]}'[/#list]]
+                        [#else]
                         data : [[#list names as d][#if d_index gt 0],[/#if]'${d}'[/#list]]
+                        [/#if]
                     }
                 ],
                 yAxis : [
@@ -71,7 +75,11 @@
                                 }
                             }
                         },
+                        [#if datas?size gt 0]
+                        "data":[[#list datas as d][#if d_index gt 0],[/#if]${d[1]}[/#list]],
+                        [#else]
                         "data":[[#list values as d][#if d_index gt 0],[/#if]${d}[/#list]],
+                        [/#if]
                         [#if maxAndMin]
                         markPoint : {
                             data : [
