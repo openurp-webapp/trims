@@ -1,6 +1,6 @@
 [@b.head/]
 [#if datas?size gt 0]
-<h4>平均评教 Top10</h4>
+<h4>${depart.name} 平均评教 Top10</h4>
 <table class="gridtable">
   <tr>
     <th>学年</th>

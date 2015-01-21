@@ -4,6 +4,6 @@
   [@b.form action="!search" target="studentAreaMapDiv"]
     [@btns name="sfzx" datas=[[1, '在校生'],['', '全部']] value = '1'/]
   [/@]
-  [@b.div id="studentAreaMapDiv" href="!search"/]
+  [@b.div id="studentAreaMapDiv" href="!search?sfzx=1"/]
 </div>
 [@b.foot/]

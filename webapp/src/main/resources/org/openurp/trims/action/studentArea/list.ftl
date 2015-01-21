@@ -20,7 +20,7 @@
               },
               dataRange: {
                   min: 0,
-                  max: 2500,
+                  max: ${max},
                   x: 'left',
                   y: 'bottom',
                   text:['高','低'],           // 文本，默认为数值文本

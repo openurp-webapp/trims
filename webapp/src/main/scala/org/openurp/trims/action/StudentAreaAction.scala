@@ -25,8 +25,15 @@ class StudentAreaAction extends AbsEamsAction {
       order by num desc"""
     val query = SqlBuilder.sql(sql)
     val datas = entityDao.search(query)
+    var max = 0
+    datas.foreach(data => {
+      val value = new Integer(data(1).toString)
+      if(max < value) max = value
+    })
+    max = max / 100 * 100 + 100
     put("datas", datas)
     put("sfzx", sfzx)
+    put("max", max)
     forward()
   }
   

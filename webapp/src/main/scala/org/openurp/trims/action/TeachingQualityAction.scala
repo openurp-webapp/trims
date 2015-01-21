@@ -2,6 +2,7 @@ package org.openurp.trims.action
 
 import scala.collection.mutable.ListBuffer
 import org.beangle.data.jpa.dao.SqlBuilder
+import org.openurp.base.Department
 
 class TeachingQualityAction extends AbsEamsAction {
 
@@ -84,7 +85,9 @@ class TeachingQualityAction extends AbsEamsAction {
     limit 10"""
     val query = SqlBuilder.sql(sql)
     val datas = entityDao.search(query)
+    val depart = entityDao.get(classOf[Department], new Integer(departId)) 
     put("datas", datas)
+    put("depart", depart)
     forward()
   }
 
