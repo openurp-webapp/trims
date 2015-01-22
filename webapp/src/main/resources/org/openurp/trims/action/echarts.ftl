@@ -18,17 +18,13 @@
                   , subtext : '${title2}'
                   [/#if], padding: 0},
                 //renderAsImage:true,
-                tooltip : {
-                  trigger: '${trigger}',
-                  axisPointer : {            // 坐标轴指示器，坐标轴触发有效
-                    type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-                  }
-                },
                 [#if legend != '']
                 legend: {
                     data:${legend}
                 },
                 [/#if]
+                
+                [#if type != "pie"]
                 xAxis : [
                     {
                         [#if xname != '']name : '${xname}',[/#if]
@@ -49,36 +45,57 @@
                         type : 'value'
                     }
                 ],
+                tooltip : {
+                  trigger: '${trigger}',
+                  axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                    type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                  }
+                },
+                [#else]//pie
+                tooltip : {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                calculable : true,
+                [/#if]
                 [#if series == '']
                 series : [
                     {
-                        "type":"${type}",
+                        type:"${type}",
                         barMinHeight: ${barMinHeight},
                         smooth:true,
-                        itemStyle: {
-                            normal: {
-                                [#if color]
-                                color: function(params) {
-                                    // build a color map as your need.
-                                    var colorList = [
-                                      '#C1232B','#B5C334','#FCCE10','#E87C25','#27727B',
-                                       '#FE8463','#9BCA63','#FAD860','#F3A43B','#60C0DD',
-                                       '#D7504B','#C6E579','#F4E001','#F0805A','#26C0C0'
-                                    ];
-                                    return colorList[params.dataIndex%colorList.length]
-                                },
-                                [/#if]
-                                label: {
-                                    show: ${showSeriesLable?string},
-                                    position: 'top',
-                                    formatter: '{c}'
-                                }
-                            }
-                        },
-                        [#if datas?size gt 0]
-                        "data":[[#list datas as d][#if d_index gt 0],[/#if]${d[1]}[/#list]],
+                        [#if type == "pie"]
+                          data:[
+                          [#list datas as d]
+                            {value: ${d[1]},  name:'${d[0]}'}[#if d_has_next],[/#if]
+                          [/#list]
+                          ],
                         [#else]
-                        "data":[[#list values as d][#if d_index gt 0],[/#if]${d}[/#list]],
+                          itemStyle: {
+                              normal: {
+                                  [#if color]
+                                  color: function(params) {
+                                      // build a color map as your need.
+                                      var colorList = [
+                                        '#C1232B','#B5C334','#FCCE10','#E87C25','#27727B',
+                                         '#FE8463','#9BCA63','#FAD860','#F3A43B','#60C0DD',
+                                         '#D7504B','#C6E579','#F4E001','#F0805A','#26C0C0'
+                                      ];
+                                      return colorList[params.dataIndex%colorList.length]
+                                  },
+                                  [/#if]
+                                  label: {
+                                      show: ${showSeriesLable?string},
+                                      position: 'top',
+                                      formatter: '{c}'
+                                  }
+                              }
+                          },
+                          [#if datas?size gt 0]
+                            "data":[[#list datas as d][#if d_index gt 0],[/#if]${d[1]}[/#list]],
+                          [#else]
+                            "data":[[#list values as d][#if d_index gt 0],[/#if]${d}[/#list]],
+                          [/#if]
                         [/#if]
                         [#if maxAndMin]
                         markPoint : {
