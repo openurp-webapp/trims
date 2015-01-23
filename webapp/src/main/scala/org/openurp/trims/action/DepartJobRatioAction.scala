@@ -22,7 +22,7 @@ class DepartJobRatioAction extends AbsEamsAction {
     join edu_base.students std on em.std_id = std.id
     join std_job.employment_statuses status on status.id=em.employment_status_id
     where em.graduate_batch_id = """ + seasonId +
-      " group by std.department_id"
+      " group by std.department_id order by sum(case when status.has_job=true  then 1 else 0 end)*100/(count(*)*1.0) desc"
 
     val datas = entityDao.search(SqlBuilder.sql(query)).asInstanceOf[Seq[Array[Any]]]
     val departs = getDepartmentMap()
@@ -34,9 +34,25 @@ class DepartJobRatioAction extends AbsEamsAction {
     put("names", names)
     put("datas", datas)
     put("values", values)
+    put("seasonId", seasonId)
     forward()
   }
 
+
+  def status(): String = {
+    val seasonId = get("seasonId").get
+    val query = """
+    select status.name,count(*) num
+    from std_job.std_employments em 
+    join edu_base.students std on em.std_id = std.id
+    join std_job.employment_statuses status on status.id=em.employment_status_id
+    where em.graduate_batch_id = """ + seasonId +
+      " group by status.name"
+    val datas = entityDao.search(SqlBuilder.sql(query)).asInstanceOf[Seq[Array[Any]]]
+    put("datas", datas)
+    forward()
+  }
+  
   def season(): String = {
     val departId = new Integer(getInt("departmentId").get)
     val query = """
