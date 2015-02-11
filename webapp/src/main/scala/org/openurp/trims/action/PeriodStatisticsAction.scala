@@ -8,8 +8,8 @@ import org.openurp.edu.teach.lesson.Lesson
 import org.beangle.data.jpa.dao.OqlBuilder
 import org.beangle.commons.lang.Strings
 import org.openurp.base.Department
-import org.openurp.hr.base.code.PostType
 import org.openurp.hr.base.code.TeacherType
+import org.openurp.code.job.PostType
 /**
  * 平均课时人数统计
  * */

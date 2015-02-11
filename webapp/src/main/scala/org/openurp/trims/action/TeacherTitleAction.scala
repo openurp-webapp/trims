@@ -5,12 +5,11 @@ import org.openurp.base.Department
 import org.beangle.commons.lang.Strings
 import org.openurp.edu.teach.lesson.Lesson
 import org.openurp.edu.base.Teacher
-import org.openurp.hr.base.code.ProfessionalTitle
 import org.openurp.hr.base.Staff
 import org.beangle.data.jpa.dao.SqlBuilder
-import org.openurp.hr.base.code.ProfessionalTitleLevel
-import org.openurp.hr.base.code.model.ProfessionalTitleBean
-//import org.openurp.edu.base.code.TeacherTitle
+import org.openurp.code.job.ProfessionalTitle
+import org.openurp.code.job.model.ProfessionalTitleBean
+import org.openurp.code.job.ProfessionalTitleGrade
 
 class TeacherTitleAction extends AbsEamsAction {
 
@@ -70,7 +69,7 @@ class TeacherTitleAction extends AbsEamsAction {
     val query = SqlBuilder.sql(sql)
     val datas = entityDao.search(query)
     val map = new collection.mutable.HashMap[String, String]
-    entityDao.getAll(classOf[ProfessionalTitleLevel]).foreach(d => {
+    entityDao.getAll(classOf[ProfessionalTitleGrade]).foreach(d => {
       map.put(d.id.toString(), d.name)
     })
     putNamesAndValues(datas, data => map.get(data(0) + ""))
@@ -79,7 +78,7 @@ class TeacherTitleAction extends AbsEamsAction {
 
   def levelDepart(): String = {
     val tid = getInt("tid").get
-    val title = entityDao.get(classOf[ProfessionalTitleLevel], new Integer(tid))
+    val title = entityDao.get(classOf[ProfessionalTitleGrade], new Integer(tid))
     val query = OqlBuilder.from(classOf[Staff], "staff").join("staff.post.head", "l").join("l.title", "title")
     query.where("staff.state.id = 1")
     query.select("l.department.id, count(*) as num")

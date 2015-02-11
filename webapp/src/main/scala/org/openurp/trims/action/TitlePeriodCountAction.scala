@@ -2,8 +2,8 @@ package org.openurp.trims.action
 
 import org.openurp.base.Department
 import org.beangle.data.jpa.dao.SqlBuilder
-import org.openurp.hr.base.code.ProfessionalTitle
-import org.openurp.hr.base.code.model.ProfessionalTitleBean
+import org.openurp.code.job.ProfessionalTitle
+import org.openurp.code.job.model.ProfessionalTitleBean
 /**
  * 按职称对课时统计
  */

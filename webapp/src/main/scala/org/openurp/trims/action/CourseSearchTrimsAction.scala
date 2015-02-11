@@ -7,7 +7,6 @@ import org.openurp.base.Department
 import org.beangle.data.model.dao.Condition
 import org.openurp.edu.base.code.StdType
 import org.openurp.edu.teach.code.ExamMode
-import org.openurp.base.code.Education
 import org.openurp.edu.teach.code.CourseCategory
 import org.openurp.edu.teach.code.CourseHourType
 import org.beangle.webmvc.entity.helper.QueryHelper
@@ -21,6 +20,7 @@ import org.openurp.edu.base.Teacher
 import org.openurp.trims.service.CecService
 import org.openurp.edu.base.Project
 import org.openurp.code.BaseCode
+import org.openurp.code.edu.Education
 
 class CourseSearchTrimsAction extends AbsEamsAction[Course] {
 

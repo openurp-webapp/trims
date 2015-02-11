@@ -6,8 +6,8 @@ import org.beangle.commons.lang.Strings
 import org.openurp.edu.teach.lesson.Lesson
 import org.openurp.edu.base.Teacher
 import scala.collection.mutable.ListBuffer
-import org.openurp.hr.base.code.ProfessionalTitle
 import org.openurp.hr.base.Staff
+import org.openurp.code.job.ProfessionalTitle
 
 class TeacherTitleAllAction extends AbsEamsAction {
 
