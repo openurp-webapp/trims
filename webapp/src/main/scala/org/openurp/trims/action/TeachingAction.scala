@@ -11,8 +11,8 @@ import org.beangle.data.jpa.dao.OqlBuilder
 import org.openurp.edu.teach.grade.CourseGrade
 import java.util.HashMap
 import scala.collection.mutable.ListBuffer
-import org.openurp.base.Person
 import org.openurp.hr.base.Staff
+import org.openurp.people.base.Person
 
 /**
  * 教学情况

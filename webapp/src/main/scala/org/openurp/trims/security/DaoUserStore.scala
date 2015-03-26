@@ -5,7 +5,7 @@ import org.beangle.commons.lang.Strings
 import org.beangle.data.jpa.dao.OqlBuilder
 import org.beangle.data.model.dao.EntityDao
 import org.beangle.security.authc.{ AbstractAccountRealm, Account, AccountStore, AuthenticationToken, BadCredentialsException, DefaultAccount }
-import org.openurp.base.Person
+import org.openurp.people.base.Person
 
 class DaoUserStore(entityDao: EntityDao) extends AccountStore {
   def load(principal: Any): Option[Account] = {
@@ -16,7 +16,7 @@ class DaoUserStore(entityDao: EntityDao) extends AccountStore {
     account.accountExpired = false
     account.accountLocked = false
     account.credentialExpired = false
-    account.category = person.category
+//    account.category = person.category
     account.disabled = false
     //    account.authorities = user.roles.map(role => new org.beangle.security.authz.Role(role.name))
     Some(account)

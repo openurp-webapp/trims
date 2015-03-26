@@ -4,10 +4,10 @@ import org.beangle.data.jpa.dao.OqlBuilder
 import org.openurp.base.Department
 import com.sun.org.apache.bcel.internal.generic.ClassObserver
 import org.openurp.edu.base.code.StdType
-import org.openurp.edu.teach.code.ExamMode
-import org.openurp.edu.teach.code.CourseHourType
-import org.openurp.edu.teach.code.CourseCategory
 import org.openurp.code.edu.Education
+import org.openurp.edu.base.code.ExamMode
+import org.openurp.edu.base.code.CourseHourType
+import org.openurp.edu.base.code.CourseCategory
 
 class ExpCourseSearchTrimsAction extends CourseSearchTrimsAction {
 

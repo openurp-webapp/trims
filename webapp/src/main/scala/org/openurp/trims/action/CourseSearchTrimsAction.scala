@@ -1,26 +1,22 @@
 package org.openurp.trims.action
 
-import org.openurp.edu.teach.Course
-import org.beangle.webmvc.entity.action.RestfulAction
-import org.beangle.data.jpa.dao.OqlBuilder
-import org.openurp.base.Department
-import org.beangle.data.model.dao.Condition
-import org.openurp.edu.base.code.StdType
-import org.openurp.edu.teach.code.ExamMode
-import org.openurp.edu.teach.code.CourseCategory
-import org.openurp.edu.teach.code.CourseHourType
-import org.beangle.webmvc.entity.helper.QueryHelper
-import org.beangle.commons.lang.Strings
-import org.openurp.edu.teach.lesson.Lesson
 import org.beangle.commons.collection.Order
-import org.openurp.edu.teach.plan.PlanCourse
-import org.openurp.edu.teach.plan.CoursePlan
-import org.openurp.edu.teach.plan.MajorPlan
-import org.openurp.edu.base.Teacher
-import org.openurp.trims.service.CecService
-import org.openurp.edu.base.Project
+import org.beangle.commons.lang.Strings
+import org.beangle.data.jpa.dao.OqlBuilder
+import org.beangle.data.model.dao.Condition
+import org.beangle.webmvc.entity.action.RestfulAction
+import org.beangle.webmvc.entity.helper.QueryHelper
+import org.openurp.base.Department
 import org.openurp.code.BaseCode
 import org.openurp.code.edu.Education
+import org.openurp.edu.teach.lesson.Lesson
+import org.openurp.edu.teach.plan.{CoursePlan, MajorPlan, PlanCourse}
+import org.openurp.trims.service.CecService
+import org.openurp.edu.base.code.StdType
+import org.openurp.edu.base.code.CourseHourType
+import org.openurp.edu.base.code.CourseCategory
+import org.openurp.edu.base.code.ExamMode
+import org.openurp.edu.base.Course
 
 class CourseSearchTrimsAction extends AbsEamsAction[Course] {
 
@@ -199,7 +195,7 @@ class CourseSearchTrimsAction extends AbsEamsAction[Course] {
 
   private def detailInCourseware(): String = {
     val courseid = getInt("course.id")
-    val course = entityDao.get(classOf[Course], new java.lang.Integer(courseid.get))
+    val course = entityDao.get(classOf[Course], new java.lang.Long(courseid.get))
     put("name", (course.name.trim()))
     //    val coursewares = entityDao.load(classOf[Courseware], "course.id", courseid)   
     //    put("coursewares", coursewares)    
