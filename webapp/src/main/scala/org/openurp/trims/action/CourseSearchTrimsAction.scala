@@ -83,7 +83,7 @@ class CourseSearchTrimsAction extends AbsEamsAction[Course] {
     put("courseHourTypes", getCodes(project, classOf[CourseHourType]))
     put("type", type_)
     val courseid = get("course.id").get
-    val course = getModel[Course](entityName,convertId(courseid))
+    val course = getModel[Course](entityName, convertId(courseid))
     put("courseSiteUrl", cecService.getUrl(course.code).orNull)
     put(shortName, course)
     return forward()
@@ -103,7 +103,7 @@ class CourseSearchTrimsAction extends AbsEamsAction[Course] {
     val teacherQuery = OqlBuilder.from(classOf[Lesson], "task")
     teacherQuery.select("select distinct teacher")
     teacherQuery.join("task.teachers", "teacher")
-    teacherQuery.where(new Condition("task.course.id=:courseId", getInt("course.id").get))
+    teacherQuery.where(new Condition("task.course.id=:courseId", getLong("course.id").get))
 //    teacherQuery.where(new Condition("teacher.virtual=:virtual", false))
 
 //    val textBookQuery = OqlBuilder.from(classOf[Lesson], "task")

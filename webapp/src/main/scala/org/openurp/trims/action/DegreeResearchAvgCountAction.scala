@@ -18,17 +18,17 @@ class DegreeResearchAvgCountAction extends AbsEamsAction {
     val beginYear = get("beginYear")
     val endYear = get("endYear")
     val sql = """select degree.level_id,sum(num)/count(*) num from
-      (select degree.level_id,r.person_id,count(*) num
+      (select degree.level_id,r.user_id,count(*) num
       from sin_harvest.thesis_harvests t
       join sin_harvest.published_situations p on p.id = t.published_situation_id
       join sin_harvest.researchers r on r.id = t.researcher_id
-      join hr_base.staffs staff on staff.person_id=r.person_id
+      join hr_base.staffs staff on staff.person_id=r.user_id
       join base.gb_degrees degree on degree.id = staff.degree_id
       where staff.state_id=1 """ +
       (if (beginYear.isDefined && Strings.isNotBlank(beginYear.get)) " and to_char(staff.employ_on,'YYYY') >= '" + beginYear.get + "'" else "") +
       (if (endYear.isDefined && Strings.isNotBlank(endYear.get)) " and to_char(staff.employ_on,'YYYY') <= '" + endYear.get + "'" else "") +
-      """ group by degree.level_id,r.person_id) t
-      right join hr_base.staffs staff on staff.person_id=t.person_id
+      """ group by degree.level_id,r.user_id) t
+      right join hr_base.staffs staff on staff.person_id=t.user_id
       join base.gb_degrees degree on degree.id = staff.degree_id
       where staff.state_id=1 """ +
       (if (beginYear.isDefined && Strings.isNotBlank(beginYear.get)) " and to_char(staff.employ_on,'YYYY') >= '" + beginYear.get + "'" else "") +
@@ -55,16 +55,16 @@ class DegreeResearchAvgCountAction extends AbsEamsAction {
     val beginYear = get("beginYear")
     val endYear = get("endYear")
     val sql = """select degree.level_id,sum(num)/count(*) num from
-        (select degree.level_id,r.person_id,count(*) num
+        (select degree.level_id,r.user_id,count(*) num
         from sin_harvest.literatures l
         join sin_harvest.researchers r on r.id = l.researcher_id
-        join hr_base.staffs staff on staff.person_id=r.person_id
+        join hr_base.staffs staff on staff.person_id=r.user_id
         join base.gb_degrees degree on degree.id = staff.degree_id
         where staff.state_id=1 """ +
         (if (beginYear.isDefined && Strings.isNotBlank(beginYear.get)) " and to_char(staff.employ_on,'YYYY') >= '" + beginYear.get + "'" else "") +
         (if (endYear.isDefined && Strings.isNotBlank(endYear.get)) " and to_char(staff.employ_on,'YYYY') <= '" + endYear.get + "'" else "") +
-        """ group by degree.level_id,r.person_id)t
-        right join hr_base.staffs staff on staff.person_id=t.person_id
+        """ group by degree.level_id,r.user_id)t
+        right join hr_base.staffs staff on staff.person_id=t.user_id
         join base.gb_degrees degree on degree.id = staff.degree_id
         where staff.state_id=1 """ +
         (if (beginYear.isDefined && Strings.isNotBlank(beginYear.get)) " and to_char(staff.employ_on,'YYYY') >= '" + beginYear.get + "'" else "") +

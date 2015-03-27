@@ -21,7 +21,7 @@ class TitleResearchCountAction extends AbsEamsAction {
         from sin_harvest.thesis_harvests t
         join sin_harvest.published_situations p on p.id = t.published_situation_id
         join sin_harvest.researchers r on r.id = t.researcher_id
-        join hr_base.staffs staff on staff.person_id=r.person_id
+        join hr_base.staffs staff on staff.person_id=r.user_id
         join hr_base.staff_post_infoes spi on spi.id = staff.post_head_id
         where staff.state_id=1  """ +
       (if (beginYear.isDefined && Strings.isNotBlank(beginYear.get)) " and to_char(p.published_date,'YYYY') >= '" + beginYear.get + "'" else "") +
@@ -46,7 +46,7 @@ class TitleResearchCountAction extends AbsEamsAction {
     val sql = """select spi.title_id,count(*) num
         from sin_harvest.literatures l
         join sin_harvest.researchers r on r.id = l.researcher_id
-        join hr_base.staffs staff on staff.person_id=r.person_id
+        join hr_base.staffs staff on staff.person_id=r.user_id
         join hr_base.staff_post_infoes spi on spi.id = staff.post_head_id
         where staff.state_id=1  """ +
       (if (beginYear.isDefined && Strings.isNotBlank(beginYear.get)) " and to_char(publish_date,'YYYY') >= '" + beginYear.get + "'" else "") +

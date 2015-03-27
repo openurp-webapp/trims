@@ -109,7 +109,7 @@ class DepartResearchAction extends AbsEamsAction {
     val sql = """select pe.name,d.name dname,count(*) num
         from sin_harvest.thesis_harvests t
         join sin_harvest.researchers r on r.id = t.researcher_id
-        join base.people pe on pe.id = r.person_id
+        join base.users pe on pe.id = r.user_id
         join base.departments d on d.id=t.department_id
         join sin_harvest.published_situations p on p.id = t.published_situation_id
         where 1=1 """ +
@@ -128,7 +128,7 @@ class DepartResearchAction extends AbsEamsAction {
     val sql = """select pe.name,d.name dname,count(*) num
         from sin_harvest.literatures l
         join sin_harvest.researchers r on r.id = l.researcher_id
-        join base.people pe on pe.id = r.person_id
+        join base.users pe on pe.id = r.user_id
         join base.departments d on d.id=l.department_id
         where 1=1 """ +
         (if (teaching.isDefined) s" and d.teaching = ${teaching.get}" else "") +

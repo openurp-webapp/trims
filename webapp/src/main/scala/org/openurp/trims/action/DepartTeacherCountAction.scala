@@ -66,7 +66,7 @@ class DepartTeacherCountAction extends AbsEamsAction{
     val departId = getInt("departId").get
     val sql = s"""select p.code, p.name, tt.name typeName
     from hr_base.staffs f
-    join base.people p on f.person_id = p.id
+    join base.users p on f.person_id = p.id
     join hr_base.staff_post_infoes pi on f.post_head_id = pi.id
     join hr_base.xb_teacher_types tt on pi.teacher_type_id = tt.id
     where f.state_id = 1 and pi.department_id = ${departId}""" +

@@ -25,7 +25,7 @@
     <td class="title" width="20%">职称</td>
     <td class="content">${(staff.post.head.title.name)!}</td>
     <td class="title" width="20%">邮箱</td>
-    <td class="content">${person.email}</td>
+    <td class="content">${person.email!}</td>
   </tr>
   <tr>
     <td class="title" width="20%">部门</td>

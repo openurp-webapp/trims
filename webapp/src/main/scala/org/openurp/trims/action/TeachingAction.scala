@@ -55,8 +55,8 @@ class TeachingAction extends RestfulAction[Person] {
             from edu_teach.lessons l 
             join edu_teach.lessons_teachers lt on lt.lesson_id=l.id 
             join base.semesters s on l.semester_id = s.id 
-            join edu_teach.courses c on c.id = l.course_id
-            join edu_base.teachers t on t.person_id = lt.person_id
+            join edu_base.courses c on c.id = l.course_id
+            join edu_base.teachers t on t.user_id = lt.user_id
             where t.id = ${id} 
             group by s.code"""
     val query = SqlBuilder.sql(sql)
@@ -83,7 +83,7 @@ class TeachingAction extends RestfulAction[Person] {
     val sql = s"""select s.school_year, count(*)
   		from edu_teach.lessons l join edu_teach.lessons_teachers lt on l.id = lt.lesson_id 
   		join base.semesters s on l.semester_id = s.id
-      join hr_base.staffs f on lt.person_id = f.person_id
+      join hr_base.staffs f on lt.user_id = f.person_id
       where f.id = ${id}
   		group by s.school_year
   		order by s.school_year"""
@@ -114,7 +114,7 @@ class TeachingAction extends RestfulAction[Person] {
 			join edu_teach.lessons l on cg.lesson_id=l.id
     		join base.semesters s on l.semester_id = s.id
 			join edu_teach.lessons_teachers lt on lt.lesson_id = l.id
-            join edu_base.teachers t on t.person_id = lt.person_id
+            join edu_base.teachers t on t.user_id = lt.user_id
             where t.id = ${id} and s.school_year='${curYear}'
 			 ) t group by id,score"""
     val query = SqlBuilder.sql(sql)
@@ -135,7 +135,7 @@ class TeachingAction extends RestfulAction[Person] {
 			join edu_teach.lessons l on cg.lesson_id=l.id
     		join base.semesters s on l.semester_id = s.id
 			join edu_teach.lessons_teachers lt on lt.lesson_id = l.id
-            join edu_base.teachers t on t.person_id = lt.person_id
+            join edu_base.teachers t on t.user_id = lt.user_id
             where t.id = ${id} and s.school_year='${curYear}'
 			 ) t group by id,score"""
     val query = SqlBuilder.sql(sql)
@@ -178,10 +178,10 @@ class TeachingAction extends RestfulAction[Person] {
     val sql = s"""select s.school_year, c.id, c.name, q.score
     from edu_quality.lesson_questionnaire_stats q
     join edu_teach.lessons l on l.id = q.lesson_id
-    join edu_teach.courses c on c.id = l.course_id
+    join edu_base.courses c on c.id = l.course_id
     join base.semesters s on s.id = l.semester_id 
     join edu_teach.lessons_teachers lt on l.id = lt.lesson_id 
-    join edu_base.teachers t on t.person_id = lt.person_id
+    join edu_base.teachers t on t.user_id = lt.user_id
     where t.id = ${id}"""
     val query = SqlBuilder.sql(sql)
     val datas = entityDao.search(query)
@@ -228,7 +228,7 @@ class TeachingAction extends RestfulAction[Person] {
 		join edu_teach.lessons l on l.id = q.lesson_id
 		join base.semesters s on s.id = l.semester_id 
 		join edu_teach.lessons_teachers lt on l.id = lt.lesson_id 
-        join edu_base.teachers t on t.person_id = lt.person_id
+        join edu_base.teachers t on t.user_id = lt.user_id
         where t.id = ${id} and s.school_year='${curYear}'"""
     val query = SqlBuilder.sql(sql)
     val datas = entityDao.search(query)

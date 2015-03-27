@@ -21,8 +21,8 @@ class ResearchAction extends AbsEamsAction {
 		join sin_harvest.harvest_types h on h.id = p.harvest_type_id
 		left outer join sin_harvest.published_ranges pr on pr.id = p.published_range_id
 		join sin_harvest.researchers r on r.id = t.researcher_id
-		join base.people pe on pe.id = r.person_id
-		join edu_base.teachers te on te.person_id = pe.id
+		join base.users pe on pe.id = r.user_id
+		join edu_base.teachers te on te.user_id = pe.id
 		where te.id=${id}
         order by p.published_date desc"""
     val query = SqlBuilder.sql(sql)
@@ -42,8 +42,8 @@ class ResearchAction extends AbsEamsAction {
         from sin_harvest.literatures l
         join sin_harvest.harvest_types h on h.id = l.harvest_type_id
         join sin_harvest.researchers r on r.id = l.researcher_id
-        join base.people pe on pe.id = r.person_id
-        join edu_base.teachers te on te.person_id = pe.id
+        join base.users pe on pe.id = r.user_id
+        join edu_base.teachers te on te.user_id = pe.id
         where te.id=${id}
         order by l.publish_date desc"""
     val query = SqlBuilder.sql(sql)

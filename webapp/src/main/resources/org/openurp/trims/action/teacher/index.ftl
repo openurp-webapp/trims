@@ -4,7 +4,7 @@
   [@b.form name="staffSearchForm" action="!search" target="stafflist" title="ui.searchForm"]
     教师姓名<input name="staff.person.name" maxlength="15" size="8" value="" type="text"/>
     所属部门
-    [@b.select items=departments selected="" name="staff.person.department.id" style="width:150px;"]
+    [@b.select items=departments selected="" name="staff.department.id" style="width:150px;"]
       <option value="">...</option>
     [/@]
     在职状态
