@@ -6,10 +6,11 @@ import org.beangle.data.jpa.dao.OqlBuilder
 import org.beangle.data.model.dao.EntityDao
 import org.beangle.security.authc.{ AbstractAccountRealm, Account, AccountStore, AuthenticationToken, BadCredentialsException, DefaultAccount }
 import org.openurp.people.base.Person
+import org.openurp.base.User
 
 class DaoUserStore(entityDao: EntityDao) extends AccountStore {
   def load(principal: Any): Option[Account] = {
-    val persons = entityDao.findBy(classOf[Person], "code", List(principal.toString))
+    val persons = entityDao.findBy(classOf[User], "code", List(principal.toString))
     if (persons.isEmpty) return None
     val person = persons(0)
     val account = new DefaultAccount(person.code, person.id)
