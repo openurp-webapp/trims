@@ -13,7 +13,7 @@ class ResearchAction extends AbsEamsAction {
    */
   @mapping(value = "thesis/{id}")
   def thesis(@param("id") id: String): String = {
-    val staff = entityDao.get(classOf[Staff], new Integer(id))
+    val staff = entityDao.get(classOf[Staff], new java.lang.Long(id))
     put("staff", staff)
     val sql = s"""select t.name tname,t.count,p.name pname,h.name hname,pr.name prname,p.published_date
 		from sin_harvest.thesis_harvests t
@@ -21,8 +21,8 @@ class ResearchAction extends AbsEamsAction {
 		join sin_harvest.harvest_types h on h.id = p.harvest_type_id
 		left outer join sin_harvest.published_ranges pr on pr.id = p.published_range_id
 		join sin_harvest.researchers r on r.id = t.researcher_id
-		join base.users pe on pe.id = r.user_id
-		join edu_base.teachers te on te.user_id = pe.id
+    	join hr_base.staffs s on s.id = r.staff_id
+		join edu_base.teachers te on te.staff_id = s.id
 		where te.id=${id}
         order by p.published_date desc"""
     val query = SqlBuilder.sql(sql)
@@ -42,8 +42,8 @@ class ResearchAction extends AbsEamsAction {
         from sin_harvest.literatures l
         join sin_harvest.harvest_types h on h.id = l.harvest_type_id
         join sin_harvest.researchers r on r.id = l.researcher_id
-        join base.users pe on pe.id = r.user_id
-        join edu_base.teachers te on te.user_id = pe.id
+    	join hr_base.staffs s on s.id = r.staff_id
+		join edu_base.teachers te on te.staff_id = s.id
         where te.id=${id}
         order by l.publish_date desc"""
     val query = SqlBuilder.sql(sql)

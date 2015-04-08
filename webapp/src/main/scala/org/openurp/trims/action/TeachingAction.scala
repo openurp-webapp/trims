@@ -22,24 +22,25 @@ class TeachingAction extends RestfulAction[Person] {
    * 上课情况
    */
   @mapping(value = "lesson/{id}")
-  def lesson(@param("id") id: String): String = {
+  def lessonIndex(@param("id") id: String): String = {
     val years = getSchoolYears(id)
     val curYear = get("year").getOrElse(if (years.length > 0) years(0).asInstanceOf[Array[Any]](0) else null).asInstanceOf[String]
     lesson(id, curYear)
   }
 
   @mapping(value = "lesson/{id}/{year}")
-  def lesson(@param("id") id: String, @param("year") curYear: String): String = {
-    val staff = entityDao.get(classOf[Staff], new Integer(id))
+  def lesson(@param("id") id: String, @param(value="year",required=false) curYear: String): String = {
+    val staff = entityDao.get(classOf[Staff], new java.lang.Long(id))
     val years = getSchoolYears(id)
-    val curYear = get("year").getOrElse(if (years.length > 0) years(0).asInstanceOf[Array[Any]](0) else null)
+    var curYear = get("year").getOrElse(if (years.length > 0) years(0).asInstanceOf[Array[Any]](0) else null)
+    if (curYear == "0") curYear = null 
     put("id", id)
     put("curYear", curYear)
     put("years", years)
     put("staff", staff)
     val builder = OqlBuilder.from(classOf[Lesson], "lesson")
     builder.join("lesson.teachers", "t")
-    builder.where("t=:teacher", staff.person).where("lesson.semester.schoolYear=:curYear", curYear)
+    builder.where("t.staff=:staff", staff).where("lesson.semester.schoolYear=:curYear", curYear)
     val lessons = entityDao.search(builder)
     put("lessons", lessons)
     forward()
@@ -49,14 +50,14 @@ class TeachingAction extends RestfulAction[Person] {
    */
   def lessonLine(): String = {
     val id = get("id").get
-    val staff = entityDao.get(classOf[Staff], new Integer(id))
+    val staff = entityDao.get(classOf[Staff], new java.lang.Long(id))
     put("staff", staff)
     val sql = s"""select  s.code, sum(c.period)
             from edu_teach.lessons l 
             join edu_teach.lessons_teachers lt on lt.lesson_id=l.id 
             join base.semesters s on l.semester_id = s.id 
             join edu_base.courses c on c.id = l.course_id
-            join edu_base.teachers t on t.user_id = lt.user_id
+            join edu_base.teachers t on t.id = lt.teacher_id
             where t.id = ${id} 
             group by s.code"""
     val query = SqlBuilder.sql(sql)
@@ -74,7 +75,7 @@ class TeachingAction extends RestfulAction[Person] {
   def nav(): String = {
     val id = get("id").get
     put("id", id)
-    val staff = entityDao.get(classOf[Staff], new Integer(id))
+    val staff = entityDao.get(classOf[Staff], new java.lang.Long(id))
     put("person", staff.person)
     forward()
   }
@@ -83,7 +84,8 @@ class TeachingAction extends RestfulAction[Person] {
     val sql = s"""select s.school_year, count(*)
   		from edu_teach.lessons l join edu_teach.lessons_teachers lt on l.id = lt.lesson_id 
   		join base.semesters s on l.semester_id = s.id
-      join hr_base.staffs f on lt.user_id = f.person_id
+        join edu_base.teachers t on t.id=lt.teacher_id
+      join hr_base.staffs f on t.staff_id = f.id
       where f.id = ${id}
   		group by s.school_year
   		order by s.school_year"""
@@ -96,7 +98,7 @@ class TeachingAction extends RestfulAction[Person] {
    */
   @mapping(value = "grade/{id}")
   def grade(@param("id") id: String): String = {
-    lesson(id)
+    lessonIndex(id)
     val curYear = request.getAttribute("curYear").asInstanceOf[String]
     putExamGrade(id, curYear)
     putGaGrade(id, curYear)
@@ -114,7 +116,7 @@ class TeachingAction extends RestfulAction[Person] {
 			join edu_teach.lessons l on cg.lesson_id=l.id
     		join base.semesters s on l.semester_id = s.id
 			join edu_teach.lessons_teachers lt on lt.lesson_id = l.id
-            join edu_base.teachers t on t.user_id = lt.user_id
+            join edu_base.teachers t on t.id = lt.teacher_id
             where t.id = ${id} and s.school_year='${curYear}'
 			 ) t group by id,score"""
     val query = SqlBuilder.sql(sql)
@@ -135,7 +137,7 @@ class TeachingAction extends RestfulAction[Person] {
 			join edu_teach.lessons l on cg.lesson_id=l.id
     		join base.semesters s on l.semester_id = s.id
 			join edu_teach.lessons_teachers lt on lt.lesson_id = l.id
-            join edu_base.teachers t on t.user_id = lt.user_id
+            join edu_base.teachers t on t.id = lt.teacher_id
             where t.id = ${id} and s.school_year='${curYear}'
 			 ) t group by id,score"""
     val query = SqlBuilder.sql(sql)
@@ -181,7 +183,7 @@ class TeachingAction extends RestfulAction[Person] {
     join edu_base.courses c on c.id = l.course_id
     join base.semesters s on s.id = l.semester_id 
     join edu_teach.lessons_teachers lt on l.id = lt.lesson_id 
-    join edu_base.teachers t on t.user_id = lt.user_id
+    join edu_base.teachers t on t.id = lt.teacher_id
     where t.id = ${id}"""
     val query = SqlBuilder.sql(sql)
     val datas = entityDao.search(query)
@@ -221,14 +223,14 @@ class TeachingAction extends RestfulAction[Person] {
    */
   @mapping(value = "quality/year/{id}")
   def qualityYear(@param("id") id: String): String = {
-    lesson(id)
+    lessonIndex(id)
     val curYear = request.getAttribute("curYear")
     val sql = s"""select q.lesson_id,q.score
 		from edu_quality.lesson_questionnaire_stats q
 		join edu_teach.lessons l on l.id = q.lesson_id
 		join base.semesters s on s.id = l.semester_id 
 		join edu_teach.lessons_teachers lt on l.id = lt.lesson_id 
-        join edu_base.teachers t on t.user_id = lt.user_id
+        join edu_base.teachers t on t.id = lt.teacher_id
         where t.id = ${id} and s.school_year='${curYear}'"""
     val query = SqlBuilder.sql(sql)
     val datas = entityDao.search(query)

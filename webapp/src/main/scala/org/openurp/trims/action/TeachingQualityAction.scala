@@ -18,8 +18,9 @@ class TeachingQualityAction extends AbsEamsAction {
     from edu_quality.lesson_questionnaire_stats q
     join edu_teach.lessons l on l.id = q.lesson_id
     join base.semesters s on s.id = l.semester_id 
-    join edu_teach.lessons_teachers lt on l.id = lt.lesson_id 
-    join hr_base.staffs f on f.person_id = lt.user_id
+    join edu_teach.lessons_teachers lt on l.id = lt.lesson_id
+    join edu_base.teachers te on te.id = lt.teacher_id
+    join hr_base.staffs f on f.id = te.staff_id
     join hr_base.staff_post_infoes pi on pi.id = f.post_head_id
     join base.departments d on d.id = pi.department_id
     where d.teaching = true and f.state_id = 1
@@ -27,6 +28,7 @@ class TeachingQualityAction extends AbsEamsAction {
     and s.school_year <= '${endYear}'
     group by s.school_year, d.id
     """
+    println(sql)
     val query = SqlBuilder.sql(sql)
     val datas = entityDao.search(query)
     val yearSet = new collection.mutable.HashSet[String]
@@ -75,8 +77,9 @@ class TeachingQualityAction extends AbsEamsAction {
     join edu_teach.lessons l on l.id = q.lesson_id
     join base.semesters s on s.id = l.semester_id 
     join edu_teach.lessons_teachers lt on l.id = lt.lesson_id 
-    join hr_base.staffs f on f.person_id = lt.user_id
-    join base.users p on p.id = f.person_id
+    join edu_base.teachers te on te.id = lt.teacher_id
+    join hr_base.staffs f on f.id = te.staff_id
+    join ppl_base.people p on p.id = f.person_id
     join hr_base.staff_post_infoes pi on pi.id = f.post_head_id
     where f.state_id = 1 and pi.department_id = ${departId}
     and s.school_year = '${schoolYear}'

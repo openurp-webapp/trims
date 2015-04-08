@@ -77,5 +77,5 @@
 [#else]
 <div style="padding:100px; font-size:20px; text-align:center">暂无数据</div>
 [/#if]
-[@b.div id="lessonDiv" href="!lesson?id=${staff.id}"/]
+[@b.div id="lessonDiv" href="!lessonIndex?id=${staff.id}"/]
 [@b.foot/]

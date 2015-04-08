@@ -12,7 +12,7 @@ class TeacherInfoAction extends RestfulAction[Staff] {
 
   @mapping(value = "{id}")
   override def info(@param("id") id: String): String = {
-    val staff = entityDao.get(classOf[Staff], new Integer(id))
+    val staff = entityDao.get(classOf[Staff], new java.lang.Long(id))
     val person = staff.person
     val birthday = person.birthday
     if (birthday != null) {

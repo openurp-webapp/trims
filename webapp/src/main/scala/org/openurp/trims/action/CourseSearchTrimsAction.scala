@@ -159,7 +159,7 @@ class CourseSearchTrimsAction extends AbsEamsAction[Course] {
 
   private def detailInOutline() {
     val courseid = get("course.id")
-    super.info(courseid.get)
+    //super.info(courseid.get)
     val teachObjectsQuery = OqlBuilder.from(classOf[Lesson], "task")
     teachObjectsQuery.select("select distinct major, majorField")
     teachObjectsQuery.join("task.teachClass.major", "major")

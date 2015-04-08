@@ -1,6 +1,7 @@
 [@b.head/]
 [#include "../trims.ftl"/]
 <h4>[@beginYearAndEndYear/] 平均课时 Top10</h4>
+[#if datas?size gt 0]
 <table class="gridtable">
   <tr>
     <th>学年学期</th>
@@ -17,4 +18,7 @@
   </tr>
     [/#list]
 </table>
+[#else]
+<div style="padding:100px; font-size:20px; text-align:center">暂无数据</div>
+[/#if]
 [@b.foot/]

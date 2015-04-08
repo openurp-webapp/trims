@@ -31,12 +31,13 @@ class PeriodStatisticsAction extends  AbsEamsAction[Lesson]{
     val departmentId = getInt("departmentId")
     val teacherTypeId = getInt("teacherTypeId")
     val sql = """select num * 10 + 5, count(*) from
-		(select t.user_id, cast(avg(num) / 10 as int) num from 
-		(select  lt.user_id,l.semester_id, sum(c.period) num
+		(select t.teacher_id, cast(avg(num) / 10 as int) num from 
+		(select  lt.teacher_id,l.semester_id, sum(c.period) num
 		from edu_teach.lessons l 
     join base.departments d on l.teach_depart_id = d.id
 		join edu_teach.lessons_teachers lt on lt.lesson_id=l.id 
-    join hr_base.staffs f on lt.user_id = f.person_id
+    join edu_base.teachers te on te.id = lt.teacher_id
+    join hr_base.staffs f on f.id = te.staff_id
     join hr_base.staff_post_infoes pi on f.post_head_id = pi.id
 		join edu_base.courses c on c.id = l.course_id where f.state_id = 1 """ + 
     (if(teacherTypeId.isDefined)s" and pi.teacher_type_id = ${teacherTypeId.get}"else"")+
@@ -44,9 +45,9 @@ class PeriodStatisticsAction extends  AbsEamsAction[Lesson]{
 		(if(beginYear.isDefined)s" and l.semester_id >= ${beginYear.get}"else"")+
 		(if(endYear.isDefined)s" and l.semester_id <= '${endYear.get}'"else"")+
 		(if(departmentId.isDefined)s" and l.teach_depart_id = '${departmentId.get}'"else"")+
-		""" group by l.semester_id,lt.user_id
-		order by lt.user_id) t
-		group by user_id order by avg(num) desc) t
+		""" group by l.semester_id,lt.teacher_id
+		order by lt.teacher_id) t
+		group by teacher_id order by avg(num) desc) t
 		group by num 
 		order by num"""
 		put("beginYear", beginYear)
@@ -74,10 +75,12 @@ class PeriodStatisticsAction extends  AbsEamsAction[Lesson]{
     val sql="""	select  p.name p_name,s.code, sum(c.period) num, d.name d_name
 		from edu_teach.lessons l 
 		join edu_teach.lessons_teachers lt on lt.lesson_id=l.id 
-    join base.users p on p.id=lt.user_id
-    join hr_base.staffs f on p.id = f.person_id
+    join edu_base.teachers te on te.id = lt.teacher_id
+    join hr_base.staffs f on f.id = te.staff_id
+    join ppl_base.people p on p.id = f.person_id
     join hr_base.staff_post_infoes pi on f.post_head_id = pi.id
-    join base.departments d on pi.department_id=d.id
+	join base.departments dd on pi.department_id=dd.id--所属部门
+	join base.departments d on l.teach_depart_id = d.id--开课院系
     join base.semesters s on l.semester_id = s.id
 		join edu_base.courses c on c.id = l.course_id where f.state_id = 1"""+  
     (if(teacherTypeId.isDefined)s" and pi.teacher_type_id = ${teacherTypeId.get}"else"")+
