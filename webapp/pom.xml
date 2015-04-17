@@ -8,12 +8,16 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.openurp.trims</groupId>
   <artifactId>openurp-trims-webapp</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.2-SNAPSHOT</version>
   <packaging>war</packaging>
   <name>OpenURP TRIMS Webapp</name>
 
   <properties>
     <beangle.security.version>4.0.7-SNAPSHOT</beangle.security.version>
+    <openurp.platform.version>0.0.2-SNAPSHOT</openurp.platform.version>
+    <openurp.code.version>0.0.2</openurp.code.version>
+    <openurp.sin.version>0.0.2-SNAPSHOT</openurp.sin.version>
+    <openurp.workload.version>0.0.2-SNAPSHOT</openurp.workload.version>
   </properties>
 
   <dependencies>
@@ -25,12 +29,12 @@
     <dependency>
       <groupId>org.openurp.platform</groupId>
       <artifactId>openurp-platform-web</artifactId>
-      <version>0.0.2</version>
+      <version>${openurp.platform.version}</version>
     </dependency>
     <dependency>
       <groupId>org.openurp.platform.security</groupId>
       <artifactId>openurp-platform-security-user</artifactId>
-      <version>0.0.2</version>
+      <version>${openurp.platform.version}</version>
     </dependency>
     <dependency>
       <groupId>org.beangle.security</groupId>
@@ -54,12 +58,12 @@
     <dependency>
       <groupId>org.openurp.app</groupId>
       <artifactId>teach-home</artifactId>
-      <version>0.0.1</version>
+      <version>0.0.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.openurp.code</groupId>
-      <artifactId>openurp-code-model</artifactId>
-      <version>${project.version}</version>
+      <artifactId>openurp-code-model-person</artifactId>
+      <version>${openurp.code.version}</version>
     </dependency>
     <dependency>
       <groupId>org.openurp.edu.award</groupId>
@@ -114,7 +118,7 @@
     <dependency>
       <groupId>org.openurp.sin.harvest</groupId>
       <artifactId>openurp-sin-harvest-model</artifactId>
-      <version>${project.version}</version>
+      <version>${openurp.sin.version}</version>
     </dependency>
     <dependency>
       <groupId>org.openurp.std.base</groupId>
