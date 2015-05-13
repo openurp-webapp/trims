@@ -1,12 +1,10 @@
 package org.openurp.trims.action
 
 import org.beangle.webmvc.entity.action.RestfulAction
-import org.openurp.edu.base.Teacher
 import org.beangle.webmvc.api.view.View
 import org.beangle.data.jpa.dao.OqlBuilder
-import org.openurp.base.Department
-import org.openurp.hr.base.Staff
-import org.openurp.hr.base.code.TeacherType
+import org.openurp.hr.base.code.model.TeacherType
+import org.openurp.hr.base.model.Staff
 
 class TeacherAction extends AbsEamsAction[Staff] {
   

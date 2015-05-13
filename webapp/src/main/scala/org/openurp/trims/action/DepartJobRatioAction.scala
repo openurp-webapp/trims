@@ -4,7 +4,7 @@ import annotation.migration
 import collection.mutable.ListBuffer
 import org.beangle.commons.lang.Strings
 import org.beangle.data.jpa.dao.SqlBuilder
-import org.openurp.base.Department
+import org.openurp.base.model.Department
 
 class DepartJobRatioAction extends AbsEamsAction {
 

@@ -2,10 +2,9 @@ package org.openurp.trims.action
 
 import org.beangle.commons.lang.Strings
 import org.beangle.data.jpa.dao.OqlBuilder
-import org.openurp.base.Department
-import org.openurp.edu.base.Student
-import org.openurp.edu.teach.lesson.Lesson
 import java.util.Date
+import org.openurp.edu.base.model.Student
+import org.openurp.base.model.Department
 
 class StudentDepartStatisticsAction extends AbsEamsAction[Student] {
 

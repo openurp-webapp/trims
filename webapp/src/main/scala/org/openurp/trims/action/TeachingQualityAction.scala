@@ -2,7 +2,7 @@ package org.openurp.trims.action
 
 import scala.collection.mutable.ListBuffer
 import org.beangle.data.jpa.dao.SqlBuilder
-import org.openurp.base.Department
+import org.openurp.base.model.Department
 
 class TeachingQualityAction extends AbsEamsAction {
 

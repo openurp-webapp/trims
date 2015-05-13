@@ -15,7 +15,7 @@
   <properties>
     <beangle.security.version>4.0.7-SNAPSHOT</beangle.security.version>
     <openurp.platform.version>0.0.2-SNAPSHOT</openurp.platform.version>
-    <openurp.code.version>0.0.2</openurp.code.version>
+    <openurp.code.version>0.0.3-SNAPSHOT</openurp.code.version>
     <openurp.sin.version>0.0.2-SNAPSHOT</openurp.sin.version>
     <openurp.workload.version>0.0.2-SNAPSHOT</openurp.workload.version>
   </properties>

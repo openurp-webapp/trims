@@ -4,12 +4,12 @@ import org.beangle.webmvc.api.action.ActionSupport
 import org.beangle.data.jpa.dao.SqlBuilder
 import org.beangle.data.model.dao.EntityDao
 import org.beangle.webmvc.entity.action.RestfulAction
-import org.openurp.edu.teach.lesson.Lesson
 import org.beangle.data.jpa.dao.OqlBuilder
 import org.beangle.commons.lang.Strings
-import org.openurp.base.Department
-import org.openurp.hr.base.code.TeacherType
-import org.openurp.code.job.PostType
+import org.openurp.hr.base.code.model.TeacherType
+import org.openurp.code.job.model.PostType
+import org.openurp.base.model.Department
+import org.openurp.edu.teach.lesson.model.Lesson
 /**
  * 平均课时人数统计
  * */

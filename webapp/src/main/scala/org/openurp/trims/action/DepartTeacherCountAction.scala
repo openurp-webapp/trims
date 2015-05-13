@@ -1,12 +1,11 @@
 package org.openurp.trims.action
 
 import org.beangle.webmvc.entity.action.RestfulAction
-import org.openurp.edu.base.Teacher
 import org.beangle.data.jpa.dao.SqlBuilder
-import org.openurp.base.Department
 import org.beangle.commons.lang.Strings
 import scala.collection.mutable.ListBuffer
-import org.openurp.hr.base.code.TeacherType
+import org.openurp.hr.base.code.model.TeacherType
+import org.openurp.base.model.Department
 /**
  * 各部门教师人数分布
  * *

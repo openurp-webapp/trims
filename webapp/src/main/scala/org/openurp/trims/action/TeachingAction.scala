@@ -1,18 +1,16 @@
 package org.openurp.trims.action
 
 import org.beangle.webmvc.entity.action.RestfulAction
-import org.openurp.edu.base.Teacher
 import org.beangle.webmvc.api.annotation.mapping
 import org.beangle.webmvc.api.annotation.param
 import org.beangle.data.jpa.dao.SqlBuilder
 import org.beangle.data.model.dao.Query
-import org.openurp.edu.teach.lesson.Lesson
 import org.beangle.data.jpa.dao.OqlBuilder
-import org.openurp.edu.teach.grade.CourseGrade
 import java.util.HashMap
 import scala.collection.mutable.ListBuffer
-import org.openurp.hr.base.Staff
-import org.openurp.people.base.Person
+import org.openurp.people.base.model.Person
+import org.openurp.hr.base.model.Staff
+import org.openurp.edu.teach.lesson.model.Lesson
 
 /**
  * 教学情况

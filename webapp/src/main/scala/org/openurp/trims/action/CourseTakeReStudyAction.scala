@@ -1,9 +1,9 @@
 package org.openurp.trims.action
 
-import org.openurp.edu.teach.lesson.CourseTake
 import org.beangle.data.jpa.dao.OqlBuilder
-import org.openurp.edu.teach.code.CourseTakeType
-import org.openurp.base.Semester
+import org.openurp.edu.teach.lesson.model.CourseTake
+import org.openurp.base.model.Semester
+import org.openurp.edu.teach.code.model.CourseTakeType
 
 class CourseTakeReStudyAction extends AbsEamsAction[CourseTake] {
 

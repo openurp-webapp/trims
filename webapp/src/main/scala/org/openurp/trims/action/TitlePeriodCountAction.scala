@@ -1,9 +1,8 @@
 package org.openurp.trims.action
 
-import org.openurp.base.Department
 import org.beangle.data.jpa.dao.SqlBuilder
-import org.openurp.code.job.ProfessionalTitle
-import org.openurp.code.job.model.ProfessionalTitleBean
+import org.openurp.base.model.Department
+import org.openurp.code.job.model.ProfessionalTitle
 /**
  * 按职称对课时统计
  */
@@ -86,9 +85,9 @@ class TitlePeriodCountAction  extends AbsEamsAction {
     val query = SqlBuilder.sql(sql)
     val datas = entityDao.search(query)
     val map = getDepartmentMap
-    var title = entityDao.get(classOf[ProfessionalTitleBean], new Integer(tid))
+    var title = entityDao.get(classOf[ProfessionalTitle], new Integer(tid))
     if (tid == 0) {
-      title = new ProfessionalTitleBean
+      title = new ProfessionalTitle
       title.id = 0
       title.name = "无职称"
     }
@@ -127,9 +126,9 @@ class TitlePeriodCountAction  extends AbsEamsAction {
     val query = SqlBuilder.sql(sql)
     val datas = entityDao.search(query)
     val department = entityDao.get(classOf[Department], new Integer(did))
-    var title = entityDao.get(classOf[ProfessionalTitleBean], new Integer(tid))
+    var title = entityDao.get(classOf[ProfessionalTitle], new Integer(tid))
     if (tid == 0) {
-      title = new ProfessionalTitleBean
+      title = new ProfessionalTitle
       title.name = "无职称"
     }
     put("title", title)

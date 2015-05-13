@@ -3,17 +3,17 @@ package org.openurp.trims.action
 import org.beangle.data.jpa.dao.OqlBuilder
 import org.beangle.data.model.Entity
 import org.beangle.webmvc.entity.action.RestfulAction
-import org.openurp.edu.base.Project
-import org.openurp.edu.teach.lesson.Lesson
-import org.openurp.base.Department
 import org.beangle.webmvc.entity.action.AbstractRestfulAction
 import org.beangle.webmvc.entity.action.AbstractEntityAction
-import org.openurp.edu.base.Student
 import org.beangle.commons.lang.Strings
 import org.beangle.data.jpa.dao.SqlBuilder
 import scala.collection.mutable.ListBuffer
 import java.util.Calendar
 import org.openurp.code.BaseCode
+import org.openurp.edu.base.model.Student
+import org.openurp.edu.base.model.Project
+import org.openurp.base.model.Department
+import org.openurp.edu.teach.lesson.model.Lesson
 
 abstract class AbsEamsAction[T <: Entity[_ <: java.io.Serializable]] extends AbstractEntityAction[T] {
 

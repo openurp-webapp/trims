@@ -5,8 +5,7 @@ import org.beangle.commons.lang.Strings
 import org.beangle.data.jpa.dao.OqlBuilder
 import org.beangle.data.model.dao.EntityDao
 import org.beangle.security.authc.{ AbstractAccountRealm, Account, AccountStore, AuthenticationToken, BadCredentialsException, DefaultAccount }
-import org.openurp.people.base.Person
-import org.openurp.base.User
+import org.openurp.base.model.User
 
 class DaoUserStore(entityDao: EntityDao) extends AccountStore {
   def load(principal: Any): Option[Account] = {

@@ -1,12 +1,11 @@
 package org.openurp.trims.action
 
 import java.util.Calendar
-
 import org.beangle.commons.codec.digest.Digests
 import org.beangle.webmvc.api.annotation.{mapping, param}
 import org.beangle.webmvc.entity.action.RestfulAction
-import org.openurp.hr.base.Staff
 import org.openurp.platform.ws.ServiceConfig
+import org.openurp.hr.base.model.Staff
 
 class TeacherInfoAction extends RestfulAction[Staff] {
 

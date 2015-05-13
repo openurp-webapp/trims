@@ -6,17 +6,17 @@ import org.beangle.data.jpa.dao.OqlBuilder
 import org.beangle.data.model.dao.Condition
 import org.beangle.webmvc.entity.action.RestfulAction
 import org.beangle.webmvc.entity.helper.QueryHelper
-import org.openurp.base.Department
-import org.openurp.code.BaseCode
-import org.openurp.code.edu.Education
-import org.openurp.edu.teach.lesson.Lesson
-import org.openurp.edu.teach.plan.{CoursePlan, MajorPlan, PlanCourse}
+import org.openurp.base.model.Department
+import org.openurp.edu.base.code.model.StdType
+import org.openurp.edu.base.code.model.CourseHourType
+import org.openurp.edu.teach.plan.model.MajorPlan
+import org.openurp.edu.base.code.model.CourseCategory
+import org.openurp.edu.base.code.model.ExamMode
+import org.openurp.edu.base.model.Course
+import org.openurp.edu.teach.plan.model.PlanCourse
 import org.openurp.trims.service.CecService
-import org.openurp.edu.base.code.StdType
-import org.openurp.edu.base.code.CourseHourType
-import org.openurp.edu.base.code.CourseCategory
-import org.openurp.edu.base.code.ExamMode
-import org.openurp.edu.base.Course
+import org.openurp.edu.teach.lesson.model.Lesson
+import org.openurp.edu.base.code.model.Education
 
 class CourseSearchTrimsAction extends AbsEamsAction[Course] {
 
@@ -123,7 +123,7 @@ class CourseSearchTrimsAction extends AbsEamsAction[Course] {
   private def detailInMajor() {
     val planCourse = entityDao.get(
       classOf[PlanCourse], new java.lang.Long(getLong("planCourse.id").get))
-    val teachPlan = entityDao.get(classOf[MajorPlan], new Integer(getInt("teachPlan.id").get))
+    val teachPlan = entityDao.get(classOf[MajorPlan], new java.lang.Long(getInt("teachPlan.id").get))
 
     val teacherQuery = OqlBuilder.from(classOf[Lesson], "task")
     teacherQuery.select("select distinct teacher")

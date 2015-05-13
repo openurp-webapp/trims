@@ -1,15 +1,10 @@
 package org.openurp.trims.action
 
 import org.beangle.data.jpa.dao.OqlBuilder
-import org.openurp.base.Department
-import org.beangle.commons.lang.Strings
-import org.openurp.edu.teach.lesson.Lesson
-import org.openurp.edu.base.Teacher
-import org.openurp.hr.base.Staff
 import org.beangle.data.jpa.dao.SqlBuilder
-import org.openurp.code.job.ProfessionalTitle
-import org.openurp.code.job.model.ProfessionalTitleBean
-import org.openurp.code.job.ProfessionalTitleGrade
+import org.openurp.hr.base.model.Staff
+import org.openurp.code.job.model.ProfessionalTitle
+import org.openurp.code.job.model.ProfessionalGrade
 
 class TeacherTitleAction extends AbsEamsAction {
 
@@ -36,14 +31,14 @@ class TeacherTitleAction extends AbsEamsAction {
 
   def department(): String = {
     val tid = getInt("tid").get
-    var title = entityDao.get(classOf[ProfessionalTitleBean], new Integer(tid))
+    var title = entityDao.get(classOf[ProfessionalTitle], new Integer(tid))
     val query = OqlBuilder.from(classOf[Staff], "staff").join("staff.post.head", "l")
     query.where("staff.state.id = 1")
     query.select("l.department.id, count(*) as num")
     //    query.where("l.teaching = true")
     if ("undefined".equals(get("tid").get)) {
       query.where("l.title.id is null")
-      title = new ProfessionalTitleBean
+      title = new ProfessionalTitle
       title.name = "无职称"
     } else {
       query.where("l.title.id=:tid", tid)
@@ -69,7 +64,7 @@ class TeacherTitleAction extends AbsEamsAction {
     val query = SqlBuilder.sql(sql)
     val datas = entityDao.search(query)
     val map = new collection.mutable.HashMap[String, String]
-    entityDao.getAll(classOf[ProfessionalTitleGrade]).foreach(d => {
+    entityDao.getAll(classOf[ProfessionalGrade]).foreach(d => {
       map.put(d.id.toString(), d.name)
     })
     putNamesAndValues(datas, data => map.get(data(0) + ""))
@@ -78,7 +73,7 @@ class TeacherTitleAction extends AbsEamsAction {
 
   def levelDepart(): String = {
     val tid = getInt("tid").get
-    val title = entityDao.get(classOf[ProfessionalTitleGrade], new Integer(tid))
+    val title = entityDao.get(classOf[ProfessionalGrade], new Integer(tid))
     val query = OqlBuilder.from(classOf[Staff], "staff").join("staff.post.head", "l").join("l.title", "title")
     query.where("staff.state.id = 1")
     query.select("l.department.id, count(*) as num")

@@ -4,7 +4,7 @@ import org.beangle.data.jpa.dao.SqlBuilder
 import scala.collection.mutable.ListBuffer
 import java.util.Calendar
 import org.beangle.commons.lang.Strings
-import org.openurp.code.edu.DegreeLevel
+import org.openurp.code.edu.model.DegreeLevel
 
 class DegreeResearchAvgCountAction extends AbsEamsAction {
 

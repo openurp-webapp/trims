@@ -1,13 +1,9 @@
 package org.openurp.trims.action
 
 import org.beangle.data.jpa.dao.OqlBuilder
-import org.openurp.base.Department
-import org.beangle.commons.lang.Strings
-import org.openurp.edu.teach.lesson.Lesson
-import org.openurp.edu.base.Teacher
+import org.openurp.hr.base.model.Staff
+import org.openurp.code.job.model.ProfessionalTitle
 import scala.collection.mutable.ListBuffer
-import org.openurp.hr.base.Staff
-import org.openurp.code.job.ProfessionalTitle
 
 class TeacherTitleAllAction extends AbsEamsAction {
 
