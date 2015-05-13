@@ -81,8 +81,8 @@
       <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.openurp.edu.quality</groupId>
-      <artifactId>openurp-edu-quality-model</artifactId>
+      <groupId>org.openurp.edu.evaluation</groupId>
+      <artifactId>openurp-edu-evaluation-model</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
