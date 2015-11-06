@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<mvc>
+  <profile name="openurp.edu.trims" package="org.openurp.edu.trims.action">
+    <action suffix="Action" defaultMethod="index"/>
+    <view path="/" style="full" type="freemarker" suffix=".ftl" />
+    <url path="/" suffix=""  style="seo" />
+    <interceptors>
+      <interceptor name="web.Interceptor.hibernate"/>
+      <interceptor name="web.Interceptor.security"/>
+      <interceptor name="web.Interceptor.flash"/>
+    </interceptors>
+  </profile>
+</mvc>

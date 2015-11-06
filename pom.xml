@@ -4,19 +4,19 @@
   <parent>
     <groupId>org.openurp</groupId>
     <artifactId>openurp-webapp-parent</artifactId>
-    <version>0.0.10</version>
+    <version>0.0.15</version>
   </parent>
   <groupId>org.openurp.trims</groupId>
   <artifactId>openurp-trims-parent</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>OpenURP Trims Parent</name>
-  
+
   <properties>
     <bundle.symbolicName>org.openurp.trims</bundle.symbolicName>
     <bundle.namespace>org.openurp.trims</bundle.namespace>
   </properties>
-  
+
   <modules>
     <module>webapp</module>
   </modules>

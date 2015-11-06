@@ -2,58 +2,77 @@
 <project>
   <parent>
     <groupId>org.openurp</groupId>
-    <artifactId>openurp-webapp-parent</artifactId>
-    <version>0.0.11</version>
+    <artifactId>openurp-parent</artifactId>
+    <version>0.0.17</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.openurp.trims</groupId>
-  <artifactId>openurp-trims-webapp</artifactId>
+  <groupId>org.openurp.edu.trims</groupId>
+  <artifactId>openurp-edu-trims-webapp</artifactId>
   <version>0.0.2-SNAPSHOT</version>
   <packaging>war</packaging>
   <name>OpenURP TRIMS Webapp</name>
 
   <properties>
-    <beangle.security.version>4.0.7-SNAPSHOT</beangle.security.version>
-    <openurp.platform.version>0.0.2-SNAPSHOT</openurp.platform.version>
-    <openurp.code.version>0.0.3-SNAPSHOT</openurp.code.version>
-    <openurp.sin.version>0.0.2-SNAPSHOT</openurp.sin.version>
-    <openurp.workload.version>0.0.2-SNAPSHOT</openurp.workload.version>
+    <beangle.security.version>4.0.12</beangle.security.version>
+    <beangle.commons.version>4.4.4</beangle.commons.version>
+    <beangle.webmvc.version>0.3.4</beangle.webmvc.version>
+    <beangle.webui.version>0.0.4</beangle.webui.version>
+    <beangle.data.version>4.3.2</beangle.data.version>
+    <openurp.platform.version>0.0.5</openurp.platform.version>
+    <openurp.api.version>0.0.5</openurp.api.version>
+    <hibernate.version>4.3.1.Final</hibernate.version>
   </properties>
 
   <dependencies>
     <dependency>
-        <groupId>org.beangle.commons</groupId>
-        <artifactId>beangle-commons-web</artifactId>
-        <version>${beangle.commons.version}</version>
+      <groupId>org.beangle.commons</groupId>
+      <artifactId>beangle-commons-web_2.11</artifactId>
+      <version>${beangle.commons.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.openurp.platform</groupId>
-      <artifactId>openurp-platform-web</artifactId>
+      <groupId>org.beangle.webmvc</groupId>
+      <artifactId>beangle-webmvc-entity-plugin_2.11</artifactId>
+      <version>${beangle.webmvc.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.beangle.webmvc</groupId>
+      <artifactId>beangle-webmvc-spring-plugin_2.11</artifactId>
+      <version>${beangle.webmvc.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.beangle.webui</groupId>
+      <artifactId>beangle-webui-bootstrap_2.11</artifactId>
+      <version>${beangle.webui.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.openurp.platform.api</groupId>
+      <artifactId>openurp-platform-api-datasource</artifactId>
       <version>${openurp.platform.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.openurp.platform.security</groupId>
-      <artifactId>openurp-platform-security-user</artifactId>
+      <groupId>org.openurp.platform.api</groupId>
+      <artifactId>openurp-platform-api-cas</artifactId>
       <version>${openurp.platform.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.beangle.security</groupId>
-      <artifactId>beangle-security-cas</artifactId>
+      <groupId>org.openurp.edu.lesson</groupId>
+      <artifactId>openurp-edu-lesson-model</artifactId>
+      <version>${openurp.api.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.openurp.edu.teach</groupId>
-      <artifactId>openurp-edu-teach-model</artifactId>
-      <version>${project.version}</version>
+      <groupId>org.openurp.edu.grade</groupId>
+      <artifactId>openurp-edu-grade-model</artifactId>
+      <version>${openurp.api.version}</version>
     </dependency>
     <dependency>
       <groupId>org.openurp.hr.base</groupId>
       <artifactId>openurp-hr-base-model</artifactId>
-      <version>${project.version}</version>
+      <version>${openurp.api.version}</version>
     </dependency>
     <dependency>
       <groupId>org.openurp.base</groupId>
       <artifactId>openurp-base-model</artifactId>
-      <version>${project.version}</version>
+      <version>${openurp.api.version}</version>
     </dependency>
     <dependency>
       <groupId>org.openurp.app</groupId>
@@ -63,73 +82,81 @@
     <dependency>
       <groupId>org.openurp.code</groupId>
       <artifactId>openurp-code-model-person</artifactId>
-      <version>${openurp.code.version}</version>
+      <version>${openurp.api.version}</version>
     </dependency>
     <dependency>
       <groupId>org.openurp.edu.award</groupId>
       <artifactId>openurp-edu-award-model</artifactId>
-      <version>${project.version}</version>
+      <version>${openurp.api.version}</version>
     </dependency>
     <dependency>
       <groupId>org.openurp.edu.base</groupId>
       <artifactId>openurp-edu-base-model</artifactId>
-      <version>${project.version}</version>
+      <version>${openurp.api.version}</version>
     </dependency>
     <dependency>
       <groupId>org.openurp.edu.otherexam</groupId>
       <artifactId>openurp-edu-otherexam-model</artifactId>
-      <version>${project.version}</version>
+      <version>${openurp.api.version}</version>
     </dependency>
     <dependency>
       <groupId>org.openurp.edu.evaluation</groupId>
       <artifactId>openurp-edu-evaluation-model</artifactId>
-      <version>${project.version}</version>
+      <version>${openurp.api.version}</version>
     </dependency>
     <dependency>
       <groupId>org.openurp.edu.textbook</groupId>
       <artifactId>openurp-edu-textbook-model</artifactId>
-      <version>${project.version}</version>
+      <version>${openurp.api.version}</version>
     </dependency>
     <dependency>
       <groupId>org.openurp.edu.workload</groupId>
       <artifactId>openurp-edu-workload-model</artifactId>
-      <version>${project.version}</version>
+      <version>${openurp.api.version}</version>
     </dependency>
     <dependency>
       <groupId>org.openurp.edu.std</groupId>
       <artifactId>openurp-edu-std-model</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.openurp.lg.room</groupId>
-      <artifactId>openurp-lg-room-model</artifactId>
-      <version>${project.version}</version>
+      <version>${openurp.api.version}</version>
     </dependency>
     <dependency>
       <groupId>org.openurp.people.base</groupId>
       <artifactId>openurp-people-base-model</artifactId>
-      <version>${project.version}</version>
+      <version>${openurp.api.version}</version>
     </dependency>
     <dependency>
       <groupId>org.openurp.people.info</groupId>
       <artifactId>openurp-people-info-model</artifactId>
-      <version>${project.version}</version>
+      <version>${openurp.api.version}</version>
     </dependency>
     <dependency>
       <groupId>org.openurp.sin.harvest</groupId>
       <artifactId>openurp-sin-harvest-model</artifactId>
-      <version>${openurp.sin.version}</version>
+      <version>${openurp.api.version}</version>
     </dependency>
     <dependency>
       <groupId>org.openurp.std.base</groupId>
       <artifactId>openurp-std-base-model</artifactId>
-      <version>${project.version}</version>
+      <version>${openurp.api.version}</version>
     </dependency>
     <dependency>
       <groupId>org.openurp.std.job</groupId>
       <artifactId>openurp-std-job-model</artifactId>
-      <version>${project.version}</version>
+      <version>${openurp.api.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-validator</artifactId>
+      <version>${hibernate.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-ehcache</artifactId>
+      <version>${hibernate.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
     </dependency>
   </dependencies>
 </project>
-
