@@ -24,22 +24,21 @@ class DepartPeriodCountAction extends AbsEamsAction[Lesson] {
     val teaching = getBoolean("teaching")
     val teacherTypeId = getInt("teacherTypeId")
     val sql = """select teach_depart_id, cast(avg(num) as int) num from 
-		(select  l.teach_depart_id,lt.teacher_id,s.school_year, s.name, sum(c.period) num
+		(select  l.teach_depart_id,lt.staff_id,s.school_year, s.name, sum(c.period) num
 		from edu_teach.lessons l 
 		join edu_teach.lessons_teachers lt on lt.lesson_id=l.id 
 		join base.semesters s on l.semester_id = s.id 
 		join edu_base.courses c on c.id = l.course_id
     join base.departments d on l.teach_depart_id = d.id
-    join edu_base.teachers te on te.id = lt.teacher_id
-    join hr_base.staffs f on f.id = te.staff_id
+    join hr_base.staffs f on f.id = lt.staff_id
     join hr_base.staff_post_infoes pi on pi.id=f.post_head_id
 		where 1=1 and f.state_id=1 """ + 
     (if(teaching.isDefined)s" and d.teaching = '${teaching.get}'"else"")+
     (if(beginYear.isDefined)s" and l.semester_id >= ${beginYear.get}"else"")+
     (if(endYear.isDefined)s" and l.semester_id <= '${endYear.get}'"else"")+
     (if(teacherTypeId.isDefined)s" and pi.teacher_type_id = ${teacherTypeId.get}"else"")+
-		"""group by l.teach_depart_id,s.school_year,s.name,lt.teacher_id
-		order by lt.teacher_id) t
+		"""group by l.teach_depart_id,s.school_year,s.name,lt.staff_id
+		order by lt.staff_id) t
 		group by teach_depart_id order by avg(num) desc"""
     val query = SqlBuilder.sql(sql)
     val datas = entityDao.search(query)

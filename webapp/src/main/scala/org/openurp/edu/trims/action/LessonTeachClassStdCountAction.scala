@@ -17,8 +17,8 @@ class LessonTeachClassStdCountAction extends AbsEamsAction[Lesson] {
   def search(): String = {
     val teaching = getBoolean("teaching")
     val query = OqlBuilder.from(classOf[Lesson], "l")
-    query.select("l.teachClass.stdCount, count(*)")
-    query.where("l.teachClass.stdCount > 0")
+    query.select("l.teachclass.stdCount, count(*)")
+    query.where("l.teachclass.stdCount > 0")
     getInt("beginYear").map(year => {
       if (year != 0) {
         put("beginYear", year)
@@ -38,8 +38,8 @@ class LessonTeachClassStdCountAction extends AbsEamsAction[Lesson] {
       put("department", entityDao.get(classOf[Department], departmentId))
       query.where("l.teachDepart.id=:did", departmentId)
     })
-    query.groupBy("l.teachClass.stdCount")
-    query.orderBy("l.teachClass.stdCount")
+    query.groupBy("l.teachclass.stdCount")
+    query.orderBy("l.teachclass.stdCount")
     val datas = entityDao.search(query)
     val avg = getAvg(datas)(d => {
       d.asInstanceOf[Array[Any]](1).toString.toDouble

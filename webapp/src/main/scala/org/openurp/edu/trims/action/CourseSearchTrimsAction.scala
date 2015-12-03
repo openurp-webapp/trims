@@ -85,15 +85,15 @@ class CourseSearchTrimsAction extends AbsEamsAction[Course] {
     val courseid = get("course.id").get
     val course = getModel[Course](entityName, convertId(courseid))
     put("courseSiteUrl", cecService.getUrl(course.code).orNull)
-    put(shortName, course)
+    put(simpleEntityName, course)
     return forward()
   }
 
   private def detailDefault() {
     //    val teachObjectsQuery = OqlBuilder.from(classOf[Lesson], "task")
     //    teachObjectsQuery.select("select distinct major, majorField")
-    //    teachObjectsQuery.join("task.teachClass.major", "major")
-    //    teachObjectsQuery.join("left outer", "task.teachClass.majorField", "majorField")
+    //    teachObjectsQuery.join("task.teachclass.major", "major")
+    //    teachObjectsQuery.join("left outer", "task.teachclass.majorField", "majorField")
     //    teachObjectsQuery.where(new Condition("task.course.id=:courseId", getLong("course.id")))
     //    teachObjectsQuery.where(new Condition("major.department.college=true"))
     //    teachObjectsQuery.where(new Condition("major.enabled=true"))
@@ -128,14 +128,14 @@ class CourseSearchTrimsAction extends AbsEamsAction[Course] {
     val teacherQuery = OqlBuilder.from(classOf[Lesson], "task")
     teacherQuery.select("select distinct teacher")
     teacherQuery.join("task.teachers", "teacher")
-    teacherQuery.where(new Condition("task.teachClass.major.id=:majorId", teachPlan.program.major.id))
+    teacherQuery.where(new Condition("task.teachclass.major.id=:majorId", teachPlan.program.major.id))
     // MajorField is removed 
     //    if (teachPlan.getMajorField() == null)
     //      teacherQuery
-    //          .add(new Condition("task.teachClass.majorField is null"))
+    //          .add(new Condition("task.teachclass.majorField is null"))
     //    else
     //      teacherQuery.where(new Condition(
-    //          "task.teachClass.majorField.id=:majorFieldId", teachPlan
+    //          "task.teachclass.majorField.id=:majorFieldId", teachPlan
     //              .getMajorField().getId()))
     teacherQuery.where(new Condition("task.course.id=:courseId", planCourse.course.id))
     teacherQuery.where(new Condition("teacher.virtual=:virtual", false))
@@ -162,8 +162,8 @@ class CourseSearchTrimsAction extends AbsEamsAction[Course] {
     //super.info(courseid.get)
     val teachObjectsQuery = OqlBuilder.from(classOf[Lesson], "task")
     teachObjectsQuery.select("select distinct major, majorField")
-    teachObjectsQuery.join("task.teachClass.major", "major")
-    teachObjectsQuery.join("left outer", "task.teachClass.majorField",
+    teachObjectsQuery.join("task.teachclass.major", "major")
+    teachObjectsQuery.join("left outer", "task.teachclass.majorField",
       "majorField")
     teachObjectsQuery.where(new Condition("task.course.id=:courseId",
       getLong("course.id")))

@@ -12,7 +12,7 @@ class PeriodStatisticsAction extends  AbsEamsAction[Lesson]{
   
     def index(): String = {
     put("years", getLessonTerms())
-    val departs = entityDao .findBy(classOf[Department], "category.teaching", Array(true))
+    val departs = entityDao .findBy(classOf[Department], "teaching", Array(true))
     put("departs", departs)
     println( entityDao.getAll(classOf[PostType]))
     put("teacherTypes", entityDao.getAll(classOf[StaffType]))
@@ -34,7 +34,7 @@ class PeriodStatisticsAction extends  AbsEamsAction[Lesson]{
     join hr_base.staff_post_infoes pi on f.post_head_id = pi.id
 		join edu_base.courses c on c.id = l.course_id where f.state_id = 1 """ + 
     (if(teacherTypeId.isDefined)s" and pi.teacher_type_id = ${teacherTypeId.get}"else"")+
-    //FIXME(if(teaching.isDefined)s" and d.category.teaching = '${teaching.get}'"else"")+
+    (if(teaching.isDefined)s" and d.teaching = '${teaching.get}'"else"")+
 		(if(beginYear.isDefined)s" and l.semester_id >= ${beginYear.get}"else"")+
 		(if(endYear.isDefined)s" and l.semester_id <= '${endYear.get}'"else"")+
 		(if(departmentId.isDefined)s" and l.teach_depart_id = '${departmentId.get}'"else"")+

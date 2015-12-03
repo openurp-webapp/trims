@@ -4,4 +4,7 @@
     <module class="org.openurp.edu.trims.DefaultModule"/>
     <module class="org.openurp.edu.trims.DefaultModule2"/>
   </container>
+  <container>
+    <module class="org.openurp.edu.trims.DaoModule"/>
+  </container>
 </cdi>

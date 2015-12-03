@@ -2,7 +2,7 @@ package org.openurp.edu.trims.helper
 
 import org.beangle.commons.web.util.CookieUtils
 import org.springframework.util.StringUtils
-import org.beangle.webmvc.api.context.ActionContextHolder
+import org.beangle.webmvc.api.context.ActionContext
 
 object EnvUtils {
 
@@ -14,7 +14,7 @@ object EnvUtils {
   def semesterId = get(SEMESTER_ID)
 
   private def get(name: String): Long = {
-    val request = ActionContextHolder.context.request
+    val request = ActionContext.current.request
     val value = CookieUtils.getCookieValue(request, PROJECT_ID)
     if (!StringUtils.isEmpty(value)) value.toLong else 0
   }

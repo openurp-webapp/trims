@@ -1,25 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
   <parent>
-    <groupId>org.openurp</groupId>
-    <artifactId>openurp-parent</artifactId>
-    <version>0.0.17</version>
+    <groupId>org.openurp.edu.trims</groupId>
+    <artifactId>openurp-edu-trims-parent</artifactId>
+    <version>0.0.2-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.openurp.edu.trims</groupId>
   <artifactId>openurp-edu-trims-webapp</artifactId>
-  <version>0.0.2-SNAPSHOT</version>
   <packaging>war</packaging>
-  <name>OpenURP TRIMS Webapp</name>
+  <name>OpenURP Edu TRIMS Webapp</name>
 
   <properties>
-    <beangle.security.version>4.0.12</beangle.security.version>
-    <beangle.commons.version>4.4.4</beangle.commons.version>
-    <beangle.webmvc.version>0.3.4</beangle.webmvc.version>
-    <beangle.webui.version>0.0.4</beangle.webui.version>
-    <beangle.data.version>4.3.2</beangle.data.version>
-    <openurp.platform.version>0.0.5</openurp.platform.version>
-    <openurp.api.version>0.0.5</openurp.api.version>
+    <openurp.platform.version>0.0.6</openurp.platform.version>
+    <beangle.webui.version>0.0.5</beangle.webui.version>
+    <openurp.api.version>0.0.6</openurp.api.version>
     <hibernate.version>4.3.1.Final</hibernate.version>
   </properties>
 
@@ -27,17 +22,14 @@
     <dependency>
       <groupId>org.beangle.commons</groupId>
       <artifactId>beangle-commons-web_2.11</artifactId>
-      <version>${beangle.commons.version}</version>
     </dependency>
     <dependency>
       <groupId>org.beangle.webmvc</groupId>
       <artifactId>beangle-webmvc-entity-plugin_2.11</artifactId>
-      <version>${beangle.webmvc.version}</version>
     </dependency>
     <dependency>
       <groupId>org.beangle.webmvc</groupId>
       <artifactId>beangle-webmvc-spring-plugin_2.11</artifactId>
-      <version>${beangle.webmvc.version}</version>
     </dependency>
     <dependency>
       <groupId>org.beangle.webui</groupId>
@@ -73,11 +65,6 @@
       <groupId>org.openurp.base</groupId>
       <artifactId>openurp-base-model</artifactId>
       <version>${openurp.api.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.openurp.app</groupId>
-      <artifactId>teach-home</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.openurp.code</groupId>

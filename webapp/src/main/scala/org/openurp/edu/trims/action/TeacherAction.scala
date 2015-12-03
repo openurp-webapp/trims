@@ -15,7 +15,7 @@ class TeacherAction extends AbsEamsAction[Staff] {
   }
   
   def search(): String = {
-    put(shortName + "s", entityDao.search(getQueryBuilder()))
+    put(simpleEntityName + "s", entityDao.search(getQueryBuilder()))
     forward()
   }
   
